@@ -8,5 +8,6 @@ public class Ship {
 	public Ship(int length,Cell[] cells) {
 		//cell[]=parts[];
 		this.length=length;
+		// just a test
 	}
 }
