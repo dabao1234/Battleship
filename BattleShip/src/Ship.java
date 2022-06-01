@@ -6,7 +6,7 @@ public class Ship {
 	private boolean isSunk = false;
 	
 	//constructor 
-	public Ship(int length,Cell[] cells) {
+	Ship(int length,Cell[] cells) {
 		cells = parts;
 		this.length=length;
 	}
@@ -26,6 +26,10 @@ public class Ship {
 				isSunk = false;
 			}
 		}
+		return isSunk;
 	}
 	
+	public void addShip(Cell[] cells) {
+		parts=cells;
+	}
 }

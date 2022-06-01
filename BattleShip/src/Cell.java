@@ -1,10 +1,13 @@
 
 public class Cell {
 	private Cellstate state;
-	
+	private int row;
+	private int col;
 	//always empty unless told otherwise 
-	public Cell() {
+	public Cell(int row, int collumn) {
 		state = Cellstate.empty;
+		col=collumn;
+		this.row=row;
 	}
 	// sets the state
 	public void setState(Cellstate state) {
@@ -14,6 +17,13 @@ public class Cell {
 	// gets state
 	public Cellstate getState() {
 		return state;
+	}
+	
+	public boolean isHit() {
+		if(state.equals("X")) {
+			return true;
+		}
+		return false;
 	}
 	
 	
