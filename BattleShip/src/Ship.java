@@ -9,4 +9,8 @@ public class Ship {
 		cells = parts;
 		this.length=length;
 	}
+	
+	public void addShip(Cell[] cells) {
+		parts=cells;
+	}
 }

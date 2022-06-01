@@ -11,7 +11,7 @@ public class Board {
 		board = new Cell[aRows][aCols];
 		for (int i = 0; i < aRows; i++) {
 			for (int j = 0; j < aCols; j++) {
-				board[i][j] = new Cell(); // no color
+				board[i][j] = new Cell(i,j); // no color
 			}
 		}
 	}
@@ -25,7 +25,7 @@ public class Board {
 		board = new Cell[10][10];
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				board[i][j] = new Cell(); // no color
+				board[i][j] = new Cell(i,j); // no color
 			}
 		}
 		// fills board with empty cells
@@ -48,7 +48,6 @@ public class Board {
 		if (isEmpty ==true) {// if it is empty place ship
 			for (int i = startrow; i < shipLength; i++) {
 				board[i][startcol].setState(Cellstate.ship);
-				cell[i]=board[i][startcol];
 			}
 		}
 		
