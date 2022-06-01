@@ -9,6 +9,9 @@ public class Driver {
 		b.display();
 		b.placeShipVertical(0, 2, 5);
 		b.display();
+		//Hello - D
+		
+		b.display();
 	}
 
 }
