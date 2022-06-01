@@ -4,8 +4,7 @@ public class Board {
 	private int row;
 	private int col;
 
-	// constutor change
-	// awesome work
+	// constructor change
 	public Board(int aRows, int aCols) {
 		row = aRows;
 		col = aCols;
@@ -33,7 +32,7 @@ public class Board {
 	}
 
 	public void placeShipVertical(int startrow, int startcol, int shipLength) {
-		// place the start of the ship and then set the state of evercell upwards to
+		// place the start of the ship and then set the state of every cell upwards to
 		// ship
 		boolean isEmpty = false;
 		for (int i = 0; i < shipLength; i++) {
@@ -68,6 +67,7 @@ public class Board {
 		if(isEmpty==true) {
 		for (int i = 0; i < shipLength; i++) {
 			board[startrow][startcol + i].setState(Cellstate.ship);
+			//ADD THESE CELLS TO THE SHIP OBJECT
 		}
 		}
 	}
@@ -99,7 +99,7 @@ public class Board {
 				System.out.print(board[i][j] + " ");
 
 			}
-			System.out.println();// evertime row increase go down
+			System.out.println();// everytime row increase go down
 		}
 	}
 }

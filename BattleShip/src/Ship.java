@@ -6,8 +6,7 @@ public class Ship {
 	
 	//constructor 
 	public Ship(int length,Cell[] cells) {
-		//cell[]=parts[];
+		cells = parts;
 		this.length=length;
-		// just a test
 	}
 }
