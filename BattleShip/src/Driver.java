@@ -11,7 +11,7 @@ public class Driver {
 		b.display();
 		//Hello - D
 		
-		b.display();
+		
 	}
 
 }
