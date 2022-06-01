@@ -31,9 +31,11 @@ public class Board {
 		// fills board with empty cells
 	}
 
-	public void placeShipVertical(int startrow, int startcol, int shipLength) {
+	public Ship placeShipVertical(int startrow, int startcol, int shipLength) {
 		// place the start of the ship and then set the state of every cell upwards to
 		// ship
+		
+		Cell[] cell=new Cell[shipLength];
 		boolean isEmpty = false;
 		for (int i = 0; i < shipLength; i++) {
 			isEmpty = true;
@@ -46,8 +48,12 @@ public class Board {
 		if (isEmpty ==true) {// if it is empty place ship
 			for (int i = startrow; i < shipLength; i++) {
 				board[i][startcol].setState(Cellstate.ship);
+				cell[i]=board[i][startcol];
 			}
 		}
+		
+		Ship newShip=new Ship(shipLength, cell);
+		return newShip;
 
 	}
 
