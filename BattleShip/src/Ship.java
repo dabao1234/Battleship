@@ -12,6 +12,7 @@ public class Ship {
 	}
 	
 	public boolean getSunk() {
+		//
 		return isSunk;
 	}
 	
