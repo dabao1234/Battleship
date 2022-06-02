@@ -5,16 +5,21 @@ public class Driver {
 
 	public static void main(String[] args) {
 		final int NUM_SHIPS = 5; 
+		
+		Player p = Player.P1;
 
 		Scanner in = new Scanner(System.in);
+		
 		boolean programFinished = false;
-		Board b=new Board();
+		boolean placed = false;
+		
+		Board b = new Board(p);
 		int shipAlign = 0;
 		int startCol = 0;
 		int row = 0;
 		int lengthShip = 0;
 		
-		while(!programFinished) {
+		for(int l = 0; l < 5; l++) {
 			//Section to place the ship 
 			b.display();
 			
@@ -36,11 +41,11 @@ public class Driver {
 				
 				//Placing the Ship
 				if(shipAlign == 1) {
-					b.placeShipHorizontall(startCol, endCol, lengthShip);
+					b.placeShipHorizontall(startCol, row, lengthShip);
 					b.display();
 				}
 				else if(shipAlign == 2) {
-					b.placeShipVertical(startCol, endCol, lengthShip);
+					b.placeShipVertical(startCol, row, lengthShip);
 					b.display();
 				}
 				else {
@@ -52,6 +57,7 @@ public class Driver {
 			}
 			
 		}
+		p = Player.P2;
 		
 	}
 	/**

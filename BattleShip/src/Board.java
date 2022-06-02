@@ -3,11 +3,13 @@ public class Board {
 	private Cell[][] board;
 	private int row;
 	private int col;
+	private Player player;
 
 	// constructor change
-	public Board(int aRows, int aCols) {
+	public Board(int aRows, int aCols, Player p) {
 		row = aRows;
 		col = aCols;
+		player = p;
 		board = new Cell[aRows][aCols];
 		for (int i = 0; i < aRows; i++) {
 			for (int j = 0; j < aCols; j++) {
@@ -19,9 +21,10 @@ public class Board {
 	/**
 	 * default board is a array of 10 by 10 cells
 	 */
-	public Board() {
+	public Board(Player p) {
 		row = 10;
 		col = 10;
+		player = p;
 		board = new Cell[10][10];
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
