@@ -3,6 +3,8 @@ public class Cell {
 	private Cellstate state;
 	private int row;
 	private int col;
+	private boolean isVisible = true;
+	
 	//always empty unless told otherwise 
 	public Cell(int row, int collumn) {
 		state = Cellstate.empty;
@@ -26,22 +28,42 @@ public class Cell {
 		return false;
 	}
 	
+	public void setVisible(boolean t) {
+		isVisible = t;
+	}
+	
 	
 
 	// To string
 	@Override
 	public String toString() {
-		switch (state) {
-		case miss:
-			return "M";
-		case hit:
-			return "X";
-		case empty:
-			return "-";
-		case ship:
-			return "S";
-		default:
-			return "-";
+		if(isVisible == true) {
+			switch (state) {
+				case miss:
+					return "M";
+				case hit:
+					return "X";
+				case empty:
+					return "-";
+				case ship:
+					return "S";
+				default:
+					return "-";
+			}
+		}
+		else {
+			switch (state) {
+			case miss:
+				return "M";
+			case hit:
+				return "X";
+			case empty:
+				return "-";
+			case ship:
+				return "-";
+			default:
+				return "-";
+			}
 		}
 
 	}

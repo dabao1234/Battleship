@@ -95,9 +95,13 @@ public class Board {
 		}
 	}
 	
-	//sets the enum of all ships to the state  
+	// makes every cell invisible, so ships will display as blank 
 	public void hideShips() {
-		
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				board[i][j].setVisible(false);
+			}
+		}
 	}
 	
 	public boolean hasAttempt(int row, int col) {
@@ -114,12 +118,15 @@ public class Board {
 		if(hasShip(row, col) == true) {
 			// checks to see if the ship has been hit already
 			if(!isHit(row, col) == true) {
+				// if not, make it a hit
 				board[row][col].setState(Cellstate.hit);
 			}
 			else {
+				// if so, we want them to enter another thing
 				System.out.println("Bad");
 			}
 		}
+		// if no ship there, make it a miss
 		else {
 			board[row][col].setState(Cellstate.miss);
 		}
