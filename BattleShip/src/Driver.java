@@ -11,7 +11,7 @@ public class Driver {
 		Board b=new Board();
 		int shipAlign = 0;
 		int startCol = 0;
-		int endCol = 0;
+		int row = 0;
 		int lengthShip = 0;
 		
 		while(!programFinished) {
@@ -29,8 +29,8 @@ public class Driver {
 				//Get the values for the ship placement
 				System.out.println("Please enter the starting column: ");
 				startCol = robustInt(in);
-				System.out.println("Please enter the end column: ");
-				endCol = robustInt(in);
+				System.out.println("Please enter the starting row: ");
+				row = robustInt(in);
 				System.out.println("Please enter the ship length: ");
 				lengthShip = robustInt(in);
 				
