@@ -61,17 +61,17 @@ public class Board {
 		// ship
 		// to avoid overlap check if all cells are empty
 		boolean isEmpty = false;
-		for (int i = 0; i < shipLength; i++) {
+		for (int i = startcol; i < shipLength; i++) {
 			isEmpty = true;
-			if (board[startrow][startcol + i].getState().equals(Cellstate.ship)) {
+			if (board[startrow][i].getState().equals(Cellstate.ship)) {
 				isEmpty = false;
 				break;
 			}
 		}
 		System.out.println(isEmpty);
 		if(isEmpty==true) {
-		for (int i = 0; i < shipLength; i++) {
-			board[startrow][startcol + i].setState(Cellstate.ship);
+		for (int i = startcol; i < shipLength; i++) {
+			board[startrow][i].setState(Cellstate.ship);
 			//ADD THESE CELLS TO THE SHIP OBJECT
 		}
 		}
