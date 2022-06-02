@@ -11,7 +11,7 @@ public class Board {
 		board = new Cell[aRows][aCols];
 		for (int i = 0; i < aRows; i++) {
 			for (int j = 0; j < aCols; j++) {
-				board[i][j] = new Cell(i,j); // no color
+				board[i][j] = new Cell(i, j); // no color
 			}
 		}
 	}
@@ -113,7 +113,14 @@ public class Board {
 		}
 	}
 	
-	public void shoot(int row, int col) {
+	/**
+	 * 
+	 * @param row
+	 * @param col
+	 * @return whether or not the shot has succeeded
+	 */
+	
+	public boolean shoot(int row, int col) {
 		// checks to see if there's a ship there
 		if(hasShip(row, col) == true) {
 			// checks to see if the ship has been hit already
@@ -124,12 +131,14 @@ public class Board {
 			else {
 				// if so, we want them to enter another thing
 				System.out.println("Bad");
+				return false;
 			}
 		}
 		// if no ship there, make it a miss
 		else {
 			board[row][col].setState(Cellstate.miss);
 		}
+		return true;
 	}
 	
 	
@@ -145,7 +154,8 @@ public class Board {
 				System.out.print(board[i][j] + " ");
 
 			}
-			System.out.println();// everytime row increase go down
+			// go to the next line for the next row of ships
+			System.out.println();
 		}
 	}
 }
