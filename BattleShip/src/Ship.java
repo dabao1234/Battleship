@@ -20,6 +20,10 @@ public class Ship {
 		isSunk = sunk;
 	}
 	
+	public Cell[] getParts() {
+		return parts;
+	}
+	
 	private boolean checkSunk() {
 		isSunk = true;
 		for(Cell part : parts) {
