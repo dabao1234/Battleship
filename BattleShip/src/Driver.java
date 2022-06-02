@@ -5,7 +5,7 @@ public class Driver {
 
 	public static void main(String[] args) {
 		final int NUM_SHIPS = 5; 
-		// TODO Auto-generated method stub
+
 		Scanner in = new Scanner(System.in);
 		boolean programFinished = false;
 		Board b=new Board();
