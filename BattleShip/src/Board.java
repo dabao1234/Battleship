@@ -80,9 +80,15 @@ public class Board {
 			return false;
 		}
 	}
+<<<<<<< HEAD
 
 	// sets the enum of all ships to the state
+=======
+	
+	// makes every cell invisible, so ships will display as blank 
+>>>>>>> branch 'main' of https://github.com/dabao1234/Battleship
 	public void hideShips() {
+<<<<<<< HEAD
 
 	}
 
@@ -125,6 +131,13 @@ public class Board {
 		}
 
 		return true;
+=======
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				board[i][j].setVisible(false);
+			}
+		}
+>>>>>>> branch 'main' of https://github.com/dabao1234/Battleship
 	}
 	
 	public boolean checkOverlapHorizontal(int startrow, int startcol, int shiplength) {
@@ -170,19 +183,50 @@ public class Board {
 			return false;
 		}
 	}
+<<<<<<< HEAD
 
 	public void shoot(int row, int col) {
+=======
+	
+	/**
+	 * 
+	 * @param row
+	 * @param col
+	 * @return whether or not the shot has succeeded
+	 */
+	
+	public boolean shoot(int row, int col) {
+>>>>>>> branch 'main' of https://github.com/dabao1234/Battleship
 		// checks to see if there's a ship there
 		if (hasShip(row, col) == true) {
 			// checks to see if the ship has been hit already
+<<<<<<< HEAD
 			if (!isHit(row, col) == true) {
+=======
+			if(!isHit(row, col) == true) {
+				// if not, make it a hit
+>>>>>>> branch 'main' of https://github.com/dabao1234/Battleship
 				board[row][col].setState(Cellstate.hit);
+<<<<<<< HEAD
 			} else {
-				System.out.println("Bad");
+=======
 			}
+			else {
+				// if so, we want them to enter another thing
+>>>>>>> branch 'main' of https://github.com/dabao1234/Battleship
+				System.out.println("Bad");
+				return false;
+			}
+<<<<<<< HEAD
 		} else {
+=======
+		}
+		// if no ship there, make it a miss
+		else {
+>>>>>>> branch 'main' of https://github.com/dabao1234/Battleship
 			board[row][col].setState(Cellstate.miss);
 		}
+		return true;
 	}
 
 	// public boolean isSunk() {
@@ -197,7 +241,8 @@ public class Board {
 				System.out.print(board[i][j] + " ");
 
 			}
-			System.out.println();// everytime row increase go down
+			// go to the next line for the next row of ships
+			System.out.println();
 		}
 	}
 }
