@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+
 public class Driver {
 
 	public static void main(String[] args) {
@@ -23,13 +25,16 @@ public class Driver {
 			for(int x = NUM_SHIPS; x > 0; x++ ) {
 				
 				shipAlign = getAlign(in);
-				System.out.println("Please enter the starting column: ");
-				startCol = in.nextInt();
-				System.out.println("Please enter the end column: ");
-				endCol = in.nextInt();
-				System.out.println("Please enter the ship length: ");
-				lengthShip = in.nextInt();
 				
+				//Get the values for the ship placement
+				System.out.println("Please enter the starting column: ");
+				startCol = robustInt(in);
+				System.out.println("Please enter the end column: ");
+				endCol = robustInt(in);
+				System.out.println("Please enter the ship length: ");
+				lengthShip = robustInt(in);
+				
+				//Placing the Ship
 				if(shipAlign == 1) {
 					b.placeShipHorizontall(startCol, endCol, lengthShip);
 					b.display();
@@ -41,8 +46,9 @@ public class Driver {
 				else {
 					//They have not inputed a proper value 
 				}
+				//Re Say the Prompt
 				System.out.println("P1, Please Place Your Ships: Enter 1 if you would like to place"
-						+ " a ship vertically or 2 if you would like to place a ship horizontally. ");
+						+ " a ship vertically or 2 if you would like to place a ship horizontally.");
 			}
 			
 		}
@@ -54,6 +60,7 @@ public class Driver {
 	 * @return the row the user has inputed
 	 */
 	public static int getRow(Scanner in) {
+		
 		return in.nextInt();
 	}
 	/**
@@ -77,8 +84,24 @@ public class Driver {
 	 * @param in
 	 * @return  the col the user has inputed
 	 */
-	public static int getCol(Scanner in) {
-		return in.nextInt();
+	static int robustInt(Scanner in) {
+		boolean valid = false;
+		int value = 0;
+		
+		while (valid != true) {
+			if (in.hasNextInt()) {
+				value = in.nextInt();
+				if (String.valueOf(value).length() < 0 && String.valueOf(value).length() > 10 ) {
+					System.out.println("Please Enter A Valid Number: ");
+				} else {
+					valid = true;
+				}
+			} else {
+				System.out.println("Please Enter A Valid Number: ");
+			}
+			in.nextLine();
+		}
+		return value;
 	}
 	/**
 	 * 
