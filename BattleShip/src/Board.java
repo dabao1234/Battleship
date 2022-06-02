@@ -77,8 +77,17 @@ public class Board {
 		}
 	}
 	
-	public boolean isHit(int row, int col) {
+	public boolean hasShip(int row, int col) {
 		if(board[row][col].getState().equals(Cellstate.ship)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean isHit(int row, int col) {
+		if(board[row][col].getState().equals(Cellstate.hit)) {
 			return true;
 		}
 		else {
@@ -89,6 +98,31 @@ public class Board {
 	//sets the enum of all ships to the state  
 	public void hideShips() {
 		
+	}
+	
+	public boolean hasAttempt(int row, int col) {
+		if(board[row][col].getState().equals(Cellstate.hit) || board[row][col].getState().equals(Cellstate.miss)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void shoot(int row, int col) {
+		// checks to see if there's a ship there
+		if(hasShip(row, col) == true) {
+			// checks to see if the ship has been hit already
+			if(!isHit(row, col) == true) {
+				board[row][col].setState(Cellstate.hit);
+			}
+			else {
+				System.out.println("Bad");
+			}
+		}
+		else {
+			board[row][col].setState(Cellstate.miss);
+		}
 	}
 	
 	
