@@ -29,7 +29,6 @@ public class Driver {
 				}
 			}
 			p = Player.P2;
-
 			
 		}
 		
