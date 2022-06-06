@@ -36,16 +36,14 @@ public class Driver {
 				
 				//Placing the Ship
 				if(shipAlign == 1) {
-					b.placeShipHorizontall(startCol, endCol, lengthShip);
+					b.placeShipHorizontall(startCol, row, lengthShip);
 					b.display();
 				}
 				else if(shipAlign == 2) {
-					b.placeShipVertical(startCol, endCol, lengthShip);
+					b.placeShipVertical(startCol, row, lengthShip);
 					b.display();
 				}
-				else {
-					//They have not inputed a proper value 
-				}
+				
 				//Re Say the Prompt
 				System.out.println("P1, Please Place Your Ships: Enter 1 if you would like to place"
 						+ " a ship vertically or 2 if you would like to place a ship horizontally.");
@@ -71,13 +69,28 @@ public class Driver {
 	 * @return
 	 */
 	public static int getAlign(Scanner in) {
-		if(in.nextInt() == 1) {
-			return 1;
+		boolean valid = false;
+		int value = 0;
+		
+		while (valid != true) {
+			if (in.hasNextInt()) {
+				value = in.nextInt();
+				if (value < 1 && value > 2) {
+					System.out.println("Please Enter A Valid Number: ");
+				} else if(value == 1){
+					valid = true;
+					return 1; 
+				}
+				else if(value == 2) {
+					valid = true;
+					return 2; 
+				}
+			} else {
+				System.out.println("Please Enter A Valid Number: ");
+			}
+			in.nextLine();
 		}
-		else if(in.nextInt() == 2) {
-			return 2; 
-		}
-		return 0; 
+		return 0;
 	}
 	/**
 	 * 
@@ -91,7 +104,7 @@ public class Driver {
 		while (valid != true) {
 			if (in.hasNextInt()) {
 				value = in.nextInt();
-				if (String.valueOf(value).length() < 0 && String.valueOf(value).length() > 10 ) {
+				if (value < 0 && value > 10 ) {
 					System.out.println("Please Enter A Valid Number: ");
 				} else {
 					valid = true;
