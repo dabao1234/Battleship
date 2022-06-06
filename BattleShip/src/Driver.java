@@ -31,11 +31,7 @@ public class Driver {
 			}
 			p = Player.P2;
 
-			while(x < NUM_SHIPS) {
-				if(place(in, b1, p, x)) {
-					x++;
-				}
-			}
+			
 		}
 		
 		int col;
@@ -48,12 +44,14 @@ public class Driver {
 			row = robustInt(in) - 1;
 			
 			if(p.equals(Player.P1)) {
-				shoot(row, col, b2);
-				p = Player.P2;
+				if(shoot(row, col, b2)) {
+					p = Player.P2;
+				}
 			}
 			else {
-				shoot(row, col, b1);
-				p = Player.P1;
+				if(shoot(row, col, b1)) {
+					p = Player.P1;
+				}
 			}
 		}
 		
@@ -130,12 +128,23 @@ public class Driver {
 	 * 
 	 */
 	
-	static void shoot(int r, int c, Board b) {
-		b.shoot(r, c);
+	static boolean shoot(int r, int c, Board b) {
+		if(!b.shoot(r, c)) {
+			b.display();
+			return true;
+		}
 		b.display();
+		return false;
 	}
 	
+
 	static boolean place(Scanner in, Board b, Player p, int count) {
+
+	
+		
+		System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically.");
+		
+
 		int shipAlign = 0;
 		int startCol = 0;
 		int row = 0;

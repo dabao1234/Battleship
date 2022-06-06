@@ -130,6 +130,7 @@ public class Board {
 			if(!isHit(row, col) == true) {
 				// if not, make it a hit
 				board[row][col].setState(Cellstate.hit);
+				return false;
 			}
 			else {
 				// if so, we want them to enter another thing
@@ -148,6 +149,7 @@ public class Board {
 	//public boolean isSunk() {
 		
 	//}
+	
 	// displays the board
 	public void display() {
 		System.out.println("  0 1 2 3 4 5 6 7 8 9");
