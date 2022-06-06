@@ -19,7 +19,6 @@ public class Driver {
 		
 		for(int a = 0; a <= 2; a++) {
 				//Section to place the ship 
-				
 				//First Player 5 Ships
 				//The user will input 1 for horizontal and 2 for vertical 
 			int x = 0;
@@ -136,11 +135,6 @@ public class Driver {
 	
 
 	static boolean place(Scanner in, Board b, Player p, int count) {
-
-	
-		
-		System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically.");
-		
 
 		int shipAlign = 0;
 		int startCol = 0;
