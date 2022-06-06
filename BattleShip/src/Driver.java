@@ -28,7 +28,9 @@ public class Driver {
 			// First Player 5 Ships
 			// The user will input 1 for horizontal and 2 for vertical
 			System.out.println(p + " please Place Your Ships: Enter 1 if you would like to place"
-					+ " a ship horizontally or 2 if you would like to place a ship vertically.");
+					+ " a ship horizontally or 2 "
+					+ "if you would like to place a ship "
+					+ "vertically." + " Length: 2");
 			for (int x = 0; x < NUM_SHIPS; x++) {
 
 				shipAlign = getAlign(in);
@@ -39,7 +41,7 @@ public class Driver {
 				System.out.println("Please enter the starting row: ");
 				row = robustInt(in) - 1;
 				System.out.println("Please enter the ship length: ");
-				lengthShip = robustInt(in);
+				lengthShip = shipLengths[x];
 
 				// Placing the Ship
 				if (shipAlign == 1) {
@@ -52,8 +54,9 @@ public class Driver {
 					System.out.println("Invalid value.");
 				}
 				// Re Say the Prompt
-				System.out.println(
-						"Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically.");
+				System.out.println("Enter 1 if you would like to "
+						+ "place a ship horizontally or 2 if you would like"
+						+ " to place a ship vertically." + "Length: " + lengthShip);
 			}
 
 			// Get the values for the ship placement
@@ -61,8 +64,6 @@ public class Driver {
 			startCol = robustInt(in);
 			System.out.println("Please enter the starting row: ");
 			row = robustInt(in);
-			System.out.println("Please enter the ship length: ");
-			lengthShip = robustInt(in);
 
 			// Placing the Ship
 			if (shipAlign == 1) {
@@ -75,7 +76,7 @@ public class Driver {
 
 			// Re Say the Prompt
 			System.out.println("P1, Please Place Your Ships: Enter 1 if you would like to place"
-			+ " a ship vertically or 2 if you would like to place a ship horizontally.");
+			+ " a ship vertically or 2 if you would like to place a ship horizontally." + "Length: " + lengthShip);
 		}
 
 
