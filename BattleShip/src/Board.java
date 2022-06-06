@@ -33,52 +33,146 @@ public class Board {
 		}
 		// fills board with empty cells
 	}
+	
+	/**
+	 * 
+	 * @param startrow where the ship starts in the row
+	 * @param startcol where the ship starts column
+	 * @return
+	 */
+	public boolean checkAroundVertical(int startrow, int startcol, int shiplength) {
+		
+			int col=startcol;
+			int row=startrow;
+			
+			
+			// checks vertical overlap
+			for (int i = 0; i < shiplength; i++) {// plus two as it needs to check above and below ship length
+				try {
+				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
+					return false;
+				}
+				}catch(Exception e) {
+					
+				}
+			}
+
+			// checks to the left
+			row = startrow - 1;
+			System.out.println(row);
+			col = startcol - 1;// this happens os it will start the colloum below start
+			for (int i = 0; i < shiplength + 2; i++) {// plus two as it needs to check above and below ship length
+				try {
+				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
+					return false;
+				}
+				}catch(Exception e) {
+					
+				}
+			}
+			col = startcol + 1;// checks to the right of the place
+			for (int i = 0; i < shiplength + 2; i++) {// plus two as it needs to check above and below ship length
+				try {
+				if ((board[startrow + i][col].getState()).equals(Cellstate.ship)) {
+					return false;
+				}
+				}catch(Exception e) {
+					
+				}
+			}
+
+			
+	
+	
+
+		return true;
+	}
+	
+	public boolean checkOverlapHorizontal(int startrow, int startcol, int shiplength) {
+		//checks above 
+		int row=startrow;
+		int col=startcol;
+		row=startrow-1;
+		col=startcol-1;//always starts one col behid 
+		
+		for(int i=0;i<shiplength+2;i++) {
+		
+			try {
+			
+			if((board[row][col+i].getState()).equals(Cellstate.ship)) {
+				return false;
+			}
+			}catch(Exception e) {
+				System.out.println("error");
+			}
+		}
+		
+		//checks mid
+		row=row+1;//resets start row 
+		for(int i=0;i<shiplength+2;i++) {
+			if((board[row][startcol+i].getState()).equals(Cellstate.ship)) {
+				return false;
+			}
+		}
+		
+		//checks below 
+		
+		row=startrow+1;//goes below
+		for(int i=0;i<shiplength+2;i++) {
+			try {
+			if(board[row][col+i].getState().equals(Cellstate.ship)) {
+				return false;
+			}
+			}catch(Exception e) {
+				
+			}
+		}
+		
+		return true;
+	}
+
 
 	public Ship placeShipVertical(int startrow, int startcol, int shipLength) {
 		// place the start of the ship and then set the state of every cell upwards to
 		// ship
-		
-		Cell[] cell=new Cell[shipLength];
+
+		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
-		for (int i = 0; i < shipLength; i++) {
-			isEmpty = true;
-			if (board[startrow + i][startcol].getState().equals(Cellstate.ship)) {
-				isEmpty = false;
-				break;
-			}
-		}
+		isEmpty = checkAroundVertical(startrow, startcol, shipLength);// checks around the ship
 		System.out.println(isEmpty);
-		if (isEmpty ==true) {// if it is empty place ship
-			for (int i = startrow; i < shipLength; i++) {
-				board[i][startcol].setState(Cellstate.ship);
+		if (isEmpty == true) {// if it is empty place ship
+			for (int i = 0; i < shipLength; i++) {
+				board[startrow+i][startcol].setState(Cellstate.ship);
 			}
 		}
-		
-		Ship newShip=new Ship(shipLength, cell);
+		else {
+			System.out.println("error");
+		}
+
+		Ship newShip = new Ship(shipLength, cell);
 		return newShip;
 
 	}
+
 
 	public void placeShipHorizontall(int startrow, int startcol, int shipLength) {
 		// place the start of the ship and then set the state of evercell upwards to
 		// ship
 		// to avoid overlap check if all cells are empty
 		boolean isEmpty = false;
-		for (int i = 0; i < shipLength; i++) {
-			isEmpty = true;
-			if (board[startrow][startcol + i].getState().equals(Cellstate.ship)) {
-				isEmpty = false;
-				break;
+		isEmpty=checkOverlapHorizontal( startrow, startcol,  shipLength);
+		System.out.println(isEmpty);
+		if (isEmpty == true) {
+			for (int i = 0; i < shipLength; i++) {
+				board[startrow][startcol + i].setState(Cellstate.ship);
+				// ADD THESE CELLS TO THE SHIP OBJECT
 			}
 		}
-		System.out.println(isEmpty);
-		if(isEmpty==true) {
-		for (int i = 0; i < shipLength; i++) {
-			board[startrow][startcol + i].setState(Cellstate.ship);
-			//ADD THESE CELLS TO THE SHIP OBJECT
-		}
+		else {
+			System.out.println("error");
 		}
 	}
+
 	
 	public boolean hasShip(int row, int col) {
 		if(board[row][col].getState().equals(Cellstate.ship)) {
