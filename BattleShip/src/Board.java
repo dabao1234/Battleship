@@ -143,6 +143,7 @@ public class Board {
 		if (isEmpty == true) {// if it is empty place ship
 			for (int i = 0; i < shipLength; i++) {
 				board[startrow+i][startcol].setState(Cellstate.ship);
+				cell[i]=board[startrow+i][startcol];
 			}
 		}
 		else {
@@ -155,10 +156,11 @@ public class Board {
 	}
 
 
-	public void placeShipHorizontall(int startrow, int startcol, int shipLength) {
+	public Ship placeShipHorizontall(int startrow, int startcol, int shipLength) {
 		// place the start of the ship and then set the state of evercell upwards to
 		// ship
 		// to avoid overlap check if all cells are empty
+		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
 		isEmpty=checkOverlapHorizontal( startrow, startcol,  shipLength);
 		System.out.println(isEmpty);
@@ -166,11 +168,15 @@ public class Board {
 			for (int i = 0; i < shipLength; i++) {
 				board[startrow][startcol + i].setState(Cellstate.ship);
 				// ADD THESE CELLS TO THE SHIP OBJECT
+				cell[i]=board[startrow+i][startcol];
 			}
 		}
 		else {
 			System.out.println("error");
 		}
+
+		Ship newShip = new Ship(shipLength, cell);
+		return newShip;
 	}
 
 	
