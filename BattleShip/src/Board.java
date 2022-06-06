@@ -139,7 +139,7 @@ public class Board {
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
 		isEmpty = checkAroundVertical(startrow, startcol, shipLength);// checks around the ship
-		System.out.println(isEmpty);
+
 		if (isEmpty == true) {// if it is empty place ship
 			for (int i = 0; i < shipLength; i++) {
 				board[startrow+i][startcol].setState(Cellstate.ship);
@@ -147,7 +147,7 @@ public class Board {
 			}
 		}
 		else {
-			System.out.println("error");
+			System.out.println("Invalid placement, try again.");
 		}
 
 		Ship newShip = new Ship(shipLength, cell);
@@ -163,7 +163,7 @@ public class Board {
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
 		isEmpty=checkOverlapHorizontal( startrow, startcol,  shipLength);
-		System.out.println(isEmpty);
+
 		if (isEmpty == true) {
 			for (int i = 0; i < shipLength; i++) {
 				board[startrow][startcol + i].setState(Cellstate.ship);
@@ -172,7 +172,7 @@ public class Board {
 			}
 		}
 		else {
-			System.out.println("error");
+			System.out.println("Invalid placement, try again.");
 		}
 
 		Ship newShip = new Ship(shipLength, cell);
