@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 
 public class Driver {
+	
 
 	public static void main(String[] args) {
 		final int NUM_SHIPS = 5; 
@@ -10,52 +11,47 @@ public class Driver {
 
 		Scanner in = new Scanner(System.in);
 		
-		boolean programFinished = false;
+		boolean gameOver = false;
 		boolean placed = false;
 		
-		Board b = new Board(p);
-		int shipAlign = 0;
-		int startCol = 0;
-		int row = 0;
-		int lengthShip = 0;
+		Board b1 = new Board(Player.P1);
+		Board b2 = new Board(Player.P2);
 		
 		for(int a = 0; a <= 2; a++) {
 				//Section to place the ship 
-				b.display();
 				
 				//First Player 5 Ships
 				//The user will input 1 for horizontal and 2 for vertical 
 				System.out.println(p + " please Place Your Ships: Enter 1 if you would like to place"
 						+ " a ship horizontally or 2 if you would like to place a ship vertically.");
 				for(int x = 0; x < NUM_SHIPS; x++ ) {
-					
-					shipAlign = getAlign(in);
-					
-					//Get the values for the ship placement
-					System.out.println("Please enter the starting column: ");
-					startCol = robustInt(in) - 1;
-					System.out.println("Please enter the starting row: ");
-					row = robustInt(in) - 1;
-					System.out.println("Please enter the ship length: ");
-					lengthShip = robustInt(in);
-					
-					//Placing the Ship
-					if(shipAlign == 1) {
-						b.placeShipHorizontall(row, startCol, lengthShip);
-						b.display();
-					}
-					else if(shipAlign == 2) {
-						b.placeShipVertical(row, startCol, lengthShip);
-						b.display();
-					}
-					else {
-						System.out.println("Invalid value.");
-					}
-					//Re Say the Prompt
-					System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically.");
+					place(in, b1, p);
 				}
+				p = Player.P2;
 				
-			p = Player.P2;
+				for(int x = 0; x < NUM_SHIPS; x++ ) {
+					place(in, b1, p);
+				}
+		}
+		
+		int col;
+		int row;
+		
+		while(!gameOver) {
+			System.out.println("Please enter the column: ");
+			col = robustInt(in) - 1;
+			System.out.println("Please enter the row: ");
+			row = robustInt(in) - 1;
+			
+			
+			if(p.equals(Player.P1)) {
+				shoot(row, col, b2);
+				p = Player.P2;
+			}
+			else {
+				shoot(row, col, b1);
+				p = Player.P1;
+			}
 		}
 		
 		
@@ -113,5 +109,44 @@ public class Driver {
 	/**
 	 * 
 	 */
+	
+	static void shoot(int r, int c, Board b) {
+		b.shoot(r, c);
+		b.display();
+	}
+	
+	static void place(Scanner in, Board b, Player p) {
+		
+		int shipAlign = 0;
+		int startCol = 0;
+		int row = 0;
+		int lengthShip = 0;
+		
+		shipAlign = getAlign(in);
+		
+		//Get the values for the ship placement
+		System.out.println("Please enter the starting column: ");
+		startCol = robustInt(in) - 1;
+		System.out.println("Please enter the starting row: ");
+		row = robustInt(in) - 1;
+		System.out.println("Please enter the ship length: ");
+		lengthShip = robustInt(in);
+		
+		//Placing the Ship
+		if(shipAlign == 1) {
+			b.placeShipHorizontall(row, startCol, lengthShip);
+			b.display();
+		}
+		else if(shipAlign == 2) {
+			b.placeShipVertical(row, startCol, lengthShip);
+			b.display();
+		}
+		else {
+			System.out.println("Invalid value.");
+		}
+		//Re Say the Prompt
+		System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically.");
+	
+	}
 	
 }
