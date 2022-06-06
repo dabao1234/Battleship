@@ -3,6 +3,7 @@ public class Board {
 	private Cell[][] board;
 	private int row;
 	private int col;
+	private Player p;
 
 	// constructor change
 	public Board(int aRows, int aCols) {
@@ -19,7 +20,8 @@ public class Board {
 	/**
 	 * default board is a array of 10 by 10 cells
 	 */
-	public Board() {
+	public Board(Player p1) {
+		p=p1;
 		row = 10;
 		col = 10;
 		board = new Cell[10][10];
@@ -117,7 +119,6 @@ public class Board {
 
 			// checks to the left
 			row = startrow - 1;
-			System.out.println(row);
 			col = startcol - 1;// this happens os it will start the colloum below start
 			for (int i = 0; i < shiplength + 2; i++) {// plus two as it needs to check above and below ship length
 				try {
@@ -128,10 +129,11 @@ public class Board {
 					
 				}
 			}
+			row=startrow-1;
 			col = startcol + 1;// checks to the right of the place
 			for (int i = 0; i < shiplength + 2; i++) {// plus two as it needs to check above and below ship length
 				try {
-				if ((board[startrow + i][col].getState()).equals(Cellstate.ship)) {
+				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
 					return false;
 				}
 				}catch(Exception e) {
