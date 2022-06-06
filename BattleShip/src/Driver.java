@@ -22,16 +22,20 @@ public class Driver {
 				
 				//First Player 5 Ships
 				//The user will input 1 for horizontal and 2 for vertical 
-				System.out.println(p + " please Place Your Ships: Enter 1 if you would like to place"
-						+ " a ship horizontally or 2 if you would like to place a ship vertically.");
-				for(int x = 0; x < NUM_SHIPS; x++ ) {
-					place(in, b1, p);
+			int x = 0;
+			
+			while(x < NUM_SHIPS) {
+				if(place(in, b1, p)) {
+					x++;
 				}
-				p = Player.P2;
-				
-				for(int x = 0; x < NUM_SHIPS; x++ ) {
-					place(in, b1, p);
+			}
+			p = Player.P2;
+
+			while(x < NUM_SHIPS) {
+				if(place(in, b1, p)) {
+					x++;
 				}
+			}
 		}
 		
 		int col;
@@ -63,7 +67,6 @@ public class Driver {
 	 * @return the row the user has inputed
 	 */
 	public static int getRow(Scanner in) {
-		
 		return in.nextInt();
 	}
 	/**
@@ -115,7 +118,9 @@ public class Driver {
 		b.display();
 	}
 	
-	static void place(Scanner in, Board b, Player p) {
+	static boolean place(Scanner in, Board b, Player p) {
+		
+		System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically.");
 		
 		int shipAlign = 0;
 		int startCol = 0;
@@ -136,17 +141,15 @@ public class Driver {
 		if(shipAlign == 1) {
 			b.placeShipHorizontall(row, startCol, lengthShip);
 			b.display();
+			return true;
 		}
 		else if(shipAlign == 2) {
 			b.placeShipVertical(row, startCol, lengthShip);
 			b.display();
+			return true;
 		}
-		else {
-			System.out.println("Invalid value.");
-		}
-		//Re Say the Prompt
-		System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically.");
-	
+		System.out.println("Invalid value.");
+		return false;	
 	}
 	
 }
