@@ -19,45 +19,46 @@ public class Driver {
 		int row = 0;
 		int lengthShip = 0;
 		
-		for(int l = 0; l < 5; l++) {
-			//Section to place the ship 
-			b.display();
-			
-			//First Player 5 Ships
-			//The user will input 1 for vertical and 2 for horizontal 
-			System.out.println("P1, Please Place Your Ships: Enter 1 if you would like to place"
-					+ " a ship vertically or 2 if you would like to place a ship horizontally. ");
-			for(int x = NUM_SHIPS; x > 0; x++ ) {
+		for(int a = 0; a <= 2; a++) {
+				//Section to place the ship 
+				b.display();
 				
-				shipAlign = getAlign(in);
+				//First Player 5 Ships
+				//The user will input 1 for horizontal and 2 for vertical 
+				System.out.println(p + " please Place Your Ships: Enter 1 if you would like to place"
+						+ " a ship horizontally or 2 if you would like to place a ship vertically.");
+				for(int x = 0; x < NUM_SHIPS; x++ ) {
+					
+					shipAlign = getAlign(in);
+					
+					//Get the values for the ship placement
+					System.out.println("Please enter the starting column: ");
+					startCol = robustInt(in) - 1;
+					System.out.println("Please enter the starting row: ");
+					row = robustInt(in) - 1;
+					System.out.println("Please enter the ship length: ");
+					lengthShip = robustInt(in);
+					
+					//Placing the Ship
+					if(shipAlign == 1) {
+						b.placeShipHorizontall(row, startCol, lengthShip);
+						b.display();
+					}
+					else if(shipAlign == 2) {
+						b.placeShipVertical(row, startCol, lengthShip);
+						b.display();
+					}
+					else {
+						System.out.println("Invalid value.");
+					}
+					//Re Say the Prompt
+					System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically.");
+				}
 				
-				//Get the values for the ship placement
-				System.out.println("Please enter the starting column: ");
-				startCol = robustInt(in);
-				System.out.println("Please enter the starting row: ");
-				row = robustInt(in);
-				System.out.println("Please enter the ship length: ");
-				lengthShip = robustInt(in);
-				
-				//Placing the Ship
-				if(shipAlign == 1) {
-					b.placeShipHorizontall(startCol, row, lengthShip);
-					b.display();
-				}
-				else if(shipAlign == 2) {
-					b.placeShipVertical(startCol, row, lengthShip);
-					b.display();
-				}
-				else {
-					//They have not inputed a proper value 
-				}
-				//Re Say the Prompt
-				System.out.println("P1, Please Place Your Ships: Enter 1 if you would like to place"
-						+ " a ship vertically or 2 if you would like to place a ship horizontally.");
-			}
-			
+			p = Player.P2;
 		}
-		p = Player.P2;
+		
+		
 		
 	}
 	/**
