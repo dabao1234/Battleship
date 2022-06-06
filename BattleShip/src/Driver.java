@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 
 public class Driver {
+	
 
 	public static void main(String[] args) {
 		final int NUM_SHIPS = 5; 
@@ -10,10 +11,11 @@ public class Driver {
 
 		Scanner in = new Scanner(System.in);
 		
-		boolean programFinished = false;
+		boolean gameOver = false;
 		boolean placed = false;
 		
 		Board b = new Board(p);
+		
 		int shipAlign = 0;
 		int startCol = 0;
 		int row = 0;
@@ -76,8 +78,21 @@ public class Driver {
 			+ " a ship vertically or 2 if you would like to place a ship horizontally.");
 		}
 
+
 		p = Player.P2;
 
+		int col;
+		
+		while(!gameOver) {
+			System.out.println("Please enter the column: ");
+			col = robustInt(in) - 1;
+			System.out.println("Please enter the row: ");
+			row = robustInt(in) - 1;
+			
+			shoot(row, col, b);
+		}
+		
+		
 	}
 	/**
 	 * 
@@ -146,5 +161,10 @@ public class Driver {
 	/**
 	 * 
 	 */
+	
+	static void shoot(int r, int c, Board b) {
+		b.shoot(r, c);
+		b.display();
+	}
 	
 }
