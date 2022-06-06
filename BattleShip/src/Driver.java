@@ -49,12 +49,14 @@ public class Driver {
 			
 			
 			if(p.equals(Player.P1)) {
-				shoot(row, col, b2);
-				p = Player.P2;
+				if(shoot(row, col, b2)) {
+					p = Player.P2;
+				}
 			}
 			else {
-				shoot(row, col, b1);
-				p = Player.P1;
+				if(shoot(row, col, b1)) {
+					p = Player.P1;
+				}
 			}
 		}
 		
@@ -113,9 +115,13 @@ public class Driver {
 	 * 
 	 */
 	
-	static void shoot(int r, int c, Board b) {
-		b.shoot(r, c);
+	static boolean shoot(int r, int c, Board b) {
+		if(!b.shoot(r, c)) {
+			b.display();
+			return true;
+		}
 		b.display();
+		return false;
 	}
 	
 	static boolean place(Scanner in, Board b, Player p) {
