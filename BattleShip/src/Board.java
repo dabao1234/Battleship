@@ -89,46 +89,51 @@ public class Board {
 	}
 	
 	public boolean checkOverlapHorizontal(int startrow, int startcol, int shiplength) {
-		//checks above 
-		int row=startrow;
-		int col=startcol;
-		row=startrow-1;
-		col=startcol-1;//always starts one col behid 
-		
-		for(int i=0;i<shiplength+2;i++) {
-		
-			try {
+		try {
+			//checks above 
+			int row=startrow;
+			int col=startcol;
+			row=startrow-1;
+			col=startcol-1;//always starts one col behid 
 			
-			if((board[row][col+i].getState()).equals(Cellstate.ship)) {
-				return false;
-			}
-			}catch(Exception e) {
-				System.out.println("error");
-			}
-		}
-		
-		//checks mid
-		row=row+1;//resets start row 
-		for(int i=0;i<shiplength+2;i++) {
-			if((board[row][startcol+i].getState()).equals(Cellstate.ship)) {
-				return false;
-			}
-		}
-		
-		//checks below 
-		
-		row=startrow+1;//goes below
-		for(int i=0;i<shiplength+2;i++) {
-			try {
-			if(board[row][col+i].getState().equals(Cellstate.ship)) {
-				return false;
-			}
-			}catch(Exception e) {
+			for(int i=0;i<shiplength+2;i++) {
+			
+				try {
 				
+				if((board[row][col+i].getState()).equals(Cellstate.ship)) {
+					return false;
+				}
+				}catch(Exception e) {
+				}
 			}
+			
+			//checks mid
+			row=row+1;//resets start row 
+			for(int i=0;i<shiplength+2;i++) {
+				if((board[row][startcol+i].getState()).equals(Cellstate.ship)) {
+					return false;
+				}
+			}
+			
+			//checks below 
+			
+			row=startrow+1;//goes below
+			for(int i=0;i<shiplength+2;i++) {
+				try {
+				if(board[row][col+i].getState().equals(Cellstate.ship)) {
+					return false;
+				}
+				}catch(Exception e) {
+					
+				}
+			}
+			
+			return true;
+		}catch(Exception f) {
+			// idk about this
+			return false;
 		}
 		
-		return true;
 	}
 
 
