@@ -51,7 +51,7 @@ public class Board {
 				try {
 				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
 					return false;
-				}
+					}
 				}catch(Exception e) {
 					
 				}
@@ -80,10 +80,6 @@ public class Board {
 					
 				}
 			}
-
-			
-	
-	
 
 		return true;
 	}
@@ -161,7 +157,7 @@ public class Board {
 	}
 
 
-	public Ship placeShipHorizontall(int startrow, int startcol, int shipLength) {
+	public Ship placeShipHorizontal(int startrow, int startcol, int shipLength) {
 		// place the start of the ship and then set the state of evercell upwards to
 		// ship
 		// to avoid overlap check if all cells are empty
@@ -173,7 +169,10 @@ public class Board {
 			for (int i = 0; i < shipLength; i++) {
 				board[startrow][startcol + i].setState(Cellstate.ship);
 				// ADD THESE CELLS TO THE SHIP OBJECT
-				cell[i]=board[startrow+i][startcol];
+				try {
+					cell[i]=board[startrow+i][startcol];
+				}catch(Exception k) {
+				}
 			}
 		}
 		else {
@@ -208,6 +207,14 @@ public class Board {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				board[i][j].setVisible(false);
+			}
+		}
+	}
+	
+	public void showShips() {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				board[i][j].setVisible(true);
 			}
 		}
 	}
@@ -257,9 +264,9 @@ public class Board {
 	
 	// displays the board
 	public void display() {
-		System.out.println("  0 1 2 3 4 5 6 7 8 9");
+		System.out.println("  1 2 3 4 5 6 7 8 9 10");
 		for (int i = 0; i < row; i++) {
-			System.out.print(i + " ");
+			System.out.print(i+1 + " ");
 			for (int j = 0; j < col; j++) {
 				System.out.print(board[i][j] + " ");
 
