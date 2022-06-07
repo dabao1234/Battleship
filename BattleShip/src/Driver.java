@@ -1,57 +1,54 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class Driver {
-	
 
 	public static void main(String[] args) {
 		final int NUM_SHIPS = 5; 
+		
+		ArrayList<Ship> p1Ship = new ArrayList<>();
+		ArrayList<Ship> p2Ship = new ArrayList<>();
 		
 		Player p = Player.P1;
 
 		Scanner in = new Scanner(System.in);
 		
 		boolean gameOver = false;
-		boolean placed = false;
 		
 		Board b1 = new Board(Player.P1);
 		Board b2 = new Board(Player.P2);
 		
-		for(int a = 0; a <= 2; a++) {
-				//Section to place the ship 
-				//First Player 5 Ships
-				//The user will input 1 for horizontal and 2 for vertical 
-			int x = 0;
+		//Section to place the ship 
+		//First Player 5 Ships
+		//The user will input 1 for horizontal and 2 for vertical 
+		int x = 0;
 			
-			while(x < NUM_SHIPS) {
-				if(place(in, b1, p, x)) {
-					x++;
-				}
+		while(x < NUM_SHIPS) {
+			if(place(in, b1, p, x, p1Ship)) {
+				x++;
 			}
-			p = Player.P2;
-			
 		}
 		
-		int col;
-		int row;
+		System.out.println("Player one's ships placed! Player two, place now:");
+		
+		p = Player.P2;
+		x = 0;
+		
+		while(x < NUM_SHIPS) {
+			if(place(in, b2, p, x, p2Ship)) {
+				x++;
+			}
+		}
+		
+		System.out.println("Player two's ships placed! Player one, your turn!");
+
+		p = Player.P1;
 		
 		while(!gameOver) {
-			System.out.println("Please enter the column: ");
-			col = robustInt(in) - 1;
-			System.out.println("Please enter the row: ");
-			row = robustInt(in) - 1;
-			
-			if(p.equals(Player.P1)) {
-				if(shoot(row, col, b2)) {
-					p = Player.P2;
-				}
-			}
-			else {
-				if(shoot(row, col, b1)) {
-					p = Player.P1;
-				}
-			}
+			turn(in, p, b1, b2);
 		}
+		
 	}
 	/**
 	 * 
@@ -106,7 +103,7 @@ public class Driver {
 		while (valid != true) {
 			if (in.hasNextInt()) {
 				value = in.nextInt();
-				if (value < 0 && value > 9 ) {
+				if (value < 1 && value > 9 ) {
 					System.out.println("Please Enter A Valid Number: ");
 				} else {
 					valid = true;
@@ -133,7 +130,7 @@ public class Driver {
 	}
 	
 
-	static boolean place(Scanner in, Board b, Player p, int count) {
+	static boolean place(Scanner in, Board b, Player p, int count, ArrayList<Ship> ships) {
 
 		int shipAlign = 0;
 		int startCol = 0;
@@ -156,21 +153,58 @@ public class Driver {
 		//Placing the Ship
 		if(shipAlign == 1) {
 			lengthShip = lengthShips[count];
+		
+			if(b.placeShipHorizontal(row, startCol, lengthShip) == null) {
+				return false;
+			}
+			else {
+				ships.add(b.placeShipHorizontal(row, startCol, lengthShip));
+			}
 			b.display();
-			
 			return true;
 		}
 		else if(shipAlign == 2) {
+			
 			lengthShip = lengthShips[count];
 			b.placeShipVertical(row, startCol, lengthShip);
-			
+			ships.add(b.placeShipVertical(row, startCol, lengthShip));
 			b.display();
 			return true;
 		}
-		System.out.println("Invalid value.");
 		return false;	
 	}
 	
+	static boolean turn(Scanner in, Player p, Board b1, Board b2) {
+		int row;
+		int col;
+		
+		System.out.println("Please enter the column: ");
+		col = robustInt(in) - 1;
+		System.out.println("Please enter the row: ");
+		row = robustInt(in) - 1;
+		
+		if(p.equals(Player.P1)) {
+			if(shoot(row, col, b2)) {
+				b2.showShips();
+				b1.hideShips();
+				p = Player.P2;
+				return true;
+			}
+			else {
+				return turn(in, p, b1, b2);
+			}
+		}
+		else {
+			if(shoot(row, col, b1)) {
+				b2.hideShips();
+				b1.showShips();
+				p = Player.P1;
+				return true;
+			}
+			else {
+				return turn(in, p, b1, b2);
+			}
+		}
+	}
+	
 }
-
-
