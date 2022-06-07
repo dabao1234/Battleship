@@ -158,23 +158,25 @@ public class Driver {
 			
 			s = b.placeShipHorizontal(row, startCol, lengthShip);
 		
-			if(b.placeShipHorizontal(row, startCol, lengthShip) == null) {
+			if(s == null) {
 				return false;
 			}
 			else {
-				ships.add(b.placeShipHorizontal(row, startCol, lengthShip));
+				ships.add(s);
 			}
 			b.display();
 			return true;
 		}
 		else if(shipAlign == 2) {
 			
+			Ship s = b.placeShipVertical(row, startCol, lengthShip);
+			
 			lengthShip = lengthShips[count];
-			if(b.placeShipVertical(row, startCol, lengthShip) == null) {
+			if(s == null) {
 				return false;
 			}
 			else {
-				ships.add(b.placeShipVertical(row, startCol, lengthShip));
+				ships.add(s);
 			}
 			
 			ships.add(b.placeShipVertical(row, startCol, lengthShip));
