@@ -60,7 +60,7 @@ public class GUIDriver extends Application {
 		
 		//Creates the scene for P1 play 
 		VBox P1=new VBox();
-		P1.getChildren().addAll(top,boardP2,mid,boardP1);
+		P1.getChildren().addAll(top,boardP1,mid,boardP2);
 		Scene P1game=new Scene(P1,WIDTH,HEIGHT);
 		
 		//Creates P2 play scene
