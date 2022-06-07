@@ -166,7 +166,13 @@ public class Driver {
 		else if(shipAlign == 2) {
 			
 			lengthShip = lengthShips[count];
-			b.placeShipVertical(row, startCol, lengthShip);
+			if(b.placeShipVertical(row, startCol, lengthShip) == null) {
+				return false;
+			}
+			else {
+				ships.add(b.placeShipVertical(row, startCol, lengthShip));
+			}
+			
 			ships.add(b.placeShipVertical(row, startCol, lengthShip));
 			b.display();
 			return true;
