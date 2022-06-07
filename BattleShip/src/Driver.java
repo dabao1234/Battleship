@@ -103,7 +103,7 @@ public class Driver {
 		while (valid != true) {
 			if (in.hasNextInt()) {
 				value = in.nextInt();
-				if (value < 0 && value > 10 ) {
+				if (value < 1 && value > 9 ) {
 					System.out.println("Please Enter A Valid Number: ");
 				} else {
 					valid = true;
@@ -148,20 +148,29 @@ public class Driver {
 		startCol = robustInt(in) - 1;
 		System.out.println("Please enter the starting row: ");
 		row = robustInt(in) - 1;
-		lengthShip = lengthShips[count];
+		
 		
 		//Placing the Ship
 		if(shipAlign == 1) {
-			ships.add(b.placeShipHorizontal(row, startCol, lengthShip));
+			lengthShip = lengthShips[count];
+		
+			if(b.placeShipHorizontal(row, startCol, lengthShip) == null) {
+				return false;
+			}
+			else {
+				ships.add(b.placeShipHorizontal(row, startCol, lengthShip));
+			}
 			b.display();
 			return true;
 		}
 		else if(shipAlign == 2) {
+			
+			lengthShip = lengthShips[count];
+			b.placeShipVertical(row, startCol, lengthShip);
 			ships.add(b.placeShipVertical(row, startCol, lengthShip));
 			b.display();
 			return true;
 		}
-		System.out.println("Invalid value.");
 		return false;	
 	}
 	
