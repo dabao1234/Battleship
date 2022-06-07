@@ -1,4 +1,3 @@
-
 public class Cell {
 	private Cellstate state;
 	private int row;
