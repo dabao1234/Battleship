@@ -138,6 +138,7 @@ public class Driver {
 		int[] lengthShips = {2,3,3,4,5};
 		int lengthShip = 0;
 		
+		System.out.println("Ship #" + (count + 1));
 		System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically."
 				+ "" + " Length: " + lengthShips[count]);
 		
@@ -153,6 +154,9 @@ public class Driver {
 		//Placing the Ship
 		if(shipAlign == 1) {
 			lengthShip = lengthShips[count];
+			Ship s;
+			
+			s = b.placeShipHorizontal(row, startCol, lengthShip);
 		
 			if(b.placeShipHorizontal(row, startCol, lengthShip) == null) {
 				return false;
@@ -188,6 +192,7 @@ public class Driver {
 				b2.showShips();
 				b1.hideShips();
 				p = Player.P2;
+				System.out.println("arrayboy");
 				return true;
 			}
 			else {
@@ -199,6 +204,7 @@ public class Driver {
 				b2.hideShips();
 				b1.showShips();
 				p = Player.P1;
+				System.out.println("sdkfahsklfjashflkajsf");
 				return true;
 			}
 			else {

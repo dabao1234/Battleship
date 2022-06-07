@@ -59,7 +59,6 @@ public class Board {
 
 			// checks to the left
 			row = startrow - 1;
-			System.out.println(row);
 			col = startcol - 1;// this happens os it will start the colloum below start
 			for (int i = 0; i < shiplength + 2; i++) {// plus two as it needs to check above and below ship length
 				try {
@@ -144,11 +143,15 @@ public class Board {
 		if (isEmpty == true) {// if it is empty place ship
 			for (int i = 0; i < shipLength; i++) {
 				board[startrow+i][startcol].setState(Cellstate.ship);
-				cell[i]=board[startrow+i][startcol];
+				try {
+					cell[i]=board[startrow+i][startcol];
+				}catch(Exception k) {
+				}
 			}
 		}
 		else {
-			System.out.println("Invalid placement, try again.");
+			//System.out.println("Invalid placement, try again.");
+			return null;
 		}
 
 		Ship newShip = new Ship(shipLength, cell);
@@ -163,9 +166,10 @@ public class Board {
 		// to avoid overlap check if all cells are empty
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
-		isEmpty=checkOverlapHorizontal( startrow, startcol,  shipLength);
+		isEmpty=checkOverlapHorizontal(startrow, startcol, shipLength);
 
 		if (isEmpty == true) {
+			System.out.println("arrayboy");
 			for (int i = 0; i < shipLength; i++) {
 				board[startrow][startcol + i].setState(Cellstate.ship);
 				// ADD THESE CELLS TO THE SHIP OBJECT
