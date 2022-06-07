@@ -106,7 +106,7 @@ public class Driver {
 		while (valid != true) {
 			if (in.hasNextInt()) {
 				value = in.nextInt();
-				if (value < 0 && value > 10 ) {
+				if (value < 0 && value > 9 ) {
 					System.out.println("Please Enter A Valid Number: ");
 				} else {
 					valid = true;
@@ -144,9 +144,6 @@ public class Driver {
 		System.out.println("Enter 1 if you would like to place a ship horizontally or 2 if you would like to place a ship vertically."
 				+ "" + " Length: " + lengthShips[count]);
 		
-		
-		
-		
 		shipAlign = getAlign(in);
 		
 		//Get the values for the ship placement
@@ -154,16 +151,19 @@ public class Driver {
 		startCol = robustInt(in) - 1;
 		System.out.println("Please enter the starting row: ");
 		row = robustInt(in) - 1;
-		lengthShip = lengthShips[count];
+		
 		
 		//Placing the Ship
 		if(shipAlign == 1) {
-			b.placeShipHorizontall(row, startCol, lengthShip);
+			lengthShip = lengthShips[count];
 			b.display();
+			
 			return true;
 		}
 		else if(shipAlign == 2) {
+			lengthShip = lengthShips[count];
 			b.placeShipVertical(row, startCol, lengthShip);
+			
 			b.display();
 			return true;
 		}
