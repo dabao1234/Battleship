@@ -198,4 +198,8 @@ public class Driver {
 		}
 	}
 	
+	static boolean checkWin() {
+		return true;
+	}
+	
 }
