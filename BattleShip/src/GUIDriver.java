@@ -132,7 +132,8 @@ public class GUIDriver extends Application {
 			}
 		});
 		
-		
+		//sets the turn label at the top
+		lblTurn.setAlignment(Pos.CENTER);
 		lblTurn.setText(p+" turn");
 		
 		for (int i = 0; i < num_Rows; i++) {
