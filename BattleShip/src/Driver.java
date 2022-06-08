@@ -208,7 +208,7 @@ public class Driver {
 	static boolean turn(Scanner in, Player p, Board b1, Board b2) {
 		int row;
 		int col;
-		
+		//Getting 
 		System.out.println("Please enter the column: ");
 		col = robustInt(in) - 1;
 		System.out.println("Please enter the row: ");
@@ -256,7 +256,6 @@ public class Driver {
 				won = false;
 			}
 		}
-		
 		return won;
 	}
 	

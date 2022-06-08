@@ -4,7 +4,7 @@ public class Board {
 	private int col;
 	private Player player;
 
-	// constructor change
+	// Constructor change
 	public Board(int aRows, int aCols, Player p) {
 		row = aRows;
 		col = aCols;
@@ -100,7 +100,6 @@ public class Board {
 			for (int i = 0; i < shipLength + 2; i++) {
 
 				try {
-
 					if ((board[row][col + i].getState()).equals(Cellstate.ship)) {
 						return false;
 					}
