@@ -281,7 +281,8 @@ public class Board {
 	 * 
 	 * @param row
 	 * @param col
-	 * @return whether or not the shot has succeeded
+	 * @return whether or not the turn is finished (false will allow another shot to be chosen (if you hit
+	 * or you aim at an already-hit cell) and true will end the turn (if you miss))
 	 */
 
 	public boolean shoot(int row, int col) {
