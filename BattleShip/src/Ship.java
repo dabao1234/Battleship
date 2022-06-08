@@ -4,15 +4,16 @@ public class Ship {
 	private Cell[] parts;//the cells in which a ship is made 
 	private int length;
 	private boolean isSunk = false;
+	private Board playerBoard;
 	
 	//constructor 
-	Ship(int length,Cell[] cells) {
+	Ship(int length, Cell[] cells) {
 		cells = parts;
 		this.length=length;
 	}
 	
-	public boolean getSunk() {
-		//
+	public boolean getSunk(Board b) {
+		checkSunk(b);
 		return isSunk;
 	}
 	
@@ -24,10 +25,18 @@ public class Ship {
 		return parts;
 	}
 	
-	private boolean checkSunk() {
+	public boolean checkSunk(Board b) {
+		int r;
+		int c;
+		
 		isSunk = true;
 		for(Cell part : parts) {
-			if(part.isHit() == false) {
+			r = part.getRow();
+			c = part.getCol();
+			
+			Cell z = b.getCells()[r][c];
+			
+			if(z.isHit() == false) {
 				isSunk = false;
 			}
 		}

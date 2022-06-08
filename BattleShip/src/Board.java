@@ -33,6 +33,10 @@ public class Board {
 		// fills board with empty cells
 	}
 	
+	public Cell[][] getCells(){
+		return board;
+	}
+	
 	/**
 	 * 
 	 * @param startrow where the ship starts in the row

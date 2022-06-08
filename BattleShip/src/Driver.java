@@ -197,10 +197,9 @@ public class Driver {
 		
 		if(p.equals(Player.P1)) {
 			if(shoot(row, col, b2)) {
-				b2.showShips();
 				b1.hideShips();
+				b2.showShips();
 				p = Player.P2;
-				System.out.println("arrayboy");
 				return true;
 			}
 			else {
@@ -209,10 +208,9 @@ public class Driver {
 		}
 		else {
 			if(shoot(row, col, b1)) {
-				b2.hideShips();
 				b1.showShips();
+				b2.hideShips();
 				p = Player.P1;
-				System.out.println("sdkfahsklfjashflkajsf");
 				return true;
 			}
 			else {
@@ -221,8 +219,16 @@ public class Driver {
 		}
 	}
 	
-	static boolean checkWin() {
-		return true;
+	static boolean checkWin(ArrayList<Ship> ships, Board b) {
+		boolean won = true;
+		
+		for(Ship s : ships) {
+			if(!s.getSunk(b)) {
+				won = false;
+			}
+		}
+		
+		return won;
 	}
 	
 
