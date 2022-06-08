@@ -18,7 +18,8 @@ public class Board {
 	}
 
 	/**
-	 * default board is a array of 10 by 10 cells
+	 * @param p - the player
+	 * Constructor for the board, creates a 10 by 10
 	 */
 	public Board(Player p) {
 		row = 10;
@@ -32,6 +33,13 @@ public class Board {
 		}
 		// fills board with empty cells
 	}
+	/**
+	 * 
+	 * @return the board
+	 */
+	public Cell[][] getCells(){
+		return board;
+	}
 	
 	/**
 	 * 
@@ -43,7 +51,6 @@ public class Board {
 		
 			int col=startcol;
 			int row=startrow;
-			
 			
 			// checks vertical overlap
 			for (int i = 0; i < shiplength; i++) {// plus two as it needs to check above and below ship length
@@ -153,7 +160,7 @@ public class Board {
 			return null;
 		}
 
-		Ship newShip = new Ship(shipLength, cell);
+		Ship newShip = new Ship(shipLength, cell, "V");
 		return newShip;
 
 	}
@@ -183,8 +190,33 @@ public class Board {
 			return null;
 		}
 
-		Ship newShip = new Ship(shipLength, cell);
+		Ship newShip = new Ship(shipLength, cell, "H");
 		return newShip;
+	}
+	
+	public void clearSunk(Ship ship) {
+		if(ship.getOrientation().equals("V")) {
+			int shipLength = ship.getLength();
+			int startRow = ship.getStartRow();
+			int startCol = ship.getStartCol();
+					
+			// checks to the left
+			int row = startRow - 1;
+			int col = startCol - 1;// this happens so it will start the column below start
+			
+			for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
+				board[row + i][col].setState(Cellstate.miss);
+			}
+			col = startCol + 1;// checks to the right of the place
+			
+			for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
+				board[startRow + i][col].setState(Cellstate.miss);
+			}
+		}
+		else {
+			
+		}
+		
 	}
 
 	

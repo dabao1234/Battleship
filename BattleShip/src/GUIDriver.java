@@ -17,8 +17,9 @@ public class GUIDriver extends Application {
 	final int num_Cols = 10;
 	final int WIDTH = 700;
 	final int HEIGHT = 600;
+
 	Player p;
-	Label lblTurn=new Label();
+	Label lblTurn = new Label();
 
 	@Override
 	public void start(Stage stage1) throws Exception {
@@ -29,7 +30,7 @@ public class GUIDriver extends Application {
 		// Creates the buttons for P1
 		Button[][] tilesP1 = new Button[num_Rows][num_Cols];
 		Button[][] tilesP2 = new Button[num_Rows][num_Cols];
-		;// p2 screen
+		
 
 		// creates the grid panes to house the buttons
 		GridPane boardP1 = new GridPane();
@@ -66,15 +67,24 @@ public class GUIDriver extends Application {
 
 		top.getChildren().add(lblTop);
 		mid.getChildren().add(lblMid);
+
 		top.setAlignment(Pos.CENTER);
 		mid.setAlignment(Pos.CENTER);
+
+
+		
+		
+		
+		//Creates P2 play scene
+		
+		
 
 	
 		// Createsplay scene
 
 		VBox P2 = new VBox();
 		
-		P2.getChildren().addAll(lblTurn,top, boardP1, mid, boardP2);
+		P2.getChildren().addAll(lblTurn,top, boardP2, mid, boardP1);
 		Scene game = new Scene(P2, 500, 700);
 
 		// Selection Screen
@@ -102,10 +112,18 @@ public class GUIDriver extends Application {
 		stage1.setScene(selection);
 		stage1.show();
 
+
 		p = p.P1;
 
 		// button events
 		bttnHuman.setOnAction(e -> {
+			stage1.setScene(game);
+		});
+		
+		
+		
+		//button events
+		bttnHuman.setOnAction(e->{
 			stage1.setScene(game);
 			stage1.show();
 			if (p.equals(Player.P1)) {
@@ -113,16 +131,18 @@ public class GUIDriver extends Application {
 				lblMid.setText("Player 1 Board");
 			}
 		});
-
+		
+		
+		lblTurn.setText(p+" turn");
+		
 		for (int i = 0; i < num_Rows; i++) {
 			for (int z = 0; z < num_Cols; z++) {
 							// if it is the fist players turn, P2 board is clickable
 					tilesP2[i][z].setOnAction(e -> {
-						if(p.equals(Player.P1)) {
-							
+						if(p.equals(Player.P1)) {				
 							p1Board.showShips();
 							p2Board.hideShips();
-							p=Player.P2;
+							this.p=Player.P2;
 							lblTurn.setText(p+" turn");
 						}
 					});
@@ -130,10 +150,9 @@ public class GUIDriver extends Application {
 				// players 2 turns P1 baord is clickable
 					tilesP1[i][z].setOnAction(e -> {
 						if(p.equals(Player.P2)) {
-							
 							p2Board.showShips();
 							p1Board.hideShips();
-							p=Player.P1;
+							this.p=Player.P1;
 							lblTurn.setText(p+" turn");
 						}
 					});
