@@ -109,11 +109,7 @@ public class GUIDriver extends Application {
 
 		// button events
 		bttnHuman.setOnAction(e -> {
-			stage1.setScene(game);
-		});
 
-		// button events
-		bttnHuman.setOnAction(e -> {
 			stage1.setScene(game);
 			stage1.show();
 			if (p.equals(Player.P1)) {
@@ -133,7 +129,7 @@ public class GUIDriver extends Application {
 					if (p.equals(Player.P1)) {
 						// if it is in the placment mode enter's this loop
 						if (placeTurn = true) {
-							
+
 							// does not continue switch players till all ships are placed
 						}
 						// if it is the game mode enter this logic
@@ -153,12 +149,12 @@ public class GUIDriver extends Application {
 
 							// does not continue switch players till all ships are placed
 						}
-						//game code 
-						else if(isGame=true) {
-						p2Board.showShips();
-						p1Board.hideShips();
-						this.p = Player.P1;
-						lblTurn.setText(p + " turn");
+						// game code
+						else if (isGame = true) {
+							p2Board.showShips();
+							p1Board.hideShips();
+							this.p = Player.P1;
+							lblTurn.setText(p + " turn");
 						}
 					}
 				});
