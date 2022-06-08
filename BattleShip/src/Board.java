@@ -45,7 +45,7 @@ public class Board {
 	 * 
 	 * @param startrow where the ship starts in the row
 	 * @param startcol where the ship starts column
-	 * @return
+	 * @return 
 	 */
 	public boolean checkAroundVertical(int startRow, int startCol, int shipLength) {
 
@@ -144,8 +144,8 @@ public class Board {
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
 		isEmpty = checkAroundVertical(startRow, startCol, shipLength);// checks around the ship
-
-		if (isEmpty == true) {// if it is empty place ship
+		// if it is empty place ship
+		if (isEmpty == true) {
 			for (int i = 0; i < shipLength; i++) {
 				board[startRow + i][startCol].setState(Cellstate.ship);
 				try {
@@ -225,7 +225,6 @@ public class Board {
 			}
 
 			// checks below
-
 			row = startRow + 1;// goes below
 			for (int i = 0; i < shipLength + 2; i++) {
 				board[row][col + i].setState(Cellstate.miss);
@@ -234,7 +233,12 @@ public class Board {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param row - the row
+	 * @param col - the column
+	 * @return true if this section has a ship, return false if it doesn't not contain a ship
+	 */
 	public boolean hasShip(int row, int col) {
 		if (board[row][col].getState().equals(Cellstate.ship)) {
 			return true;
@@ -242,7 +246,12 @@ public class Board {
 			return false;
 		}
 	}
-
+	/**
+	 * 
+	 * @param row - the row
+	 * @param col - the column
+	 * @return true if the ship has been hit, false if it has not
+	 */
 	public boolean isHit(int row, int col) {
 		if (board[row][col].getState().equals(Cellstate.hit)) {
 			return true;
@@ -251,7 +260,7 @@ public class Board {
 		}
 	}
 
-	// makes every cell invisible, so ships will display as blank
+	// Makes the ships invisible/hides the ship
 	public void hideShips() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -260,6 +269,7 @@ public class Board {
 		}
 	}
 
+	//Make the ships visible
 	public void showShips() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -267,7 +277,12 @@ public class Board {
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @param row - the row
+	 * @param col - the column
+	 * @return true if the user has hit or missed 
+	 */
 	public boolean hasAttempt(int row, int col) {
 		if (board[row][col].getState().equals(Cellstate.hit) || board[row][col].getState().equals(Cellstate.miss)) {
 			return true;
@@ -309,7 +324,7 @@ public class Board {
 
 	// }
 
-	// displays the board
+	//Displays the board
 	public void display() {
 		System.out.println(player + "'s board:");
 		System.out.println("  1 2 3 4 5 6 7 8 9 10");
