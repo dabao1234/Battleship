@@ -39,8 +39,8 @@ public class GUIDriver extends Application {
 		for (int i = 0; i < num_Rows; i++) {
 			for (int z = 0; z < num_Cols; z++) {
 				// creates the buttons
-				Button bttnP1 = new Button();
-				Button bttnP2 = new Button();
+				Button bttnP1 = new FancyButton("", i, z);
+				Button bttnP2 = new FancyButton("", i, z);
 				bttnP1.setPrefSize(100, 50);
 				bttnP1.setStyle("-fx-border-color: black;");
 				bttnP2.setPrefSize(100, 50);
