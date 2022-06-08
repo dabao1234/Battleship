@@ -20,6 +20,14 @@ public class Cell {
 		return state;
 	}
 	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getCol() {
+		return col;
+	}
+	
 	// checks to see if the cell has been hit
 	public boolean isHit() {
 		if(state.equals(Cellstate.hit)) {

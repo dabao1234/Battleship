@@ -16,7 +16,11 @@ public class GUIDriver extends Application {
 	final int num_Cols=10;
 	final int WIDTH = 700;
 	final int HEIGHT = 600;
+<<<<<<< HEAD
+	
+=======
 	Player p;
+>>>>>>> refs/remotes/origin/main
 	@Override
 	public void start(Stage stage1) throws Exception {
 		
