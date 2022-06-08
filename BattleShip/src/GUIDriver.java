@@ -67,7 +67,7 @@ public class GUIDriver extends Application {
 		
 		VBox P2=new VBox();
 		P2.getChildren().addAll(top,boardP1,mid,boardP2);
-		Scene P2game=new Scene(P2,WIDTH,HEIGHT);
+		Scene P2game = new Scene(P2,WIDTH,HEIGHT);
 	
 		//Selection Screen 
 		
@@ -100,6 +100,8 @@ public class GUIDriver extends Application {
 			stage1.setScene(P1game);
 			stage1.show();
 		});
+		
+		
 
 	}
 

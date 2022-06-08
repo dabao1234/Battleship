@@ -200,7 +200,6 @@ public class Driver {
 				b2.showShips();
 				b1.hideShips();
 				p = Player.P2;
-				System.out.println("arrayboy");
 				return true;
 			}
 			else {
@@ -212,7 +211,6 @@ public class Driver {
 				b2.hideShips();
 				b1.showShips();
 				p = Player.P1;
-				System.out.println("sdkfahsklfjashflkajsf");
 				return true;
 			}
 			else {
