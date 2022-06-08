@@ -18,7 +18,8 @@ public class Board {
 	}
 
 	/**
-	 * default board is a array of 10 by 10 cells
+	 * @param p - the player
+	 * Constructor for the board, creates a 10 by 10
 	 */
 	public Board(Player p) {
 		row = 10;
@@ -32,7 +33,10 @@ public class Board {
 		}
 		// fills board with empty cells
 	}
-	
+	/**
+	 * 
+	 * @return the board
+	 */
 	public Cell[][] getCells(){
 		return board;
 	}
