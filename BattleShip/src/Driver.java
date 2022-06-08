@@ -22,19 +22,21 @@ public class Driver {
 		//Section to place the ship 
 		//First Player 5 Ships
 		//The user will input 1 for horizontal and 2 for vertical 
+		
 		int x = 0;
-			
+		//Loop for player 1 to place ships
 		while(x < NUM_SHIPS) {
 			if(place(in, b1, p, x, p1Ship)) {
 				x++;
 			}
 		}
 		
+		//Reset values for player 2
 		System.out.println("Player one's ships placed! Player two, place now:");
-		
 		p = Player.P2;
 		x = 0;
 		
+		//Loop for player 2 to place ships
 		while(x < NUM_SHIPS) {
 			if(place(in, b2, p, x, p2Ship)) {
 				x++;
@@ -42,7 +44,6 @@ public class Driver {
 		}
 		
 		System.out.println("Player two's ships placed! Player one, your turn!");
-
 		p = Player.P1;
 		
 		while(!gameOver) {
@@ -63,7 +64,7 @@ public class Driver {
 	 * placing a ship vertically
 	 * or horizontally
 	 * @param in
-	 * @return
+	 * @return the alignment value, 1 or 2
 	 */
 	public static int getAlign(Scanner in) {
 		boolean valid = false;
@@ -91,7 +92,6 @@ public class Driver {
 	}
 
 	/**
-	/**
 	 * 
 	 * @param in
 	 * @return  the col the user has inputed
@@ -118,6 +118,10 @@ public class Driver {
 
 	/**
 	 * 
+	 * @param r - the row
+	 * @param c - the column
+	 * @param b - the board
+	 * @return true if the missile has been successfully shot or false if it failed
 	 */
 	
 	static boolean shoot(int r, int c, Board b) {
@@ -129,7 +133,15 @@ public class Driver {
 		return false;
 	}
 	
-
+	/**
+	 * 
+	 * @param in - the scanner object
+	 * @param b - the board
+	 * @param p - the player
+	 * @param count - how many times the player has placed a ship
+	 * @param ships - the players ships
+	 * @return true if the ship is successfully placed or false if the ship is not placed
+	 */
 	static boolean place(Scanner in, Board b, Player p, int count, ArrayList<Ship> ships) {
 
 		int shipAlign = 0;
@@ -151,17 +163,18 @@ public class Driver {
 		row = robustInt(in) - 1;
 		
 		
-		//Placing the Ship
+		//Placing the Ship, if it is 1 place it horizontally, if it is 2 place it vertically
 		if(shipAlign == 1) {
 			lengthShip = lengthShips[count];
 			Ship s;
 			
 			s = b.placeShipHorizontal(row, startCol, lengthShip);
-		
+			//Return false if it cannot be placed
 			if(s == null) {
 				return false;
 			}
 			else {
+				//Add the ship if it is placed successfully
 				ships.add(s);
 			}
 			b.display();
@@ -170,7 +183,6 @@ public class Driver {
 		else if(shipAlign == 2) {
 			
 			Ship s = b.placeShipVertical(row, startCol, lengthShip);
-			
 			lengthShip = lengthShips[count];
 			if(s == null) {
 				return false;
@@ -185,7 +197,14 @@ public class Driver {
 		}
 		return false;	
 	}
-	
+	/**
+	 * 
+	 * @param in - the users input
+	 * @param p - the current player
+	 * @param b1 - player 1's board
+	 * @param b2 - player 2's board
+	 * @return true when the turn is complete
+	 */
 	static boolean turn(Scanner in, Player p, Board b1, Board b2) {
 		int row;
 		int col;
@@ -218,7 +237,12 @@ public class Driver {
 			}
 		}
 	}
-	
+	/**
+	 * Goes through all the ships and check if they are sunk
+	 * @param ships - all the ships
+	 * @param b - the board
+	 * @return returns true if the player has won
+	 */
 	static boolean checkWin(ArrayList<Ship> ships, Board b) {
 		boolean won = true;
 		
