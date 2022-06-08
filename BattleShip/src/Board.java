@@ -45,15 +45,15 @@ public class Board {
 	 * 
 	 * @param startrow where the ship starts in the row
 	 * @param startcol where the ship starts column
-	 * @return
+	 * @return true if there are no overlapping ships, returns false if they do
 	 */
-	public boolean checkAroundVertical(int startrow, int startcol, int shiplength) {
+	public boolean checkAroundVertical(int startRow, int startCol, int shipLength) {
 		
-			int col=startcol;
-			int row=startrow;
+			int col=startCol;
+			int row=startRow;
 			
 			// checks vertical overlap
-			for (int i = 0; i < shiplength; i++) {// plus two as it needs to check above and below ship length
+			for (int i = 0; i < shipLength; i++) {// plus two as it needs to check above and below ship length
 				try {
 				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
 					return false;
@@ -64,9 +64,9 @@ public class Board {
 			}
 
 			// checks to the left
-			row = startrow - 1;
-			col = startcol - 1;// this happens os it will start the colloum below start
-			for (int i = 0; i < shiplength + 2; i++) {// plus two as it needs to check above and below ship length
+			row = startRow - 1;
+			col = startCol - 1;// this happens so it will start the column below start
+			for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
 				try {
 				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
 					return false;
@@ -75,10 +75,10 @@ public class Board {
 					
 				}
 			}
-			col = startcol + 1;// checks to the right of the place
-			for (int i = 0; i < shiplength + 2; i++) {// plus two as it needs to check above and below ship length
+			col = startCol + 1;// checks to the right of the place
+			for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
 				try {
-				if ((board[startrow + i][col].getState()).equals(Cellstate.ship)) {
+				if ((board[startRow + i][col].getState()).equals(Cellstate.ship)) {
 					return false;
 				}
 				}catch(Exception e) {
@@ -89,15 +89,15 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkOverlapHorizontal(int startrow, int startcol, int shiplength) {
+	public boolean checkOverlapHorizontal(int startRow, int startCol, int shipLength) {
 		try {
 			//checks above 
-			int row=startrow;
-			int col=startcol;
-			row=startrow-1;
-			col=startcol-1;//always starts one col behid 
+			int row=startRow;
+			int col=startCol;
+			row=startRow-1;
+			col=startCol-1;//always starts one col behid 
 			
-			for(int i=0;i<shiplength+2;i++) {
+			for(int i=0;i<shipLength+2;i++) {
 			
 				try {
 				
@@ -110,16 +110,16 @@ public class Board {
 			
 			//checks mid
 			row=row+1;//resets start row 
-			for(int i=0;i<shiplength+2;i++) {
-				if((board[row][startcol+i].getState()).equals(Cellstate.ship)) {
+			for(int i=0;i<shipLength+2;i++) {
+				if((board[row][startCol+i].getState()).equals(Cellstate.ship)) {
 					return false;
 				}
 			}
 			
 			//checks below 
 			
-			row=startrow+1;//goes below
-			for(int i=0;i<shiplength+2;i++) {
+			row=startRow+1;//goes below
+			for(int i=0;i<shipLength+2;i++) {
 				try {
 				if(board[row][col+i].getState().equals(Cellstate.ship)) {
 					return false;
@@ -138,19 +138,19 @@ public class Board {
 	}
 
 
-	public Ship placeShipVertical(int startrow, int startcol, int shipLength) {
+	public Ship placeShipVertical(int startRow, int startCol, int shipLength) {
 		// place the start of the ship and then set the state of every cell upwards to
 		// ship
 
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
-		isEmpty = checkAroundVertical(startrow, startcol, shipLength);// checks around the ship
+		isEmpty = checkAroundVertical(startRow, startCol, shipLength);// checks around the ship
 
 		if (isEmpty == true) {// if it is empty place ship
 			for (int i = 0; i < shipLength; i++) {
-				board[startrow+i][startcol].setState(Cellstate.ship);
+				board[startRow+i][startCol].setState(Cellstate.ship);
 				try {
-					cell[i]=board[startrow+i][startcol];
+					cell[i]=board[startRow+i][startCol];
 				}catch(Exception k) {
 				}
 			}
@@ -166,21 +166,20 @@ public class Board {
 	}
 
 
-	public Ship placeShipHorizontal(int startrow, int startcol, int shipLength) {
+	public Ship placeShipHorizontal(int startRow, int startCol, int shipLength) {
 		// place the start of the ship and then set the state of evercell upwards to
 		// ship
 		// to avoid overlap check if all cells are empty
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
-		isEmpty=checkOverlapHorizontal(startrow, startcol, shipLength);
+		isEmpty=checkOverlapHorizontal(startRow, startCol, shipLength);
 
 		if (isEmpty == true) {
-			System.out.println("arrayboy");
 			for (int i = 0; i < shipLength; i++) {
-				board[startrow][startcol + i].setState(Cellstate.ship);
+				board[startRow][startCol + i].setState(Cellstate.ship);
 				// ADD THESE CELLS TO THE SHIP OBJECT
 				try {
-					cell[i]=board[startrow+i][startcol];
+					cell[i]=board[startRow+i][startCol];
 				}catch(Exception k) {
 				}
 			}
