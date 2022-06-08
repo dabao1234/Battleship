@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 
 public class Driver {
-
+	
 	public static void main(String[] args) {
-		final int NUM_SHIPS = 5; 
 		
+		final int NUM_SHIPS = 5; 
 		ArrayList<Ship> p1Ship = new ArrayList<>();
 		ArrayList<Ship> p2Ship = new ArrayList<>();
 		
