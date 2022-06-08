@@ -4,7 +4,7 @@ public class Board {
 	private int col;
 	private Player player;
 
-	// constructor change
+	// Constructor change
 	public Board(int aRows, int aCols, Player p) {
 		row = aRows;
 		col = aCols;
@@ -100,7 +100,6 @@ public class Board {
 			for (int i = 0; i < shipLength + 2; i++) {
 
 				try {
-
 					if ((board[row][col + i].getState()).equals(Cellstate.ship)) {
 						return false;
 					}
@@ -172,7 +171,6 @@ public class Board {
 		isEmpty = checkOverlapHorizontal(startRow, startCol, shipLength);
 
 		if (isEmpty == true) {
-			System.out.println("arrayboy");
 			for (int i = 0; i < shipLength; i++) {
 				board[startRow][startCol + i].setState(Cellstate.ship);
 				// ADD THESE CELLS TO THE SHIP OBJECT
@@ -296,7 +294,8 @@ public class Board {
 	 * 
 	 * @param row
 	 * @param col
-	 * @return whether or not the shot has succeeded
+	 * @return whether or not the turn is finished (false will allow another shot to be chosen (if you hit
+	 * or you aim at an already-hit cell) and true will end the turn (if you miss))
 	 */
 
 	public boolean shoot(int row, int col) {
@@ -326,6 +325,7 @@ public class Board {
 
 	//Displays the board
 	public void display() {
+		System.out.println(player + "'s board:");
 		System.out.println("  1 2 3 4 5 6 7 8 9 10");
 		for (int i = 0; i < row; i++) {
 			System.out.print(i + 1 + " ");
