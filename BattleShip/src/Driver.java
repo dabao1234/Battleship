@@ -6,7 +6,7 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		
-		final int NUM_SHIPS = 5; 
+		final int NUM_SHIPS = 1; 
 		ArrayList<Ship> p1Ship = new ArrayList<>();
 		ArrayList<Ship> p2Ship = new ArrayList<>();
 		
@@ -43,7 +43,7 @@ public class Driver {
 			}
 		}
 		
-		System.out.println("Player two's ships placed! Player one, your turn!");
+		System.out.println("Player two's ships placed!");
 		p = Player.P1;
 		
 		while(!gameOver) {
@@ -121,16 +121,11 @@ public class Driver {
 	 * @param r - the row
 	 * @param c - the column
 	 * @param b - the board
-	 * @return true if the missile has been successfully shot or false if it failed
+	 * @return whether or not to go to the next turn
 	 */
 	
 	static boolean shoot(int r, int c, Board b) {
-		if(!b.shoot(r, c)) {
-			b.display();
-			return true;
-		}
-		b.display();
-		return false;
+		return b.shoot(r, c);
 	}
 	
 	/**
@@ -181,9 +176,9 @@ public class Driver {
 			return true;
 		}
 		else if(shipAlign == 2) {
+			lengthShip = lengthShips[count];
 			
 			Ship s = b.placeShipVertical(row, startCol, lengthShip);
-			lengthShip = lengthShips[count];
 			if(s == null) {
 				return false;
 			}
@@ -206,31 +201,47 @@ public class Driver {
 	 * @return true when the turn is complete
 	 */
 	static boolean turn(Scanner in, Player p, Board b1, Board b2) {
+		System.out.println(p + "'s turn!");
 		int row;
 		int col;
-		//Getting 
+		
+		if(p.equals(Player.P1)) {
+			b2.hideShips();
+			b1.showShips();
+		}
+		else {
+			b2.showShips();
+			b1.hideShips();
+		}
+		
+		b1.display();
+		b2.display();
+		
+
 		System.out.println("Please enter the column: ");
 		col = robustInt(in) - 1;
 		System.out.println("Please enter the row: ");
 		row = robustInt(in) - 1;
 		
 		if(p.equals(Player.P1)) {
+			b1.display();
+			b2.display();
 			if(shoot(row, col, b2)) {
-				b1.hideShips();
-				b2.showShips();
+				b2.display();
 				p = Player.P2;
-				return true;
+				return turn(in, p, b1, b2);
 			}
 			else {
 				return turn(in, p, b1, b2);
 			}
 		}
 		else {
+			b1.display();
+			b2.display();
 			if(shoot(row, col, b1)) {
-				b1.showShips();
-				b2.hideShips();
+				b1.display();
 				p = Player.P1;
-				return true;
+				return turn(in, p, b1, b2);
 			}
 			else {
 				return turn(in, p, b1, b2);
