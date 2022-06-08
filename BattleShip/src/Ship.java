@@ -5,11 +5,25 @@ public class Ship {
 	private int length;
 	private boolean isSunk = false;
 	private Board playerBoard;
+	private String orientation;
 	
 	//constructor 
-	Ship(int length, Cell[] cells) {
+	Ship(int length, Cell[] cells, String orientation) {
+		this.orientation = orientation;
 		cells = parts;
 		this.length=length;
+	}
+	
+	public String getOrientation() {
+		return orientation;
+	}
+	
+	public int getStartCol() {
+		return parts[0].getCol();
+	}
+	
+	public int getStartRow() {
+		return parts[0].getRow();
 	}
 	
 	public boolean getSunk(Board b) {
@@ -23,6 +37,10 @@ public class Ship {
 	
 	public Cell[] getParts() {
 		return parts;
+	}
+	
+	public int getLength() {
+		return length;
 	}
 	
 	public boolean checkSunk(Board b) {

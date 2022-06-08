@@ -179,7 +179,7 @@ public class Driver {
 				ships.add(s);
 			}
 			
-			ships.add(b.placeShipVertical(row, startCol, lengthShip));
+			ships.add(s);
 			b.display();
 			return true;
 		}
@@ -217,6 +217,10 @@ public class Driver {
 				return turn(in, p, b1, b2);
 			}
 		}
+	}
+	
+	static boolean checkSunk(Ship ship, Board b) {
+		return ship.getSunk(b);
 	}
 	
 	static boolean checkWin(ArrayList<Ship> ships, Board b) {
