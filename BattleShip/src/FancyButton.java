@@ -1,9 +1,9 @@
 import javafx.scene.control.Button;
 
-public class FancyButtom extends Button {
+public class FancyButton extends Button {
 	private int col;
 	private int row;
-	public FancyButtom(String s, int coll,int row) {
+	public FancyButton(String s, int coll,int row) {
 		super(s);
 		col = coll;
 		this.row=row;
