@@ -16,6 +16,7 @@ public class GUIDriver extends Application {
 	final int num_Cols=10;
 	final int WIDTH = 700;
 	final int HEIGHT = 600;
+	Player p;
 	@Override
 	public void start(Stage stage1) throws Exception {
 		
@@ -32,15 +33,15 @@ public class GUIDriver extends Application {
 				//creates the buttons
 				Button bttnp1= new Button();
 				Button bttnP2=new Button();
-				bttnp1.setPrefSize(50, 50);
-				bttnP2.setPrefSize(50, 50);
+				bttnp1.setPrefSize(100, 100);
+				bttnP2.setPrefSize(100, 100);
 				tilesP1[i][z]= bttnp1;
 				tilesP2[i][z]= bttnP2;
 				//sets the color
-				//tilesP1[i][z].setBackground(Background.fill(Color.BLUE));
-				//tilesP2[i][z].setBackground(Background.fill(Color.BLUE));
+				tilesP1[i][z].setBackground(Background.fill(Color.BLUE));
+				tilesP2[i][z].setBackground(Background.fill(Color.BLUE));
 				//adds to the grid pane 
-				System.out.print("yes");
+			
 				boardP1.add(tilesP1[i][z], i, z);
 				boardP2.add(tilesP2[i][z], i, z);
 			}
@@ -95,10 +96,15 @@ public class GUIDriver extends Application {
 		stage1.setScene(selection);
 		stage1.show();
 		
+		p=p.P1;
+		
 		//button events
 		bttnHuman.setOnAction(e->{
-			stage1.setScene(P1game);
+			stage1.setScene(P2game);
 			stage1.show();
+			if(p.equals(Player.P1)) {
+				lblTop.setText("Player 2 Board");
+			}
 		});
 		
 		
