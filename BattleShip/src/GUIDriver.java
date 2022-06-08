@@ -17,7 +17,8 @@ public class GUIDriver extends Application {
 	final int num_Cols = 10;
 	final int WIDTH = 700;
 	final int HEIGHT = 600;
-
+	boolean isGame = false;
+	boolean placeTurn = true;
 	Player p;
 	Label lblTurn = new Label();
 
@@ -30,7 +31,6 @@ public class GUIDriver extends Application {
 		// Creates the buttons for P1
 		Button[][] tilesP1 = new Button[num_Rows][num_Cols];
 		Button[][] tilesP2 = new Button[num_Rows][num_Cols];
-		
 
 		// creates the grid panes to house the buttons
 		GridPane boardP1 = new GridPane();
@@ -71,20 +71,13 @@ public class GUIDriver extends Application {
 		top.setAlignment(Pos.CENTER);
 		mid.setAlignment(Pos.CENTER);
 
+		// Creates P2 play scene
 
-		
-		
-		
-		//Creates P2 play scene
-		
-		
-
-	
 		// Createsplay scene
 
 		VBox P2 = new VBox();
-		
-		P2.getChildren().addAll(lblTurn,top, boardP2, mid, boardP1);
+
+		P2.getChildren().addAll(lblTurn, top, boardP2, mid, boardP1);
 		Scene game = new Scene(P2, 500, 700);
 
 		// Selection Screen
@@ -112,18 +105,15 @@ public class GUIDriver extends Application {
 		stage1.setScene(selection);
 		stage1.show();
 
-
 		p = p.P1;
 
 		// button events
 		bttnHuman.setOnAction(e -> {
 			stage1.setScene(game);
 		});
-		
-		
-		
-		//button events
-		bttnHuman.setOnAction(e->{
+
+		// button events
+		bttnHuman.setOnAction(e -> {
 			stage1.setScene(game);
 			stage1.show();
 			if (p.equals(Player.P1)) {
@@ -131,33 +121,48 @@ public class GUIDriver extends Application {
 				lblMid.setText("Player 1 Board");
 			}
 		});
-		
-		//sets the turn label at the top
+
+		// sets the turn label at the top
 		lblTurn.setAlignment(Pos.CENTER);
-		lblTurn.setText(p+" turn");
-		
+		lblTurn.setText(p + " turn");
+
 		for (int i = 0; i < num_Rows; i++) {
 			for (int z = 0; z < num_Cols; z++) {
-							// if it is the fist players turn, P2 board is clickable
-					tilesP2[i][z].setOnAction(e -> {
-						if(p.equals(Player.P1)) {				
+				// if it is the fist players turn, P2 board is clickable
+				tilesP2[i][z].setOnAction(e -> {
+					if (p.equals(Player.P1)) {
+						// if it is in the placment mode enter's this loop
+						if (placeTurn = true) {
+							
+							// does not continue switch players till all ships are placed
+						}
+						// if it is the game mode enter this logic
+						if (isGame = true) {
 							p1Board.showShips();
 							p2Board.hideShips();
-							this.p=Player.P2;
-							lblTurn.setText(p+" turn");
+							this.p = Player.P2;
+							lblTurn.setText(p + " turn");
 						}
-					});
-				
+					}
+				});
+
 				// players 2 turns P1 baord is clickable
-					tilesP1[i][z].setOnAction(e -> {
-						if(p.equals(Player.P2)) {
-							p2Board.showShips();
-							p1Board.hideShips();
-							this.p=Player.P1;
-							lblTurn.setText(p+" turn");
+				tilesP1[i][z].setOnAction(e -> {
+					if (p.equals(Player.P2)) {
+						if (placeTurn = true) {
+
+							// does not continue switch players till all ships are placed
 						}
-					});
-				
+						//game code 
+						else if(isGame=true) {
+						p2Board.showShips();
+						p1Board.hideShips();
+						this.p = Player.P1;
+						lblTurn.setText(p + " turn");
+						}
+					}
+				});
+
 			}
 		}
 
