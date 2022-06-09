@@ -31,7 +31,6 @@ public class Driver {
 			}
 		}
 		
-		//Reset values for player 2
 		System.out.println("Player one's ships placed! Player two, place now:");
 		p = Player.P2;
 		x = 0;
@@ -224,6 +223,7 @@ public class Driver {
 		System.out.println("Please enter the row: ");
 		row = robustInt(in) - 1;
 		
+		//Player 1 or Player 2's turn to shoot the ships
 		if(p.equals(Player.P1)) {
 			b1.display();
 			b2.display();
