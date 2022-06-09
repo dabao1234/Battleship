@@ -157,7 +157,7 @@ public class GUIDriver extends Application {
 					int row = ((FancyButton) e.getSource()).getRow();
 					if (p.equals(Player.P1)) {
 						// if it is in placement mode it enter's this loop
-						if (placeTurn = true) {
+						if (placeTurn == true) {
 							// allows player to place the ships till it all placed
 							// p1Board.p
 							if (orentation == true && p1Ships.size() < 6) {
@@ -172,7 +172,7 @@ public class GUIDriver extends Application {
 							// does not continue switch players till all ships are placed
 						}
 						// if it is the game mode enter this logic
-						if (isGame = true) {
+						if (isGame == true) {
 							p1Board.showShips();
 							p2Board.hideShips();
 							this.p = Player.P2;
@@ -184,12 +184,12 @@ public class GUIDriver extends Application {
 				//Players 2 turns P1's board  is clickable
 				tilesP1[i][z].setOnAction(e -> {
 					if (p.equals(Player.P2)) {
-						if (placeTurn = true) {
+						if (placeTurn == true) {
 
 							// does not continue switch players till all ships are placed
 						}
 						// game code
-						else if (isGame = true) {
+						else if (isGame == true) {
 							p2Board.showShips();
 							p1Board.hideShips();
 							this.p = Player.P1;
