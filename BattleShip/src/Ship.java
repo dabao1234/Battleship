@@ -13,6 +13,9 @@ public class Ship {
 		cells = parts;
 		this.length=length;
 	}
+	Ship(int lenght) {
+		this.length=length;
+	}
 	
 	public String getOrientation() {
 		return orientation;
