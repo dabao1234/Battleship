@@ -73,7 +73,7 @@ public class GUIDriver extends Application {
 
 		// Creates P2 play scene
 
-		// Createsplay scene
+		// Creates play scene
 
 		VBox P2 = new VBox();
 
@@ -124,10 +124,10 @@ public class GUIDriver extends Application {
 
 		for (int i = 0; i < num_Rows; i++) {
 			for (int z = 0; z < num_Cols; z++) {
-				// if it is the fist players turn, P2 board is clickable
+				// if it is the first players turn, P2 board is clickable
 				tilesP2[i][z].setOnAction(e -> {
 					if (p.equals(Player.P1)) {
-						// if it is in the placment mode enter's this loop
+						// if it is in placement mode it enter's this loop
 						if (placeTurn = true) {
 
 							// does not continue switch players till all ships are placed
@@ -142,7 +142,7 @@ public class GUIDriver extends Application {
 					}
 				});
 
-				// players 2 turns P1 baord is clickable
+				//Players 2 turns P1's board  is clickable
 				tilesP1[i][z].setOnAction(e -> {
 					if (p.equals(Player.P2)) {
 						if (placeTurn = true) {

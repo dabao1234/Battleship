@@ -7,7 +7,7 @@ public class Ship {
 	private Board playerBoard;
 	private String orientation;
 	
-	//constructor 
+	//The Constructor
 	Ship(int length, Cell[] cells, String orientation) {
 		this.orientation = orientation;
 		cells = parts;
@@ -42,7 +42,7 @@ public class Ship {
 	public int getLength() {
 		return length;
 	}
-	
+	//Check if the ship has been fully hit/if it has been sunken
 	public boolean checkSunk(Board b) {
 		int r;
 		int c;

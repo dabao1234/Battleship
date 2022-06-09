@@ -204,12 +204,13 @@ public class Driver {
 		System.out.println(p + "'s turn!");
 		int row;
 		int col;
-		
+		//Display player 1's ships and hide player 2's ships
 		if(p.equals(Player.P1)) {
 			b2.hideShips();
 			b1.showShips();
 		}
 		else {
+			//Do the same for player 2
 			b2.showShips();
 			b1.hideShips();
 		}
@@ -217,7 +218,7 @@ public class Driver {
 		b1.display();
 		b2.display();
 		
-
+		//The row and column values for shooting
 		System.out.println("Please enter the column: ");
 		col = robustInt(in) - 1;
 		System.out.println("Please enter the row: ");
@@ -248,7 +249,12 @@ public class Driver {
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 * @param ship - the ship object
+	 * @param b - the board of the player
+	 * @return true if the ship is sunk
+	 */
 	static boolean checkSunk(Ship ship, Board b) {
 		return ship.getSunk(b);
 	}
