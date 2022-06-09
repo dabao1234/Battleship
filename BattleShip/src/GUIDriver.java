@@ -155,7 +155,10 @@ public class GUIDriver extends Application {
 				tilesP2[i][z].setOnAction(e -> {
 					int column = ((FancyButton) e.getSource()).getCol();
 					int row = ((FancyButton) e.getSource()).getRow();
+					System.out.println("col "+column+"row "+row);
+					System.out.println(orentation);
 					if (p.equals(Player.P1)) {
+						p1Board.display();
 						// if it is in placement mode it enter's this loop
 						if (placeTurn == true) {
 							// allows player to place the ships till it all placed
@@ -163,13 +166,16 @@ public class GUIDriver extends Application {
 							if (orentation == true && p1Ships.size() < 6) {
 								p1Ships.add(p1Board.placeShipVertical(column, row, lengthShips[numP1Placed]));
 								numP1Placed++;
-
 							}
-							if (orentation == false && p1Ships.size() < 6) {
-								p1Ships.add(p1Board.placeShipVertical(column, row, lengthShips[numP1Placed]));
+							else if (orentation == false && p1Ships.size() < 6) {
+								p1Ships.add(p1Board.placeShipHorizontal(column, row, lengthShips[numP1Placed]));
 								numP1Placed++;
 							}
+							if(p1Ships.size()==5) {
+								placeTurn=false;
+							}
 							// does not continue switch players till all ships are placed
+							
 						}
 						// if it is the game mode enter this logic
 						if (isGame == true) {
