@@ -4,7 +4,7 @@ public class Board {
 	private int col;
 	private Player player;
 
-	// Constructor change
+	// Constructor Change
 	public Board(int aRows, int aCols, Player p) {
 		row = aRows;
 		col = aCols;
@@ -88,7 +88,13 @@ public class Board {
 
 		return true;
 	}
-
+	/**
+	 * 
+	 * @param startRow - the starting row
+	 * @param startCol - the starting column
+	 * @param shipLength - the ship length
+	 * @return false if any ships overlap each other or if there is an invalid placement
+	 */
 	public boolean checkOverlapHorizontal(int startRow, int startCol, int shipLength) {
 		try {
 			// checks above
@@ -116,7 +122,6 @@ public class Board {
 			}
 
 			// checks below
-
 			row = startRow + 1;// goes below
 			for (int i = 0; i < shipLength + 2; i++) {
 				try {
@@ -127,7 +132,6 @@ public class Board {
 
 				}
 			}
-
 			return true;
 		} catch (Exception f) {
 			// idk about this
@@ -135,7 +139,13 @@ public class Board {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param startRow - the starting row
+	 * @param startCol - the starting column
+	 * @param shipLength - the length of the ship
+	 * @return the new ship that is placed, will return null if the ship cannot be placed
+	 */
 	public Ship placeShipVertical(int startRow, int startCol, int shipLength) {
 		// place the start of the ship and then set the state of every cell upwards to
 		// ship
@@ -161,7 +171,13 @@ public class Board {
 		return newShip;
 
 	}
-
+	/**
+	 * 
+	 * @param startRow - the starting row
+	 * @param startCol - the starting column
+	 * @param shipLength - the ship length
+	 * @return the new ship that is placed horizontally, returns null if it cannot be placed
+	 */
 	public Ship placeShipHorizontal(int startRow, int startCol, int shipLength) {
 		// place the start of the ship and then set the state of evercell upwards to
 		// ship
@@ -187,7 +203,10 @@ public class Board {
 		Ship newShip = new Ship(shipLength, cell, "H");
 		return newShip;
 	}
-
+	/**
+	 * 
+	 * @param ship
+	 */
 	public void clearSunk(Ship ship) {
 		int shipLength = ship.getLength();
 		int startRow = ship.getStartRow();
