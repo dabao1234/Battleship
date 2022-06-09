@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+import ics4ustart.FancyButton;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,12 +22,15 @@ public class GUIDriver extends Application {
 	final int HEIGHT = 600;
 	boolean isGame = false;
 	boolean placeTurn = true;
-	boolean orentation=false; //if false it is vertical, if true it is horizontal
+	boolean orentation = false; // if false it is vertical, if true it is horizontal
 	Player p;
 	Label lblTurn = new Label();
-	ArrayList<Ship> p1Ship = new ArrayList<>();
-	ArrayList<Ship> p2Ship = new ArrayList<>();
-
+	ArrayList<Ship> p1Ships = new ArrayList<>();
+	ArrayList<Ship> p2Ships = new ArrayList<>();
+	int numP1Placed=0;
+	int numP2Placed=0;
+	int[] lengthShips = {2,3,3,4,5};
+	//make list of ships
 	@Override
 	public void start(Stage stage1) throws Exception {
 		// board objects
@@ -81,11 +85,11 @@ public class GUIDriver extends Application {
 		// Createsplay scene
 
 		VBox P2 = new VBox();
-		HBox orentations=new HBox();
-		Button bttnVert=new Button("Vertical");
-		Button bttnHor=new Button("Horizontal");
-		orentations.getChildren().addAll(bttnVert,bttnHor);
-		P2.getChildren().addAll(lblTurn, top, boardP2, mid, boardP1,orentations);
+		HBox orentations = new HBox();
+		Button bttnVert = new Button("Vertical");
+		Button bttnHor = new Button("Horizontal");
+		orentations.getChildren().addAll(bttnVert, bttnHor);
+		P2.getChildren().addAll(lblTurn, top, boardP2, mid, boardP1, orentations);
 		Scene game = new Scene(P2, 500, 700);
 
 		// Selection Screen
@@ -125,31 +129,42 @@ public class GUIDriver extends Application {
 				lblMid.setText("Player 1 Board");
 			}
 		});
-		
-		//true means vertical
-		bttnVert.setOnAction(e->{
-			orentation=true;
+
+		// true means vertical
+		bttnVert.setOnAction(e -> {
+			orentation = true;
 		});
-		
-		//false means horizontal 
-		bttnHor.setOnAction(e->{
-			orentation=false;
+
+		// false means horizontal
+		bttnHor.setOnAction(e -> {
+			orentation = false;
 		});
 
 		// sets the turn label at the top
 		lblTurn.setAlignment(Pos.CENTER);
 		lblTurn.setText(p + " turn");
-
+		
+		
 		for (int i = 0; i < num_Rows; i++) {
-			for (int z = 0; z < num_Cols; z++) {
+			for (int z = 0; z < num_Cols; z++) {				
 				// if it is the fist players turn, P2 board is clickable
 				tilesP2[i][z].setOnAction(e -> {
+					int column = ((FancyButton) e.getSource()).getCol();
+					int row = ((FancyButton) e.getSource()).getRow();
 					if (p.equals(Player.P1)) {
 						// if it is in the placment mode enter's this loop
 						if (placeTurn = true) {
-							//allows player to place the ships till it all placed 
-							//p1Board.p
-							
+							// allows player to place the ships till it all placed
+							// p1Board.p
+							if (orentation == true && p1Ships.size() < 6) {
+								p1Ships.add(p1Board.placeShipVertical(column, row, lengthShips[numP1Placed]));
+								numP1Placed++;
+
+							}
+							if (orentation == false && p1Ships.size() < 6) {
+								p1Ships.add(p1Board.placeShipVertical(column, row, lengthShips[numP1Placed]));
+								numP1Placed++;
+							}
 							// does not continue switch players till all ships are placed
 						}
 						// if it is the game mode enter this logic
@@ -178,7 +193,6 @@ public class GUIDriver extends Application {
 						}
 					}
 				});
-
 			}
 		}
 
@@ -188,5 +202,8 @@ public class GUIDriver extends Application {
 		launch(args);
 
 	}
+	
+	public boolean isDone(ships,ships)
+	
 
 }
