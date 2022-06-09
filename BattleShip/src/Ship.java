@@ -48,6 +48,7 @@ public class Ship {
 		int c;
 		
 		isSunk = true;
+		//Loops through each part of the cells and checks if it is hit
 		for(Cell part : parts) {
 			r = part.getRow();
 			c = part.getCol();
