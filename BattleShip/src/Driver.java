@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Driver {
 	
+	static boolean gameOver = false;
+	
 	public static void main(String[] args) {
 		
 		final int NUM_SHIPS = 1; 
@@ -14,7 +16,6 @@ public class Driver {
 
 		Scanner in = new Scanner(System.in);
 		
-		boolean gameOver = false;
 		
 		Board b1 = new Board(Player.P1);
 		Board b2 = new Board(Player.P2);
@@ -46,7 +47,7 @@ public class Driver {
 		p = Player.P1;
 		
 		while(!gameOver) {
-			turn(in, p, b1, b2);
+			turn(in, p, b1, b2, p1Ship, p2Ship);
 		}
 		
 	}
@@ -123,8 +124,15 @@ public class Driver {
 	 * @return whether or not to go to the next turn
 	 */
 	
-	static boolean shoot(int r, int c, Board b) {
-		return b.shoot(r, c);
+	static boolean shoot(int r, int c, Board b, ArrayList<Ship> ships) {
+		boolean done = b.shoot(r, c);
+		if(checkWin(ships, b)) {
+			gameOver = true;
+			System.out.println("Congratulations " + b.getPlayer() + "!");
+			return true;
+		}
+		
+		return done;
 	}
 	
 	/**
@@ -199,7 +207,11 @@ public class Driver {
 	 * @param b2 - player 2's board
 	 * @return true when the turn is complete
 	 */
-	static boolean turn(Scanner in, Player p, Board b1, Board b2) {
+	static boolean turn(Scanner in, Player p, Board b1, Board b2, ArrayList<Ship> p1Ships, ArrayList<Ship> p2Ships) {
+		if(gameOver) {
+			return false;
+		}
+		
 		System.out.println(p + "'s turn!");
 		int row;
 		int col;
@@ -227,27 +239,33 @@ public class Driver {
 		if(p.equals(Player.P1)) {
 			b1.display();
 			b2.display();
-			if(shoot(row, col, b2)) {
+			if(shoot(row, col, b2, p2Ships)) {
 				b2.display();
 				p = Player.P2;
-				return turn(in, p, b1, b2);
+				if(checkWin(p2Ships, b2)) {
+					gameOver = true;
+					System.out.println("Congratulations P1!");
+				}
+				return turn(in, p, b1, b2, p1Ships, p2Ships);
 			}
 			else {
-				return turn(in, p, b1, b2);
+				return turn(in, p, b1, b2, p1Ships, p2Ships);
 			}
 		}
 		else {
 			b1.display();
 			b2.display();
-			if(shoot(row, col, b1)) {
+			if(shoot(row, col, b1, p1Ships)) {
 				b1.display();
 				p = Player.P1;
-				return turn(in, p, b1, b2);
+				
+				return turn(in, p, b1, b2, p1Ships, p2Ships);
 			}
 			else {
-				return turn(in, p, b1, b2);
+				return turn(in, p, b1, b2, p1Ships, p2Ships);
 			}
 		}
+		//ADD FOR SHIP IN SHIPS CHECKSUNK: CALL CLEARMISS
 	}
 	/**
 	 * 
@@ -276,8 +294,4 @@ public class Driver {
 		return won;
 	}
 	
-
 }
-
-
-

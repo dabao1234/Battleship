@@ -16,6 +16,10 @@ public class Board {
 			}
 		}
 	}
+	
+	public Player getPlayer() {
+		return player;
+	}
 
 	/**
 	 * @param p - the player Constructor for the board, creates a 10 by 10
@@ -149,7 +153,7 @@ public class Board {
 	public Ship placeShipVertical(int startRow, int startCol, int shipLength) {
 		// place the start of the ship and then set the state of every cell upwards to
 		// ship
-
+		
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
 		isEmpty = checkAroundVertical(startRow, startCol, shipLength);// checks around the ship
@@ -182,6 +186,7 @@ public class Board {
 		// place the start of the ship and then set the state of evercell upwards to
 		// ship
 		// to avoid overlap check if all cells are empty
+		
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
 		isEmpty = checkOverlapHorizontal(startRow, startCol, shipLength);
@@ -191,7 +196,7 @@ public class Board {
 				board[startRow][startCol + i].setState(Cellstate.ship);
 				// ADD THESE CELLS TO THE SHIP OBJECT
 				try {
-					cell[i] = board[startRow + i][startCol];
+					cell[i] = board[startRow][startCol + i];
 				} catch (Exception k) {
 				}
 			}
@@ -258,7 +263,7 @@ public class Board {
 	 * @return true if this section has a ship, return false if it doesn't not contain a ship
 	 */
 	public boolean hasShip(int row, int col) {
-		if (board[row][col].getState().equals(Cellstate.ship)) {
+		if (board[row][col].getState().equals(Cellstate.ship) || board[row][col].getState().equals(Cellstate.hit)) {
 			return true;
 		} else {
 			return false;
@@ -319,21 +324,26 @@ public class Board {
 
 	public boolean shoot(int row, int col) {
 		// checks to see if there's a ship there
-		if (hasShip(row, col) == true) {
+		if (hasShip(row, col)) {
 			// checks to see if the ship has been hit already
-			if (!isHit(row, col) == true) {
+			if (!hasAttempt(row, col)) {
 				// if not, make it a hit
 				board[row][col].setState(Cellstate.hit);
 				return false;
 			} else {
 				// if so, we want them to enter another thing
-				System.out.println("Bad");
+				System.out.println("Try again!");
 				return false;
 			}
 		}
 		// if no ship there, make it a miss
-		else {
+		else if(!hasAttempt(row, col)){
 			board[row][col].setState(Cellstate.miss);
+		}
+		// if no ship but you've already shot there, try again
+		else {
+			System.out.println("Try again!");
+			return false;
 		}
 		return true;
 	}
