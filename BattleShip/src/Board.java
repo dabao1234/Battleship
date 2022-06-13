@@ -258,7 +258,7 @@ public class Board {
 	 * @return true if this section has a ship, return false if it doesn't not contain a ship
 	 */
 	public boolean hasShip(int row, int col) {
-		if (board[row][col].getState().equals(Cellstate.ship)) {
+		if (board[row][col].getState().equals(Cellstate.ship) || board[row][col].getState().equals(Cellstate.hit)) {
 			return true;
 		} else {
 			return false;
@@ -319,21 +319,26 @@ public class Board {
 
 	public boolean shoot(int row, int col) {
 		// checks to see if there's a ship there
-		if (hasShip(row, col) == true) {
+		if (hasShip(row, col)) {
 			// checks to see if the ship has been hit already
-			if (!isHit(row, col) == true) {
+			if (!hasAttempt(row, col)) {
 				// if not, make it a hit
 				board[row][col].setState(Cellstate.hit);
 				return false;
 			} else {
 				// if so, we want them to enter another thing
-				System.out.println("Bad");
+				System.out.println("Try again!");
 				return false;
 			}
 		}
 		// if no ship there, make it a miss
-		else {
+		else if(!hasAttempt(row, col)){
 			board[row][col].setState(Cellstate.miss);
+		}
+		// if no ship but you've already shot there, try again
+		else {
+			System.out.println("Try again!");
+			return false;
 		}
 		return true;
 	}

@@ -36,6 +36,13 @@ public class Cell {
 		return false;
 	}
 	
+	public boolean isMiss() {
+		if(state.equals(Cellstate.miss)) {
+			return true;
+		}
+		return false;
+	}
+	
 	// sets the visibility of the cell which will determine whether the ships will be
 	// displayed or not
 	public void setVisible(boolean t) {

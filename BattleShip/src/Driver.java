@@ -47,6 +47,14 @@ public class Driver {
 		
 		while(!gameOver) {
 			turn(in, p, b1, b2);
+			if(checkWin(p1Ship, b1)) {
+				gameOver = true;
+				System.out.println("Game over!");
+			}
+			if(checkWin(p2Ship, b2)) {
+				gameOver = true;
+				System.out.println("Game over!");
+			}
 		}
 		
 	}
@@ -270,6 +278,7 @@ public class Driver {
 		boolean won = true;
 		
 		for(Ship s : ships) {
+			System.out.println(s.getSunk(b));
 			if(!s.getSunk(b)) {
 				won = false;
 			}
@@ -277,8 +286,4 @@ public class Driver {
 		return won;
 	}
 	
-
 }
-
-
-

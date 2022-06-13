@@ -13,8 +13,8 @@ public class Ship {
 		cells = parts;
 		this.length=length;
 	}
-	Ship(int lenght) {
-		this.length=length;
+	Ship(int length) {
+		this.length = length;
 	}
 	
 	public String getOrientation() {
@@ -30,8 +30,8 @@ public class Ship {
 	}
 	
 	public boolean getSunk(Board b) {
-		checkSunk(b);
-		return isSunk;
+		this.isSunk = checkSunk(b);
+		return this.isSunk;
 	}
 	
 	public void setSunk(boolean sunk) {
@@ -51,13 +51,14 @@ public class Ship {
 		int c;
 		
 		isSunk = true;
-		//Loops through each part of the cells and checks if it is hit
+		//Loops through each part of the ship and checks if it is hit
 		for(Cell part : parts) {
 			r = part.getRow();
 			c = part.getCol();
 			
 			Cell z = b.getCells()[r][c];
-			
+			System.out.println(z.isHit());
+
 			if(z.isHit() == false) {
 				isSunk = false;
 			}
