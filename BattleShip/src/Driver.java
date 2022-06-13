@@ -246,6 +246,7 @@ public class Driver {
 				return turn(in, p, b1, b2);
 			}
 		}
+		//ADD FOR SHIP IN SHIPS CHECKSUNK: CALL CLEARMISS
 	}
 	
 	static boolean checkSunk(Ship ship, Board b) {
