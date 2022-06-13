@@ -8,7 +8,7 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		
-		final int NUM_SHIPS = 1; 
+		final int NUM_SHIPS = 2; 
 		ArrayList<Ship> p1Ship = new ArrayList<>();
 		ArrayList<Ship> p2Ship = new ArrayList<>();
 		
@@ -287,7 +287,14 @@ public class Driver {
 		boolean won = true;
 		
 		for(Ship s : ships) {
-			if(!s.getSunk(b)) {
+			
+			boolean a = s.getSunk(b);
+			
+			if(a) {
+				b.clearSunk(s);
+			}
+			
+			if(!a) {
 				won = false;
 			}
 		}

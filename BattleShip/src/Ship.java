@@ -47,9 +47,6 @@ public class Ship {
 	}
 	//Check if the ship has been fully hit/if it has been sunken
 	private boolean checkSunk(Board b) {
-		int r;
-		int c;
-		
 		isSunk = true;
 		//Loops through each part of the ship and checks if it is hit
 		for(Cell part : parts) {
