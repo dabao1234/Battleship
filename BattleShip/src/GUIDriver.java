@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,7 +20,8 @@ public class GUIDriver extends Application {
 	final int WIDTH = 700;
 	final int HEIGHT = 600;
 	boolean isGame = false;
-	boolean placeTurn = true;
+	boolean placeTurnP1 = true;
+	boolean placeTurnP2 = false;
 	boolean orentation = false; // if false it is vertical, if true it is horizontal
 	Player p;
 	Label lblTurn = new Label();
@@ -144,69 +144,96 @@ public class GUIDriver extends Application {
 		// sets the turn label at the top
 		lblTurn.setAlignment(Pos.CENTER);
 		lblTurn.setText(p + " turn");
-		
-		
+
 		for (int i = 0; i < num_Rows; i++) {
-		for (int z = 0; z < num_Cols; z++) {				
+			for (int z = 0; z < num_Cols; z++) {
 				// if it is the fist players turn, P2 board is clickable
 
-				// if it is the first players turn, P2 board is clickable
+				tilesP1[i][z].setOnAction(e -> {
+					if (placeTurnP1 == true) {
+						int column = ((FancyButton) e.getSource()).getCol();
+						int row = ((FancyButton) e.getSource()).getRow();
+						System.out.println("col " + column + "row " + row);
+						System.out.println(numP1Placed);
 
-				tilesP2[i][z].setOnAction(e -> {
-					int column = ((FancyButton) e.getSource()).getCol();
-					int row = ((FancyButton) e.getSource()).getRow();
-					System.out.println("col "+column+"row "+row);
-					System.out.println(orentation);
-					if (p.equals(Player.P1)) {
-						p1Board.display();
-						// if it is in placement mode it enter's this loop
-						if (placeTurn == true) {
-							// allows player to place the ships till it all placed
-							// p1Board.p
-							if (orentation == true && p1Ships.size() < 6) {
-								p1Ships.add(p1Board.placeShipVertical(column, row, lengthShips[numP1Placed]));
+						if (orentation == true && numP1Placed < 5) {
+							Ship maybeShip;
+							maybeShip=p1Board.placeShipVertical(row, column, lengthShips[numP1Placed]);
+							if(maybeShip!=null) {
+								p1Ships.add(maybeShip);
+								colorTiles(tilesP1,lengthShips[numP1Placed],row,column);
 								numP1Placed++;
+								p1Board.display();
 							}
-							else if (orentation == false && p1Ships.size() < 6) {
-								p1Ships.add(p1Board.placeShipHorizontal(column, row, lengthShips[numP1Placed]));
+							
+						} else if (orentation == false && numP1Placed < 5) {
+							Ship maybeShip;
+							maybeShip=p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
+							if(maybeShip!=null) {
+								p1Ships.add(maybeShip);
+								colorTiles(tilesP1,lengthShips[numP1Placed],row,column);
 								numP1Placed++;
+								p1Board.display();
 							}
-							if(p1Ships.size()==5) {
-								placeTurn=false;
-							}
-							// does not continue switch players till all ships are placed
 							
 						}
-						// if it is the game mode enter this logic
-						if (isGame == true) {
-							p1Board.showShips();
-							p2Board.hideShips();
-							this.p = Player.P2;
-							lblTurn.setText(p + " turn");
+						if (numP1Placed == 5) {
+							System.out.println("all placed");
+							placeTurnP1 = false;
+							placeTurnP2=true;
+						}
+					}
+				});
+				tilesP2[i][z].setOnAction(e -> {
+					if (placeTurnP2 == true) {
+						int column = ((FancyButton) e.getSource()).getCol();
+						int row = ((FancyButton) e.getSource()).getRow();
+						System.out.println("col " + column + "row " + row);
+						System.out.println(orentation);
+						if (orentation == true && numP2Placed < 5) {
+							Ship maybeShip;
+							maybeShip=p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
+							if(maybeShip!=null) {
+								p1Ships.add(maybeShip);
+								colorTiles(tilesP2,lengthShips[numP2Placed],row,column);
+								numP2Placed++;
+								p1Board.display();
+							}
+						} else if (orentation == false && numP2Placed < 5) {
+							Ship maybeShip;
+							maybeShip=p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
+							if(maybeShip!=null) {
+								p1Ships.add(maybeShip);
+								colorTiles(tilesP2,lengthShips[numP2Placed],row,column);
+								numP2Placed++;
+								p1Board.display();
+							}
+							
+						}
+						if (numP2Placed == 5) {
+							System.out.println("all placed");
+							placeTurnP2 = false;
 						}
 					}
 				});
 
-				//Players 2 turns P1's board  is clickable
-				tilesP1[i][z].setOnAction(e -> {
-					if (p.equals(Player.P2)) {
-						if (placeTurn == true) {
-
-							// does not continue switch players till all ships are placed
-						}
-						// game code
-						else if (isGame == true) {
-							p2Board.showShips();
-							p1Board.hideShips();
-							this.p = Player.P1;
-							lblTurn.setText(p + " turn");
-						}
-					}
-				});
 			}
-			}
-		
+		}
 
+	}
+	
+	public void colorTiles(Button[][] buts, int numTiles,int startrow,int startcol) {
+		System.out.println("C col"+startcol);
+		System.out.println("C row"+startrow);
+		if(orentation==true) {
+		for(int i=0;i<numTiles;i++) {
+		  buts[startcol][startrow+i].setBackground(Background.fill(Color.GREY));
+		}
+		}else if(orentation==false) {
+			for(int i=0;i<numTiles;i++) {
+				  buts[startcol+i][startrow].setBackground(Background.fill(Color.GREY));
+				}
+		}
 	}
 
 	public static void main(String[] args) {
