@@ -16,6 +16,10 @@ public class Board {
 			}
 		}
 	}
+	
+	public Player getPlayer() {
+		return player;
+	}
 
 	/**
 	 * @param p - the player Constructor for the board, creates a 10 by 10
@@ -149,7 +153,7 @@ public class Board {
 	public Ship placeShipVertical(int startRow, int startCol, int shipLength) {
 		// place the start of the ship and then set the state of every cell upwards to
 		// ship
-
+		
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
 		isEmpty = checkAroundVertical(startRow, startCol, shipLength);// checks around the ship
@@ -182,6 +186,7 @@ public class Board {
 		// place the start of the ship and then set the state of evercell upwards to
 		// ship
 		// to avoid overlap check if all cells are empty
+		
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
 		isEmpty = checkOverlapHorizontal(startRow, startCol, shipLength);
@@ -191,7 +196,7 @@ public class Board {
 				board[startRow][startCol + i].setState(Cellstate.ship);
 				// ADD THESE CELLS TO THE SHIP OBJECT
 				try {
-					cell[i] = board[startRow + i][startCol];
+					cell[i] = board[startRow][startCol + i];
 				} catch (Exception k) {
 				}
 			}

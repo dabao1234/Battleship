@@ -10,7 +10,7 @@ public class Ship {
 	//The Constructor
 	Ship(int length, Cell[] cells, String orientation) {
 		this.orientation = orientation;
-		cells = parts;
+		this.parts = cells;
 		this.length=length;
 	}
 	Ship(int length) {
@@ -46,20 +46,17 @@ public class Ship {
 		return length;
 	}
 	//Check if the ship has been fully hit/if it has been sunken
-	public boolean checkSunk(Board b) {
+	private boolean checkSunk(Board b) {
 		int r;
 		int c;
 		
 		isSunk = true;
 		//Loops through each part of the ship and checks if it is hit
 		for(Cell part : parts) {
-			r = part.getRow();
-			c = part.getCol();
-			
-			Cell z = b.getCells()[r][c];
-			System.out.println(z.isHit());
 
-			if(z.isHit() == false) {
+			String state = part.toString();
+
+			if(!state.equals("X")) {
 				isSunk = false;
 			}
 		}
