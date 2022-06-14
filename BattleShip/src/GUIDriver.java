@@ -30,6 +30,7 @@ public class GUIDriver extends Application {
 	int numP1Placed = 0;
 	int numP2Placed = 0;
 	int[] lengthShips = { 2, 3, 3, 4, 5 };
+	
 
 	// make list of ships
 	@Override
@@ -62,8 +63,8 @@ public class GUIDriver extends Application {
 				tilesP2[i][z].setBackground(Background.fill(Color.BLUE));
 				// adds to the grid pane
 
-				boardP1.add(tilesP1[i][z], i, z);
-				boardP2.add(tilesP2[i][z], i, z);
+				boardP1.add(tilesP1[i][z], z,i);
+				boardP2.add(tilesP2[i][z], z,i);
 			}
 		}
 
@@ -134,11 +135,13 @@ public class GUIDriver extends Application {
 		// true means vertical
 		bttnVert.setOnAction(e -> {
 			orentation = true;
+			System.out.print(	orentation);
 		});
 
 		// false means horizontal
 		bttnHor.setOnAction(e -> {
 			orentation = false;
+			System.out.print(	orentation);
 		});
 
 		// sets the turn label at the top
@@ -156,7 +159,7 @@ public class GUIDriver extends Application {
 
 						if (orentation == true && numP1Placed < 5) {
 							Ship maybeShip;
-							maybeShip = p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
+							maybeShip = p1Board.placeShipVertical(row, column, lengthShips[numP1Placed]);
 							if (maybeShip != null) {
 								p1Ships.add(maybeShip);
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
@@ -166,7 +169,7 @@ public class GUIDriver extends Application {
 
 						} else if (orentation == false && numP1Placed < 5) {
 							Ship maybeShip;
-							maybeShip = p1Board.placeShipVertical(row, column, lengthShips[numP1Placed]);
+							maybeShip = p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
 							if (maybeShip != null) {
 								p1Ships.add(maybeShip);
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
@@ -180,6 +183,21 @@ public class GUIDriver extends Application {
 							placeTurnP1 = false;
 							placeTurnP2 = true;
 						}
+					}else if(placeTurnP1==false&&placeTurnP2==false)  {
+						if(p.equals(Player.P2)) {
+							p1Board.hideShips();
+							p2Board.showShips();
+							int column = ((FancyButton) e.getSource()).getCol();
+							int row = ((FancyButton) e.getSource()).getRow();
+							p1Board.shoot(row, column);
+							p1Board.display();
+							colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
+							//check for a win 
+							p=Player.P1;
+							
+							
+						}
+						
 					}
 				});
 				tilesP2[i][z].setOnAction(e -> {
@@ -188,21 +206,21 @@ public class GUIDriver extends Application {
 						int row = ((FancyButton) e.getSource()).getRow();
 						if (orentation == true && numP2Placed < 5) {
 							Ship maybeShip;
-							maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
+							maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
 							if (maybeShip != null) {
-								p1Ships.add(maybeShip);
+								p2Ships.add(maybeShip);
 								colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 								numP2Placed++;
-								p1Board.display();
+								p2Board.display();
 							}
 						} else if (orentation == false && numP2Placed < 5) {
 							Ship maybeShip;
-							maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
+							maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
 							if (maybeShip != null) {
-								p1Ships.add(maybeShip);
+								p2Ships.add(maybeShip);
 								colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 								numP2Placed++;
-								p1Board.display();
+								p2Board.display();
 							}
 
 						}
@@ -210,6 +228,16 @@ public class GUIDriver extends Application {
 							System.out.println("all placed");
 							placeTurnP2 = false;
 						}
+					} else if(placeTurnP1==false&&placeTurnP2==false)  {
+						if(p.equals(Player.P1))
+						p1Board.hideShips();
+						p2Board.showShips();
+						int column = ((FancyButton) e.getSource()).getCol();
+						int row = ((FancyButton) e.getSource()).getRow();
+						p1Board.shoot(row, column);
+						p1Board.display();
+						colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
+						p=Player.P2;
 					}
 				});
 
