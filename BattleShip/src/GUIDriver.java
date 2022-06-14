@@ -15,6 +15,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class GUIDriver extends Application {
+	//Constants for the board
 	final int num_Rows = 10;
 	final int num_Cols = 10;
 	final int WIDTH = 700;
@@ -22,7 +23,7 @@ public class GUIDriver extends Application {
 	boolean isGame = false;
 	boolean placeTurnP1 = true;
 	boolean placeTurnP2 = false;
-	boolean orentation = false; // if false it is vertical, if true it is horizontal
+	boolean orientation = false; // if false it is vertical, if true it is horizontal
 	Player p;
 	Label lblTurn = new Label();
 	ArrayList<Ship> p1Ships = new ArrayList<>();
@@ -86,11 +87,11 @@ public class GUIDriver extends Application {
 		// Creates play scene
 
 		VBox P2 = new VBox();
-		HBox orentations = new HBox();
+		HBox orientations = new HBox();
 		Button bttnVert = new Button("Vertical");
 		Button bttnHor = new Button("Horizontal");
-		orentations.getChildren().addAll(bttnVert, bttnHor);
-		P2.getChildren().addAll(lblTurn, top, boardP2, mid, boardP1, orentations);
+		orientations.getChildren().addAll(bttnVert, bttnHor);
+		P2.getChildren().addAll(lblTurn, top, boardP2, mid, boardP1, orientations);
 		Scene game = new Scene(P2, 500, 700);
 
 		// Selection Screen
@@ -133,28 +134,28 @@ public class GUIDriver extends Application {
 
 		// true means vertical
 		bttnVert.setOnAction(e -> {
-			orentation = true;
+			orientation = true;
 		});
 
 		// false means horizontal
 		bttnHor.setOnAction(e -> {
-			orentation = false;
+			orientation = false;
 		});
 
 		// sets the turn label at the top
 		lblTurn.setAlignment(Pos.CENTER);
 		lblTurn.setText(p + " turn");
 
+		//Action event if the button is placed 
 		for (int i = 0; i < num_Rows; i++) {
 			for (int z = 0; z < num_Cols; z++) {
-				// if it is the fist players turn, P2 board is clickable
-
+				//P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
 					if (placeTurnP1 == true) {
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-
-						if (orentation == true && numP1Placed < 5) {
+						//if the orientation- vertical or horizontal is true, place the ship horizontally
+						if (orientation == true && numP1Placed < 5) {
 							Ship maybeShip;
 							maybeShip = p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
 							if (maybeShip != null) {
@@ -163,8 +164,9 @@ public class GUIDriver extends Application {
 								numP1Placed++;
 								p1Board.display();
 							}
-
-						} else if (orentation == false && numP1Placed < 5) {
+							//If the player chooses to place a ship vertically and the number of ships that are 
+							//placed is less than 5
+						} else if (orientation == false && numP1Placed < 5) {
 							Ship maybeShip;
 							maybeShip = p1Board.placeShipVertical(row, column, lengthShips[numP1Placed]);
 							if (maybeShip != null) {
@@ -175,6 +177,7 @@ public class GUIDriver extends Application {
 							}
 
 						}
+						//Checks if all the ships are placed, if it is, swap players turn
 						if (numP1Placed == 5) {
 							System.out.println("all placed");
 							placeTurnP1 = false;
@@ -182,11 +185,12 @@ public class GUIDriver extends Application {
 						}
 					}
 				});
+				//Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
 					if (placeTurnP2 == true) {
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-						if (orentation == true && numP2Placed < 5) {
+						if (orientation == true && numP2Placed < 5) {
 							Ship maybeShip;
 							maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
 							if (maybeShip != null) {
@@ -195,7 +199,7 @@ public class GUIDriver extends Application {
 								numP2Placed++;
 								p1Board.display();
 							}
-						} else if (orentation == false && numP2Placed < 5) {
+						} else if (orientation == false && numP2Placed < 5) {
 							Ship maybeShip;
 							maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
 							if (maybeShip != null) {
@@ -217,7 +221,14 @@ public class GUIDriver extends Application {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param board - the current board 
+	 * @param buts - the buttons
+	 * @param numTiles - number of tiles
+	 * Method updates the board based on the status of each tile, grey for the ship, red 
+	 * if the ship is hit, and white if the tile was a miss
+	 */
 	public void colorTiles(Board board, Button[][] buts, int numTiles) {
 		Cell[][] bCells = board.getCells();
 		board.display();
