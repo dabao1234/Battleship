@@ -218,39 +218,47 @@ public class Board {
 		int startCol = ship.getStartCol();
 
 		if (ship.getOrientation().equals("V")) {
-
 			// checks to the left
 			int row = startRow - 1;
-			int col = startCol - 1;// this happens so it will start the column below start
-
-			for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
-				board[row + i][col].setState(Cellstate.miss);
-			}
-			col = startCol + 1;// checks to the right of the place
-
-			for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
-				board[startRow + i][col].setState(Cellstate.miss);
-			}
+			int col = startCol - 1; //this happens so it will start the column above start
+			
+			
 		} else {
 			int row = startRow;
 			int col = startCol;
+			
 			row = startRow - 1;
 			col = startCol - 1;
-
-			for (int i = 0; i < shipLength + 2; i++) {
-				board[row][col + i].setState(Cellstate.miss);
+			
+			for(int x = 0; x < shipLength+2; x++) {
+				try {
+					if(!board[row][col + x].getState().equals(Cellstate.hit)) {
+						board[row][col + x].setState(Cellstate.miss);
+					}
+				}catch(Exception e) {
+					
+				}
+				
 			}
-
-			// checks mid
-			row = row + 1;// resets start row
-			for (int i = 0; i < shipLength + 2; i++) {
-				board[row][startCol + i].setState(Cellstate.miss);
+				
+			row = startRow + 1;
+			
+			for(int x = 0; x < shipLength+2; x++) {
+				try {
+					if(!board[row][col + x].getState().equals(Cellstate.hit)) {
+						board[row][col + x].setState(Cellstate.miss);
+					}
+				}catch(Exception e) {
+					
+				}
 			}
-
-			// checks below
-			row = startRow + 1;// goes below
-			for (int i = 0; i < shipLength + 2; i++) {
-				board[row][col + i].setState(Cellstate.miss);
+					
+			
+			if(startCol > 0) {
+				board[startRow][col].setState(Cellstate.miss);
+			}
+			if(startCol + shipLength + 1 > 0) {
+				board[startRow][startCol + shipLength].setState(Cellstate.miss);
 			}
 
 		}
