@@ -382,10 +382,6 @@ public class Board {
 		return true;
 	}
 
-	// public boolean isSunk() {
-
-	// }
-
 	//Displays the board
 	public void display() {
 		System.out.println(player + "'s board:");
