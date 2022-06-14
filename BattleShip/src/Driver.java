@@ -8,14 +8,13 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		
-		final int NUM_SHIPS = 2; 
+		final int NUM_SHIPS = 5; 
 		ArrayList<Ship> p1Ship = new ArrayList<>();
 		ArrayList<Ship> p2Ship = new ArrayList<>();
 		
 		Player p = Player.P1;
 
 		Scanner in = new Scanner(System.in);
-		
 		
 		Board b1 = new Board(Player.P1);
 		Board b2 = new Board(Player.P2);
