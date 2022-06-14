@@ -105,7 +105,7 @@ public class Board {
 			int row = startRow;
 			int col = startCol;
 			row = startRow - 1;
-			col = startCol - 1;// always starts one col behid
+			col = startCol - 1;// always starts one column behind
 
 			for (int i = 0; i < shipLength + 2; i++) {
 
@@ -138,7 +138,6 @@ public class Board {
 			}
 			return true;
 		} catch (Exception f) {
-			// idk about this
 			return false;
 		}
 
@@ -213,15 +212,17 @@ public class Board {
 	 * @param ship
 	 */
 	public void clearSunk(Ship ship) {
+		//The starting values of the ship
 		int shipLength = ship.getLength();
 		int startRow = ship.getStartRow();
 		int startCol = ship.getStartCol();
-
+		//Checks whether the ship is placed vertically or horizontally
 		if (ship.getOrientation().equals("V")) {
 			// checks to the left
 			int row = startRow - 1;
 			int col = startCol - 1; //this happens so it will start the column above start
 			
+			//Surrounds the area of the ship with misses if the ship is sunk
 			for(int x = 0; x < shipLength+2; x++) {
 				try {
 					board[row + x][col].setState(Cellstate.miss);
@@ -252,6 +253,7 @@ public class Board {
 			}
 			
 		} else {
+			//Surrounds the ship if it is placed horizontally 
 			int row = startRow;
 			int col = startCol;
 			
@@ -275,7 +277,7 @@ public class Board {
 					
 				}
 			}
-					
+			//Catches any errors in the case it goes out of bounds
 			try {
 				board[startRow][col].setState(Cellstate.miss);
 			}catch(Exception e) {
