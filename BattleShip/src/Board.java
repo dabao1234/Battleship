@@ -222,6 +222,34 @@ public class Board {
 			int row = startRow - 1;
 			int col = startCol - 1; //this happens so it will start the column above start
 			
+			for(int x = 0; x < shipLength+2; x++) {
+				try {
+					board[row + x][col].setState(Cellstate.miss);
+				}catch(Exception e) {
+					
+				}
+			}
+			
+			col = startCol + 1;
+			
+			for(int x = 0; x < shipLength+2; x++) {
+				try {
+					board[row + x][col].setState(Cellstate.miss);
+				}catch(Exception e) {
+					
+				}
+			}
+			
+			try {
+				board[row][startCol].setState(Cellstate.miss);
+			}catch(Exception e) {
+				
+			}
+			try {
+				board[startRow + shipLength][startCol].setState(Cellstate.miss);
+			}catch(Exception e) {
+				
+			}
 			
 		} else {
 			int row = startRow;
@@ -232,33 +260,31 @@ public class Board {
 			
 			for(int x = 0; x < shipLength+2; x++) {
 				try {
-					if(!board[row][col + x].getState().equals(Cellstate.hit)) {
-						board[row][col + x].setState(Cellstate.miss);
-					}
+					board[row][col + x].setState(Cellstate.miss);
 				}catch(Exception e) {
 					
 				}
-				
 			}
 				
 			row = startRow + 1;
 			
 			for(int x = 0; x < shipLength+2; x++) {
 				try {
-					if(!board[row][col + x].getState().equals(Cellstate.hit)) {
-						board[row][col + x].setState(Cellstate.miss);
-					}
+					board[row][col + x].setState(Cellstate.miss);
 				}catch(Exception e) {
 					
 				}
 			}
 					
-			
-			if(startCol > 0) {
+			try {
 				board[startRow][col].setState(Cellstate.miss);
+			}catch(Exception e) {
+				
 			}
-			if(startCol + shipLength + 1 > 0) {
+			try {
 				board[startRow][startCol + shipLength].setState(Cellstate.miss);
+			}catch(Exception e) {
+				
 			}
 
 		}
