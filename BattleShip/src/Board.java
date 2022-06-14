@@ -4,7 +4,12 @@ public class Board {
 	private int col;
 	private Player player;
 
-	// Constructor Change
+	/**
+	 * Constructor to create a board
+	 * @param aRows - the number of rows in the board
+	 * @param aCols - the number of columns in the board
+	 * @param p - the player who owns the board
+	 */
 	public Board(int aRows, int aCols, Player p) {
 		row = aRows;
 		col = aCols;
@@ -17,12 +22,17 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Gets the owner of the board
+	 * @return the player who owns the board
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
 	/**
-	 * @param p - the player Constructor for the board, creates a 10 by 10
+	 * Constructor for the board, creates a 10 by 10
+	 * @param p - the player who owns the board
 	 */
 	public Board(Player p) {
 		row = 10;
@@ -46,7 +56,7 @@ public class Board {
 	}
 
 	/**
-	 * 
+	 * Checks to make sure there is room to place a ship vertically
 	 * @param startrow where the ship starts in the row
 	 * @param startcol where the ship starts column
 	 * @return 
@@ -93,7 +103,7 @@ public class Board {
 		return true;
 	}
 	/**
-	 * 
+	 * Checks to make sure there is ample room to place a ship horizontally
 	 * @param startRow - the starting row
 	 * @param startCol - the starting column
 	 * @param shipLength - the ship length
@@ -144,7 +154,7 @@ public class Board {
 
 	}
 	/**
-	 * 
+	 * Places a ship vertically on the board
 	 * @param startRow - the starting row
 	 * @param startCol - the starting column
 	 * @param shipLength - the length of the ship
@@ -176,7 +186,7 @@ public class Board {
 
 	}
 	/**
-	 * 
+	 * Places a ship horizontally on the board
 	 * @param startRow - the starting row
 	 * @param startCol - the starting column
 	 * @param shipLength - the ship length
@@ -209,8 +219,9 @@ public class Board {
 		return newShip;
 	}
 	/**
-	 * 
-	 * @param ship
+	 * Clears the area around the ship setting them as misses so the user
+	 * can't shoot there, since they will be empty
+	 * @param ship - the ship that has been sunk
 	 */
 	public void clearSunk(Ship ship) {
 		int shipLength = ship.getLength();
@@ -291,7 +302,7 @@ public class Board {
 
 	}
 	/**
-	 * 
+	 * Checks to see if there is a ship in the given coordinates
 	 * @param row - the row
 	 * @param col - the column
 	 * @return true if this section has a ship, return false if it doesn't not contain a ship
@@ -304,7 +315,7 @@ public class Board {
 		}
 	}
 	/**
-	 * 
+	 * Checks to see if the coordinates have been hit
 	 * @param row - the row
 	 * @param col - the column
 	 * @return true if the ship has been hit, false if it has not
@@ -317,7 +328,9 @@ public class Board {
 		}
 	}
 
-	// Makes the ships invisible/hides the ship
+	/**
+	 * Hides all the ships on a board by making the cells invisible
+	 */
 	public void hideShips() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -326,7 +339,9 @@ public class Board {
 		}
 	}
 
-	//Make the ships visible
+	/**
+	 * Displays all the ships on the board by making the cells visible
+	 */
 	public void showShips() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -335,7 +350,7 @@ public class Board {
 		}
 	}
 	/**
-	 * 
+	 * Checks to see whether or not the spot has already been shot at
 	 * @param row - the row
 	 * @param col - the column
 	 * @return true if the user has hit or missed 
@@ -349,9 +364,9 @@ public class Board {
 	}
 
 	/**
-	 * 
-	 * @param row
-	 * @param col
+	 * Shoots at the given coordinates
+	 * @param row - the row we want to shoot at
+	 * @param col - the column we want to shoot at
 	 * @return whether or not the turn is finished (false will allow another shot to be chosen (if you hit
 	 * or you aim at an already-hit cell) and true will end the turn (if you miss))
 	 */
@@ -382,7 +397,9 @@ public class Board {
 		return true;
 	}
 
-	//Displays the board
+	/**
+	 * Displays the board
+	 */
 	public void display() {
 		System.out.println(player + "'s board:");
 		System.out.println("  1 2 3 4 5 6 7 8 9 10");
