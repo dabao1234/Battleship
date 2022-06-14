@@ -153,34 +153,32 @@ public class GUIDriver extends Application {
 					if (placeTurnP1 == true) {
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-						System.out.println("col " + column + "row " + row);
-						System.out.println(numP1Placed);
 
 						if (orentation == true && numP1Placed < 5) {
 							Ship maybeShip;
-							maybeShip=p1Board.placeShipVertical(row, column, lengthShips[numP1Placed]);
-							if(maybeShip!=null) {
+							maybeShip = p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
+							if (maybeShip != null) {
 								p1Ships.add(maybeShip);
-								colorTiles(tilesP1,lengthShips[numP1Placed],row,column);
+								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
 								p1Board.display();
 							}
-							
+
 						} else if (orentation == false && numP1Placed < 5) {
 							Ship maybeShip;
-							maybeShip=p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
-							if(maybeShip!=null) {
+							maybeShip = p1Board.placeShipVertical(row, column, lengthShips[numP1Placed]);
+							if (maybeShip != null) {
 								p1Ships.add(maybeShip);
-								colorTiles(tilesP1,lengthShips[numP1Placed],row,column);
+								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
 								p1Board.display();
 							}
-							
+
 						}
 						if (numP1Placed == 5) {
 							System.out.println("all placed");
 							placeTurnP1 = false;
-							placeTurnP2=true;
+							placeTurnP2 = true;
 						}
 					}
 				});
@@ -188,27 +186,25 @@ public class GUIDriver extends Application {
 					if (placeTurnP2 == true) {
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-						System.out.println("col " + column + "row " + row);
-						System.out.println(orentation);
 						if (orentation == true && numP2Placed < 5) {
 							Ship maybeShip;
-							maybeShip=p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
-							if(maybeShip!=null) {
+							maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
+							if (maybeShip != null) {
 								p1Ships.add(maybeShip);
-								colorTiles(tilesP2,lengthShips[numP2Placed],row,column);
+								colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 								numP2Placed++;
 								p1Board.display();
 							}
 						} else if (orentation == false && numP2Placed < 5) {
 							Ship maybeShip;
-							maybeShip=p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
-							if(maybeShip!=null) {
+							maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
+							if (maybeShip != null) {
 								p1Ships.add(maybeShip);
-								colorTiles(tilesP2,lengthShips[numP2Placed],row,column);
+								colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 								numP2Placed++;
 								p1Board.display();
 							}
-							
+
 						}
 						if (numP2Placed == 5) {
 							System.out.println("all placed");
@@ -221,19 +217,24 @@ public class GUIDriver extends Application {
 		}
 
 	}
-	
-	public void colorTiles(Button[][] buts, int numTiles,int startrow,int startcol) {
-		System.out.println("C col"+startcol);
-		System.out.println("C row"+startrow);
-		if(orentation==true) {
-		for(int i=0;i<numTiles;i++) {
-		  buts[startcol][startrow+i].setBackground(Background.fill(Color.GREY));
-		}
-		}else if(orentation==false) {
-			for(int i=0;i<numTiles;i++) {
-				  buts[startcol+i][startrow].setBackground(Background.fill(Color.GREY));
+
+	public void colorTiles(Board board, Button[][] buts, int numTiles) {
+		Cell[][] bCells = board.getCells();
+		board.display();
+		
+		for (int i = 0; i < 10; i++) {
+			for(int j=0;j<10;j++) {
+				if(bCells[i][j].getState().equals(Cellstate.ship)) {
+					buts[i][j].setBackground((Background.fill(Color.GREY)));
+				}else if(bCells[i][j].getState().equals(Cellstate.hit)) {
+					buts[i][j].setBackground((Background.fill(Color.RED)));
+				}else if(bCells[i][j].getState().equals(Cellstate.miss)) {
+					buts[i][j].setBackground((Background.fill(Color.WHITE)));
 				}
+			}
+
 		}
+		
 	}
 
 	public static void main(String[] args) {
