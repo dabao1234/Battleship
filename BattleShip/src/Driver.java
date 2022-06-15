@@ -50,14 +50,8 @@ public class Driver {
 		}
 		
 	}
-	/**
-	 * 
-	 * @param in - the scanner object
-	 * @return the row the user has inputed
-	 */
-	public static int getRow(Scanner in) {
-		return in.nextInt();
-	}
+	
+	
 	/**
 	 * Asks for either one or two, and depending on the answer, the user will be 
 	 * placing a ship vertically
@@ -91,9 +85,9 @@ public class Driver {
 	}
 
 	/**
-	 * 
-	 * @param in
-	 * @return  the col the user has inputed
+	 * Takes user input for an integer between 1 and 9
+	 * @param in - the scanner to take user input
+	 * @return  the number the user has input
 	 */
 	static int robustInt(Scanner in) {
 		boolean valid = false;
@@ -116,7 +110,7 @@ public class Driver {
 	}
 
 	/**
-	 * 
+	 * Shoots at the cell the user selects
 	 * @param r - the row
 	 * @param c - the column
 	 * @param b - the board
@@ -135,7 +129,7 @@ public class Driver {
 	}
 	
 	/**
-	 * 
+	 * Places all of the user's ships for them
 	 * @param in - the scanner object
 	 * @param b - the board
 	 * @param p - the player
@@ -199,7 +193,7 @@ public class Driver {
 		return false;	
 	}
 	/**
-	 * 
+	 * Runs a user's entire turn, including shooting and checking for wins
 	 * @param in - the users input
 	 * @param p - the current player
 	 * @param b1 - player 1's board
@@ -266,18 +260,11 @@ public class Driver {
 		}
 		//ADD FOR SHIP IN SHIPS CHECKSUNK: CALL CLEARMISS
 	}
-	/**
-	 * 
-	 * @param ship - the ship object
-	 * @param b - the board of the player
-	 * @return true if the ship is sunk
-	 */
-	static boolean checkSunk(Ship ship, Board b) {
-		return ship.getSunk(b);
-	}
+	
 	
 	/**
-	 * Goes through all the ships and check if they are sunk
+	 * Loops through all of a user's ships and check if they are sunk to
+	 * determine whether or not the game has been won
 	 * @param ships - all the ships
 	 * @param b - the board
 	 * @return returns true if the player has won
@@ -299,5 +286,4 @@ public class Driver {
 		}
 		return won;
 	}
-	
 }
