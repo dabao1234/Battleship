@@ -398,7 +398,14 @@ public class Board {
 		}
 		return true;
 	}
-
+	
+	public void clear() {
+		for(int i=0;i<10;i++) {
+			for(int j=0;j<10;j++) {
+				board[i][j].setState(Cellstate.empty);
+			}
+		}
+	}
 	/**
 	 * Displays the board
 	 */

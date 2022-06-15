@@ -210,7 +210,13 @@ public class GUIDriver extends Application {
 							p1Board.display();
 							colorTilesShoot(p1Board, tilesP1, 1);
 							
-							
+							//checks if there is a winner 
+							if(checkWin(p1Ships,p1Board)==true) {
+								//player 2 wins 
+								lblEnd.setText("Player 2 wins!!!!!");
+								stage1.setScene(endScreen);
+								
+							}
 							
 							// check for a win
 							p = Player.P1;
@@ -276,7 +282,12 @@ public class GUIDriver extends Application {
 						p2Board.display();
 						colorTilesShoot(p2Board, tilesP2, 1);
 						
-					
+						if(checkWin(p2Ships,p2Board)==true) {
+							//player 1 wins 
+							lblEnd.setText("Player 1 wins!!!!!");
+							stage1.setScene(endScreen);
+							
+						}
 						p = Player.P2;
 						
 						p1Board.hideShips();//hides on Board
@@ -364,7 +375,33 @@ public class GUIDriver extends Application {
 		}
 	}
 	}
-
+	static boolean checkWin(ArrayList<Ship> ships, Board b) {
+		boolean won = true;
+		
+		for(Ship s : ships) {
+			
+			boolean a = s.getSunk(b);
+			
+			if(a) {
+				b.clearSunk(s);
+			}
+			
+			if(!a) {
+				won = false;
+			}
+		}
+		return won;
+	}
+	
+	public void clear(Button[][] b1,Button[][] b2) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				b1[i][j].setBackground((Background.fill(Color.BLUE)));
+				b2[i][j].setBackground((Background.fill(Color.BLUE)));
+			}
+		}
+			}
+	
 
 
 	public static void main(String[] args) {
