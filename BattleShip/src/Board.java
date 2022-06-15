@@ -118,7 +118,6 @@ public class Board {
 			col = startCol - 1;// always starts one column behind
 
 			for (int i = 0; i < shipLength + 2; i++) {
-
 				try {
 					if ((board[row][col + i].getState()).equals(Cellstate.ship)) {
 						return false;
@@ -130,8 +129,13 @@ public class Board {
 			// checks mid
 			row = row + 1;// resets start row
 			for (int i = 0; i < shipLength + 2; i++) {
-				if ((board[row][startCol + i].getState()).equals(Cellstate.ship)) {
-					return false;
+				try {
+					if ((board[row][startCol + i].getState()).equals(Cellstate.ship)) {
+						return false;
+					}
+				}
+				catch(Exception e) {
+					
 				}
 			}
 
@@ -169,14 +173,14 @@ public class Board {
 		// if it is empty place ship
 		if (isEmpty == true) {
 			for (int i = 0; i < shipLength; i++) {
-				board[startRow + i][startCol].setState(Cellstate.ship);
+					board[startRow + i][startCol].setState(Cellstate.ship);
 				try {
 					cell[i] = board[startRow + i][startCol];
 				} catch (Exception k) {
 				}
 			}
 		} else {
-			// System.out.println("Invalid placement, try again.");
+			System.out.println("Invalid placement, try again.");
 			return null;
 		}
 
@@ -201,6 +205,7 @@ public class Board {
 		isEmpty = checkOverlapHorizontal(startRow, startCol, shipLength);
 
 		if (isEmpty == true) {
+		
 			for (int i = 0; i < shipLength; i++) {
 				board[startRow][startCol + i].setState(Cellstate.ship);
 				// ADD THESE CELLS TO THE SHIP OBJECT
@@ -208,6 +213,7 @@ public class Board {
 					cell[i] = board[startRow][startCol + i];
 				} catch (Exception k) {
 				}
+			
 			}
 		} else {
 			System.out.println("Invalid placement, try again.");

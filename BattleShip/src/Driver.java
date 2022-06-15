@@ -102,7 +102,7 @@ public class Driver {
 		while (valid != true) {
 			if (in.hasNextInt()) {
 				value = in.nextInt();
-				if (value < 1 && value > 9 ) {
+				if (value < 1 || value > 10 ) {
 					System.out.println("Please Enter A Valid Number: ");
 				} else {
 					valid = true;
