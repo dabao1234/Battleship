@@ -176,7 +176,7 @@ public class Board {
 				}
 			}
 		} else {
-			// System.out.println("Invalid placement, try again.");
+			System.out.println("Invalid placement, try again.");
 			return null;
 		}
 
