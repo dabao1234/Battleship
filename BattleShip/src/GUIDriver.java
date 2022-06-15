@@ -15,7 +15,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class GUIDriver extends Application {
-	//Constants for the board
+	// Constants for the board
 	final int num_Rows = 10;
 	final int num_Cols = 10;
 	final int WIDTH = 700;
@@ -63,8 +63,8 @@ public class GUIDriver extends Application {
 				tilesP2[i][z].setBackground(Background.fill(Color.BLUE));
 				// adds to the grid pane
 
-				boardP1.add(tilesP1[i][z], i, z);
-				boardP2.add(tilesP2[i][z], i, z);
+				boardP1.add(tilesP1[i][z], z, i);
+				boardP2.add(tilesP2[i][z], z, i);
 			}
 		}
 
@@ -135,38 +135,33 @@ public class GUIDriver extends Application {
 		// true means vertical
 		bttnVert.setOnAction(e -> {
 			orientation = true;
+			System.out.print(orientation);
+			
+
+		});
+
+		bttnHor.setOnAction(e -> {
+			orientation = false;
+			
 		});
 
 		// false means horizontal
-		bttnHor.setOnAction(e -> {
-			orientation = false;
-		});
 
 		// sets the turn label at the top
 		lblTurn.setAlignment(Pos.CENTER);
 		lblTurn.setText(p + " turn");
 
-		//Action event if the button is placed 
+		// Action event if the button is placed
 		for (int i = 0; i < num_Rows; i++) {
 			for (int z = 0; z < num_Cols; z++) {
-				//P2's board is clickable if it is player 1's turn
+				// P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
 					if (placeTurnP1 == true) {
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-						//if the orientation- vertical or horizontal is true, place the ship horizontally
+						// if the orientation- vertical or horizontal is true, place the ship
+						// horizontally
 						if (orientation == true && numP1Placed < 5) {
-							Ship maybeShip;
-							maybeShip = p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
-							if (maybeShip != null) {
-								p1Ships.add(maybeShip);
-								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
-								numP1Placed++;
-								p1Board.display();
-							}
-							//If the player chooses to place a ship vertically and the number of ships that are 
-							//placed is less than 5
-						} else if (orientation == false && numP1Placed < 5) {
 							Ship maybeShip;
 							maybeShip = p1Board.placeShipVertical(row, column, lengthShips[numP1Placed]);
 							if (maybeShip != null) {
@@ -175,45 +170,102 @@ public class GUIDriver extends Application {
 								numP1Placed++;
 								p1Board.display();
 							}
+							// If the player chooses to place a ship vertically and the number of ships that
+							// are
+							// placed is less than 5
+						} else if (orientation == false && numP1Placed < 5) {
+							Ship maybeShip;
+							maybeShip = p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
+							if (maybeShip != null) {
+								p1Ships.add(maybeShip);
+								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
+								numP1Placed++;
+								p1Board.display();
+							}
 
 						}
-						//Checks if all the ships are placed, if it is, swap players turn
+						// Checks if all the ships are placed, if it is, swap players turn
 						if (numP1Placed == 5) {
 							System.out.println("all placed");
 							placeTurnP1 = false;
 							placeTurnP2 = true;
+							lblTurn.setText("P2 Turn");
 						}
+					} else if (placeTurnP1 == false && placeTurnP2 == false) {
+						lblTurn.setText(p+" turn");
+						if (p.equals(Player.P2)) {
+							int column = ((FancyButton) e.getSource()).getCol();
+							int row = ((FancyButton) e.getSource()).getRow();
+							colorTiles(p1Board, tilesP1, 1);//updates GUI
+							
+							p1Board.hideShips();//hides on Board
+							hideShips(p1Board,tilesP1);//hides on GUI 
+							p2Board.showShips();//shows on Board
+							showShips(p2Board,tilesP2);	//shows on GUI
+							
+							p1Board.shoot(row, column);
+							p1Board.display();
+							
+							
+							// check for a win
+							p = Player.P1;
+							
+
+						}
+
 					}
 				});
-				//Ship placement for player 2
+				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
 					if (placeTurnP2 == true) {
+						
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
 						if (orientation == true && numP2Placed < 5) {
 							Ship maybeShip;
-							maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
+							maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
 							if (maybeShip != null) {
-								p1Ships.add(maybeShip);
+								p2Ships.add(maybeShip);
 								colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 								numP2Placed++;
-								p1Board.display();
+								p2Board.display();
 							}
 						} else if (orientation == false && numP2Placed < 5) {
 							Ship maybeShip;
-							maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
+							maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
 							if (maybeShip != null) {
-								p1Ships.add(maybeShip);
+								p2Ships.add(maybeShip);
 								colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 								numP2Placed++;
-								p1Board.display();
+								p2Board.display();
 							}
 
 						}
 						if (numP2Placed == 5) {
 							System.out.println("all placed");
 							placeTurnP2 = false;
+							p=Player.P1;
+							lblTurn.setText(p+" turn");
+							
 						}
+					} else if (placeTurnP1 == false && placeTurnP2 == false) {
+						lblTurn.setText(p+" turn");
+						if (p.equals(Player.P1)) {
+						colorTiles(p2Board, tilesP2, 1);
+						p2Board.hideShips();
+						hideShips(p2Board,tilesP2);
+						p1Board.showShips();
+						showShips(p1Board,tilesP1);
+					
+						int column = ((FancyButton) e.getSource()).getCol();
+						int row = ((FancyButton) e.getSource()).getRow();
+						p2Board.shoot(row, column);
+						p2Board.display();
+						
+					
+						p = Player.P2;
+						
+					}
 					}
 				});
 
@@ -221,32 +273,63 @@ public class GUIDriver extends Application {
 		}
 
 	}
+
 	/**
 	 * 
-	 * @param board - the current board 
-	 * @param buts - the buttons
-	 * @param numTiles - number of tiles
-	 * Method updates the board based on the status of each tile, grey for the ship, red 
-	 * if the ship is hit, and white if the tile was a miss
+	 * @param board    - the current board
+	 * @param buts     - the buttons
+	 * @param numTiles - number of tiles Method updates the board based on the
+	 *                 status of each tile, grey for the ship, red if the ship is
+	 *                 hit, and white if the tile was a miss
 	 */
 	public void colorTiles(Board board, Button[][] buts, int numTiles) {
 		Cell[][] bCells = board.getCells();
 		board.display();
-		
+
 		for (int i = 0; i < 10; i++) {
-			for(int j=0;j<10;j++) {
-				if(bCells[i][j].getState().equals(Cellstate.ship)) {
+			for (int j = 0; j < 10; j++) {
+				if (bCells[i][j].getState().equals(Cellstate.ship)) {
 					buts[i][j].setBackground((Background.fill(Color.GREY)));
-				}else if(bCells[i][j].getState().equals(Cellstate.hit)) {
+				} else if (bCells[i][j].getState().equals(Cellstate.hit)) {
 					buts[i][j].setBackground((Background.fill(Color.RED)));
-				}else if(bCells[i][j].getState().equals(Cellstate.miss)) {
+				} else if (bCells[i][j].getState().equals(Cellstate.miss)) {
 					buts[i][j].setBackground((Background.fill(Color.WHITE)));
 				}
 			}
 
 		}
-		
+
 	}
+
+	public void hideShips(Board board,Button[][] buts) {
+		Cell[][] bCells = board.getCells();
+		board.display();
+		
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if (bCells[i][j].getState().equals(Cellstate.ship)) {
+					buts[i][j].setBackground((Background.fill(Color.BLUE)));
+
+			}
+		}
+	}
+	}
+	
+	public void showShips(Board board,Button[][] buts) {
+		Cell[][] bCells = board.getCells();
+		board.display();
+		
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if (bCells[i][j].getState().equals(Cellstate.ship)) {
+					buts[i][j].setBackground((Background.fill(Color.GREY)));
+
+			}
+		}
+	}
+	}
+
+
 
 	public static void main(String[] args) {
 		launch(args);
