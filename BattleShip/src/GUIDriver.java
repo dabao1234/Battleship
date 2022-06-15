@@ -156,6 +156,7 @@ public class GUIDriver extends Application {
 			for (int z = 0; z < num_Cols; z++) {
 				// P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
+					lblTurn.setText(p+" turn");
 					if (placeTurnP1 == true) {
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
@@ -190,13 +191,15 @@ public class GUIDriver extends Application {
 							placeTurnP1 = false;
 							placeTurnP2 = true;
 							lblTurn.setText("P2 Turn");
+							p=Player.P2;
+							//hide P1 Ships 
+							hideShips(p1Board,tilesP1);
 						}
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
-						lblTurn.setText(p+" turn");
 						if (p.equals(Player.P2)) {
+							
 							int column = ((FancyButton) e.getSource()).getCol();
 							int row = ((FancyButton) e.getSource()).getRow();
-							colorTiles(p1Board, tilesP1, 1);//updates GUI
 							
 							p1Board.hideShips();//hides on Board
 							hideShips(p1Board,tilesP1);//hides on GUI 
@@ -205,20 +208,28 @@ public class GUIDriver extends Application {
 							
 							p1Board.shoot(row, column);
 							p1Board.display();
+							colorTilesShoot(p1Board, tilesP1, 1);
+							
 							
 							
 							// check for a win
 							p = Player.P1;
 							
+							p2Board.hideShips();//hides on Board
+							hideShips(p2Board,tilesP2);//hides on GUI 
+							p1Board.showShips();//shows on Board
+							showShips(p1Board,tilesP1);	//shows on GUI
+							
 
-						}
+						} 
 
 					}
 				});
 				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
+					lblTurn.setText(p+" turn");
 					if (placeTurnP2 == true) {
-						
+		
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
 						if (orientation == true && numP2Placed < 5) {
@@ -246,12 +257,14 @@ public class GUIDriver extends Application {
 							placeTurnP2 = false;
 							p=Player.P1;
 							lblTurn.setText(p+" turn");
-							
+							//hide p2 Ships and Show p1 ships
+							hideShips(p2Board,tilesP2);
+							showShips(p1Board,tilesP1);
 						}
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
-						lblTurn.setText(p+" turn");
+						
 						if (p.equals(Player.P1)) {
-						colorTiles(p2Board, tilesP2, 1);
+							
 						p2Board.hideShips();
 						hideShips(p2Board,tilesP2);
 						p1Board.showShips();
@@ -261,10 +274,15 @@ public class GUIDriver extends Application {
 						int row = ((FancyButton) e.getSource()).getRow();
 						p2Board.shoot(row, column);
 						p2Board.display();
+						colorTilesShoot(p2Board, tilesP2, 1);
 						
 					
 						p = Player.P2;
 						
+						p1Board.hideShips();//hides on Board
+						hideShips(p1Board,tilesP1);//hides on GUI 
+						p2Board.showShips();//shows on Board
+						showShips(p2Board,tilesP2);	//shows on GUI
 					}
 					}
 				});
@@ -291,6 +309,24 @@ public class GUIDriver extends Application {
 				if (bCells[i][j].getState().equals(Cellstate.ship)) {
 					buts[i][j].setBackground((Background.fill(Color.GREY)));
 				} else if (bCells[i][j].getState().equals(Cellstate.hit)) {
+					buts[i][j].setBackground((Background.fill(Color.RED)));
+				} else if (bCells[i][j].getState().equals(Cellstate.miss)) {
+					buts[i][j].setBackground((Background.fill(Color.WHITE)));
+				}
+			}
+
+		}
+
+	}
+	
+	public void colorTilesShoot(Board board, Button[][] buts, int numTiles) {
+		Cell[][] bCells = board.getCells();
+		board.display();
+
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				
+				if (bCells[i][j].getState().equals(Cellstate.hit)) {
 					buts[i][j].setBackground((Background.fill(Color.RED)));
 				} else if (bCells[i][j].getState().equals(Cellstate.miss)) {
 					buts[i][j].setBackground((Background.fill(Color.WHITE)));
