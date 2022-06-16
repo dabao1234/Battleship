@@ -219,7 +219,16 @@ public class GUIDriver extends Application {
 							p2Board.showShips();//shows on Board
 							showShips(p2Board,tilesP2);	//shows on GUI
 							
-							p1Board.shoot(row, column);
+							if(p1Board.shoot(row, column)==true) {
+								p = Player.P2;
+								stage1.setScene(betweens);
+								stage1.show();
+								
+								p1Board.hideShips();//hides on Board
+								hideShips(p1Board,tilesP1);//hides on GUI 
+								p2Board.showShips();//shows on Board
+								showShips(p2Board,tilesP2);	//shows on GUI
+							};
 							p1Board.display();
 							colorTilesShoot(p1Board, tilesP1, 1);
 							
@@ -297,7 +306,16 @@ public class GUIDriver extends Application {
 					
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-						p2Board.shoot(row, column);
+						if(p2Board.shoot(row, column)==true) {
+							p = Player.P2;
+							stage1.setScene(betweens);
+							stage1.show();
+							
+							p1Board.hideShips();//hides on Board
+							hideShips(p1Board,tilesP1);//hides on GUI 
+							p2Board.showShips();//shows on Board
+							showShips(p2Board,tilesP2);	//shows on GUI
+						};
 						p2Board.display();
 						colorTilesShoot(p2Board, tilesP2, 1);
 						
@@ -307,14 +325,7 @@ public class GUIDriver extends Application {
 							stage1.setScene(endScreen);
 							
 						}
-						p = Player.P2;
-						stage1.setScene(betweens);
-						stage1.show();
 						
-						p1Board.hideShips();//hides on Board
-						hideShips(p1Board,tilesP1);//hides on GUI 
-						p2Board.showShips();//shows on Board
-						showShips(p2Board,tilesP2);	//shows on GUI
 					}
 					}
 				});
