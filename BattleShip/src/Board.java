@@ -129,7 +129,7 @@ public class Board {
 
 			// checks mid
 			row = row + 1;// resets start row
-			for (int i = 0; i < shipLength + 2; i++) {
+			for (int i = 0; i < shipLength; i++) {
 				if ((board[row][startCol + i].getState()).equals(Cellstate.ship)) {
 					return false;
 				}
