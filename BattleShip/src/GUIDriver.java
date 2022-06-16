@@ -31,7 +31,7 @@ public class GUIDriver extends Application {
 	int numP1Placed = 0;
 	int numP2Placed = 0;
 	int[] lengthShips = { 2, 3, 3, 4, 5 };
-	
+
 	Player opp;
 
 	// make list of ships
@@ -117,15 +117,15 @@ public class GUIDriver extends Application {
 		end.getChildren().addAll(lblEnd, bttnReset);
 		end.setAlignment(Pos.CENTER);
 		Scene endScreen = new Scene(end, 700, 700);
-		
-		//mid Screen 
-		VBox a= new VBox();
+
+		// mid Screen
+		VBox a = new VBox();
 		Label lblmid = new Label();
-		Button bttnbetwen= new Button("Play next player");
+		Button bttnbetwen = new Button("Play next player");
 		a.getChildren().addAll(lblmid, bttnbetwen);
 		a.setAlignment(Pos.CENTER);
 		Scene betweens = new Scene(a, 100, 100);
-		
+
 		stage1.setScene(selection);
 		stage1.show();
 
@@ -133,36 +133,36 @@ public class GUIDriver extends Application {
 
 		// button events
 		bttnHuman.setOnAction(e -> {
-			lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP1Placed]);
+			lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP1Placed]);
 			stage1.setScene(game);
 			stage1.show();
 			opp = p.P2;
-			
+
 			if (p.equals(Player.P1)) {
 				lblTop.setText("Player 2 Board");
 				lblMid.setText("Player 1 Board");
 			}
 		});
-		
+
 		bttnAI.setOnAction(e -> {
 
 			stage1.setScene(game);
 			stage1.show();
 			opp = p.AI;
-			
+
 			if (p.equals(Player.P1)) {
 				lblTop.setText("Player 2 Board");
 				lblMid.setText("Player 1 Board");
 			}
 		});
-		
-		bttnReset.setOnAction(E->{
-			clear(tilesP1,tilesP2);
+
+		bttnReset.setOnAction(E -> {
+			clear(tilesP1, tilesP2);
 			p1Board.clear();
 			p2Board.clear();
-			
-			placeTurnP1=true;
-			
+
+			placeTurnP1 = true;
+
 			stage1.setScene(game);
 			stage1.show();
 		});
@@ -175,10 +175,10 @@ public class GUIDriver extends Application {
 
 		bttnHor.setOnAction(e -> {
 			orientation = false;
-			
+
 		});
 
-		bttnbetwen.setOnAction(e->{
+		bttnbetwen.setOnAction(e -> {
 			stage1.setScene(game);
 			stage1.show();
 		});
@@ -192,13 +192,13 @@ public class GUIDriver extends Application {
 			for (int z = 0; z < num_Cols; z++) {
 				// P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
-					lblTurn.setText(p+" turn");
-				
+					lblTurn.setText(p + " turn");
+
 					if (placeTurnP1 == true) {
-						
+
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-						
+
 						// if the orientation- vertical or horizontal is true, place the ship
 						// horizontally
 						if (orientation == true && numP1Placed < 5) {
@@ -209,9 +209,9 @@ public class GUIDriver extends Application {
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
 								try {
-								lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP1Placed]);
-								}catch(Exception l) {
-									
+									lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP1Placed]);
+								} catch (Exception l) {
+
 								}
 								p1Board.display();
 							}
@@ -226,9 +226,9 @@ public class GUIDriver extends Application {
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
 								try {
-								lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP1Placed]);
-								}catch(Exception h) {
-									
+									lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP1Placed]);
+								} catch (Exception h) {
+
 								}
 								p1Board.display();
 							}
@@ -240,58 +240,59 @@ public class GUIDriver extends Application {
 							placeTurnP1 = false;
 							placeTurnP2 = true;
 							lblTurn.setText("P2 Turn");
-							p=Player.P2;
+							p = Player.P2;
 							stage1.setScene(betweens);
 							stage1.show();
-							//hide P1 Ships 
-							hideShips(p1Board,tilesP1);
+							// hide P1 Ships
+							hideShips(p1Board, tilesP1);
 						}
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
 						if (p.equals(Player.P2)) {
-							
+
 							int column = ((FancyButton) e.getSource()).getCol();
 							int row = ((FancyButton) e.getSource()).getRow();
-							
-							p1Board.hideShips();//hides on Board
-							hideShips(p1Board,tilesP1);//hides on GUI 
-							p2Board.showShips();//shows on Board
-							showShips(p2Board,tilesP2);	//shows on GUI
-							
-							if(p1Board.shoot(row, column)==true) {
+
+							p1Board.hideShips();// hides on Board
+							hideShips(p1Board, tilesP1);// hides on GUI
+							p2Board.showShips();// shows on Board
+							showShips(p2Board, tilesP2); // shows on GUI
+
+							if (p1Board.shoot(row, column) == true) {
 								p = Player.P1;
 								stage1.setScene(betweens);
 								stage1.show();
-								
-								p2Board.hideShips();//hides on Board
-								hideShips(p2Board,tilesP2);//hides on GUI 
-								p1Board.showShips();//shows on Board
-								showShips(p1Board,tilesP1);	//shows on GUI
-								
+
+								p2Board.hideShips();// hides on Board
+								hideShips(p2Board, tilesP2);// hides on GUI
+								p1Board.showShips();// shows on Board
+								showShips(p1Board, tilesP1); // shows on GUI
+
 								stage1.setScene(betweens);
-							};
+							}
+							;
 							p1Board.display();
 							colorTilesShoot(p1Board, tilesP1, 1);
-							
-							//checks if there is a winner 
-							if(checkWin(p1Ships,p1Board)==true) {
-								//player 2 wins 
+
+							// checks if there is a winner
+							if (checkWin(p1Ships, p1Board) == true) {
+								// player 2 wins
 								lblEnd.setText("Player 2 wins!!!!!");
 								stage1.setScene(endScreen);
-								
+
 							}
-							
+
 							// check for a win
 
-						} 
+						}
 
 					}
 				});
 				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
-					lblTurn.setText(p+" turn");
-					
+					lblTurn.setText(p + " turn");
+
 					if (placeTurnP2 == true) {
-						if(opp.equals(Player.P2)) {
+						if (opp.equals(Player.P2)) {
 							int column = ((FancyButton) e.getSource()).getCol();
 							int row = ((FancyButton) e.getSource()).getRow();
 							if (orientation == true && numP2Placed < 5) {
@@ -302,9 +303,9 @@ public class GUIDriver extends Application {
 									colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 									numP2Placed++;
 									try {
-									lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
-									}catch(Exception f) {
-										
+										lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP2Placed]);
+									} catch (Exception f) {
+
 									}
 									p2Board.display();
 								}
@@ -316,9 +317,9 @@ public class GUIDriver extends Application {
 									colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 									numP2Placed++;
 									try {
-									lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
-									}catch(Exception f) {
-										
+										lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP2Placed]);
+									} catch (Exception f) {
+
 									}
 									p2Board.display();
 								}
@@ -327,50 +328,50 @@ public class GUIDriver extends Application {
 							if (numP2Placed == 5) {
 								System.out.println("all placed");
 								placeTurnP2 = false;
-								p=Player.P1;
-								lblTurn.setText(p+" turn");
+								p = Player.P1;
+								lblTurn.setText(p + " turn");
 								stage1.setScene(betweens);
 								stage1.show();
-								//hide p2 Ships and Show p1 ships
-								hideShips(p2Board,tilesP2);
-								showShips(p1Board,tilesP1);
+								// hide p2 Ships and Show p1 ships
+								hideShips(p2Board, tilesP2);
+								showShips(p1Board, tilesP1);
 							}
 						}
-						
+
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
-						
+
 						if (p.equals(Player.P1)) {
-							
-						p2Board.hideShips();
-						hideShips(p2Board,tilesP2);
-						p1Board.showShips();
-						showShips(p1Board,tilesP1);
-					
-						int column = ((FancyButton) e.getSource()).getCol();
-						int row = ((FancyButton) e.getSource()).getRow();
-						
-						
-						if(p2Board.shoot(row, column)==true) {
-							p = Player.P2;
-							stage1.setScene(betweens);
-							stage1.show();
-							
-							p1Board.hideShips();//hides on Board
-							hideShips(p1Board,tilesP1);//hides on GUI 
-							p2Board.showShips();//shows on Board
-							showShips(p2Board,tilesP2);	//shows on GUI
-						};
-						p2Board.display();
-						colorTilesShoot(p2Board, tilesP2, 1);
-						
-						if(checkWin(p2Ships,p2Board)==true) {
-							//player 1 wins 
-							lblEnd.setText("Player 1 wins!!!!!");
-							stage1.setScene(endScreen);
-							
+
+							p2Board.hideShips();
+							hideShips(p2Board, tilesP2);
+							p1Board.showShips();
+							showShips(p1Board, tilesP1);
+
+							int column = ((FancyButton) e.getSource()).getCol();
+							int row = ((FancyButton) e.getSource()).getRow();
+
+							if (p2Board.shoot(row, column) == true) {
+								p = Player.P2;
+								stage1.setScene(betweens);
+								stage1.show();
+
+								p1Board.hideShips();// hides on Board
+								hideShips(p1Board, tilesP1);// hides on GUI
+								p2Board.showShips();// shows on Board
+								showShips(p2Board, tilesP2); // shows on GUI
+							}
+							;
+							p2Board.display();
+							colorTilesShoot(p2Board, tilesP2, 1);
+
+							if (checkWin(p2Ships, p2Board) == true) {
+								// player 1 wins
+								lblEnd.setText("Player 1 wins!!!!!");
+								stage1.setScene(endScreen);
+
+							}
+
 						}
-						
-					}
 					}
 				});
 
@@ -405,14 +406,14 @@ public class GUIDriver extends Application {
 		}
 
 	}
-	
+
 	public void colorTilesShoot(Board board, Button[][] buts, int numTiles) {
 		Cell[][] bCells = board.getCells();
 		board.display();
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				
+
 				if (bCells[i][j].getState().equals(Cellstate.hit)) {
 					buts[i][j].setBackground((Background.fill(Color.RED)));
 				} else if (bCells[i][j].getState().equals(Cellstate.miss)) {
@@ -424,61 +425,60 @@ public class GUIDriver extends Application {
 
 	}
 
-	public void hideShips(Board board,Button[][] buts) {
+	public void hideShips(Board board, Button[][] buts) {
 		Cell[][] bCells = board.getCells();
 		board.display();
-		
+
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				if (bCells[i][j].getState().equals(Cellstate.ship)) {
 					buts[i][j].setBackground((Background.fill(Color.BLUE)));
 
+				}
 			}
 		}
 	}
-	}
-	
-	public void showShips(Board board,Button[][] buts) {
+
+	public void showShips(Board board, Button[][] buts) {
 		Cell[][] bCells = board.getCells();
 		board.display();
-		
+
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				if (bCells[i][j].getState().equals(Cellstate.ship)) {
 					buts[i][j].setBackground((Background.fill(Color.GREY)));
 
+				}
 			}
 		}
 	}
-	}
+
 	static boolean checkWin(ArrayList<Ship> ships, Board b) {
 		boolean won = true;
-		
-		for(Ship s : ships) {
-			
+
+		for (Ship s : ships) {
+
 			boolean a = s.getSunk(b);
-			
-			if(a) {
+
+			if (a) {
 				b.clearSunk(s);
 			}
-			
-			if(!a) {
+
+			if (!a) {
 				won = false;
 			}
 		}
 		return won;
 	}
-	
-	public void clear(Button[][] b1,Button[][] b2) {
+
+	public void clear(Button[][] b1, Button[][] b2) {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				b1[i][j].setBackground((Background.fill(Color.BLUE)));
 				b2[i][j].setBackground((Background.fill(Color.BLUE)));
 			}
 		}
-			}
-	
-
+	}
 
 	public static void main(String[] args) {
 		launch(args);
