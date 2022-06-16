@@ -31,6 +31,8 @@ public class GUIDriver extends Application {
 	int numP1Placed = 0;
 	int numP2Placed = 0;
 	int[] lengthShips = { 2, 3, 3, 4, 5 };
+	
+	Player opp;
 
 	// make list of ships
 	@Override
@@ -134,6 +136,20 @@ public class GUIDriver extends Application {
 
 			stage1.setScene(game);
 			stage1.show();
+			opp = p.P2;
+			
+			if (p.equals(Player.P1)) {
+				lblTop.setText("Player 2 Board");
+				lblMid.setText("Player 1 Board");
+			}
+		});
+		
+		bttnAI.setOnAction(e -> {
+
+			stage1.setScene(game);
+			stage1.show();
+			opp = p.AI;
+			
 			if (p.equals(Player.P1)) {
 				lblTop.setText("Player 2 Board");
 				lblMid.setText("Player 1 Board");
@@ -144,8 +160,6 @@ public class GUIDriver extends Application {
 		bttnVert.setOnAction(e -> {
 			orientation = true;
 			System.out.print(orientation);
-			
-
 		});
 
 		bttnHor.setOnAction(e -> {
@@ -171,6 +185,7 @@ public class GUIDriver extends Application {
 					if (placeTurnP1 == true) {
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
+						
 						// if the orientation- vertical or horizontal is true, place the ship
 						// horizontally
 						if (orientation == true && numP1Placed < 5) {
@@ -241,16 +256,8 @@ public class GUIDriver extends Application {
 							}
 							
 							// check for a win
-							stage1.setScene(betweens);
-							stage1.show();
-							p = Player.P1;
-							//enter the inbetween screen 
 							
 							
-							p2Board.hideShips();//hides on Board
-							hideShips(p2Board,tilesP2);//hides on GUI 
-							p1Board.showShips();//shows on Board
-							showShips(p1Board,tilesP1);	//shows on GUI
 							
 
 						} 
