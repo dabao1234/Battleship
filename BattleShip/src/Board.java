@@ -80,6 +80,7 @@ public class Board {
 		// checks to the left
 		row = startRow - 1;
 		col = startCol - 1;// this happens so it will start the column below start
+		
 		for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
 			try {
 				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
@@ -129,10 +130,15 @@ public class Board {
 
 			// checks mid
 			row = row + 1;// resets start row
-			for (int i = 0; i < shipLength; i++) {
-				if ((board[row][startCol + i].getState()).equals(Cellstate.ship)) {
-					return false;
+			for (int i = 0; i < shipLength + 2; i++) {
+				try {
+					if ((board[row][startCol + i].getState()).equals(Cellstate.ship)) {
+						return false;
+					}
+				}catch(Exception e) {
+					
 				}
+				
 			}
 
 			// checks below
