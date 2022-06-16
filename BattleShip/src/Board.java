@@ -69,7 +69,7 @@ public class Board {
 		// checks vertical overlap
 		for (int i = 0; i < shipLength; i++) {// plus two as it needs to check above and below ship length
 			try {
-				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
+				if ((board[row + i][col].getState()).equals(Cellstate.ship)) { 
 					return false;
 				}
 			} catch (Exception e) {
