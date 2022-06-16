@@ -59,7 +59,7 @@ public class Board {
 	 * Checks to make sure there is room to place a ship vertically
 	 * @param startrow where the ship starts in the row
 	 * @param startcol where the ship starts column
-	 * @return 
+	 * @return whether the ship is good to place or not
 	 */
 	public boolean checkAroundVertical(int startRow, int startCol, int shipLength) {
 
