@@ -87,6 +87,7 @@ public class GUIDriver extends Application {
 		// Creates play scene
 
 		VBox P2 = new VBox();
+		P2.setStyle("-fx-background-image: url('https://i.pinimg.com/originals/07/8e/53/078e53a1f98f3cf6c77d996e7a98c4b4.jpg')");
 		HBox orientations = new HBox();
 		Button bttnVert = new Button("Vertical");
 		Button bttnHor = new Button("Horizontal");
@@ -102,11 +103,11 @@ public class GUIDriver extends Application {
 		Button bttnHuman = new Button("Vs Human");
 		Button bttnAI = new Button("Vs AI");
 		srtButtons.getChildren().addAll(bttnHuman, bttnAI);
-
+		select.setStyle("-fx-background-image: url('https://www.cbc.ca/kids/images/battleship_play.jpg')");
 		srtButtons.setAlignment(Pos.CENTER);
 		select.getChildren().addAll(lblStart, srtButtons);
 		select.setAlignment(Pos.CENTER);
-		Scene selection = new Scene(select, 200, 200);
+		Scene selection = new Scene(select, 1000, 450);
 
 		// end Screen
 		VBox end = new VBox();
@@ -115,7 +116,17 @@ public class GUIDriver extends Application {
 		end.getChildren().addAll(lblEnd, bttnReset);
 		end.setAlignment(Pos.CENTER);
 		Scene endScreen = new Scene(end, 700, 700);
-
+		
+		//mid Screen 
+		VBox a= new VBox();
+		Label lblmid = new Label();
+		Button bttnbetwen= new Button("Next Player's Turn");
+		
+		a.setStyle("-fx-background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ea/BB61_USS_Iowa_BB61_broadside_USN.jpg')");
+		a.getChildren().addAll(lblmid, bttnbetwen);
+		
+		a.setAlignment(Pos.CENTER);
+		Scene betweens = new Scene(a, 200, 200);
 		stage1.setScene(selection);
 		stage1.show();
 
@@ -145,7 +156,10 @@ public class GUIDriver extends Application {
 			
 		});
 
-		// false means horizontal
+		bttnbetwen.setOnAction(e->{
+			stage1.setScene(game);
+			stage1.show();
+		});
 
 		// sets the turn label at the top
 		lblTurn.setAlignment(Pos.CENTER);
@@ -192,6 +206,8 @@ public class GUIDriver extends Application {
 							placeTurnP2 = true;
 							lblTurn.setText("P2 Turn");
 							p=Player.P2;
+							stage1.setScene(betweens);
+							stage1.show();
 							//hide P1 Ships 
 							hideShips(p1Board,tilesP1);
 						}
@@ -206,14 +222,33 @@ public class GUIDriver extends Application {
 							p2Board.showShips();//shows on Board
 							showShips(p2Board,tilesP2);	//shows on GUI
 							
-							p1Board.shoot(row, column);
+							if(p1Board.shoot(row, column)==true) {
+								p = Player.P2;
+								stage1.setScene(betweens);
+								stage1.show();
+								
+								p1Board.hideShips();//hides on Board
+								hideShips(p1Board,tilesP1);//hides on GUI 
+								p2Board.showShips();//shows on Board
+								showShips(p2Board,tilesP2);	//shows on GUI
+							};
 							p1Board.display();
 							colorTilesShoot(p1Board, tilesP1, 1);
 							
-							
+							//checks if there is a winner 
+							if(checkWin(p1Ships,p1Board)==true) {
+								//player 2 wins 
+								lblEnd.setText("Player 2 wins!!!!!");
+								stage1.setScene(endScreen);
+								
+							}
 							
 							// check for a win
+							stage1.setScene(betweens);
+							stage1.show();
 							p = Player.P1;
+							//enter the inbetween screen 
+							
 							
 							p2Board.hideShips();//hides on Board
 							hideShips(p2Board,tilesP2);//hides on GUI 
@@ -257,6 +292,8 @@ public class GUIDriver extends Application {
 							placeTurnP2 = false;
 							p=Player.P1;
 							lblTurn.setText(p+" turn");
+							stage1.setScene(betweens);
+							stage1.show();
 							//hide p2 Ships and Show p1 ships
 							hideShips(p2Board,tilesP2);
 							showShips(p1Board,tilesP1);
@@ -272,17 +309,26 @@ public class GUIDriver extends Application {
 					
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-						p2Board.shoot(row, column);
+						if(p2Board.shoot(row, column)==true) {
+							p = Player.P2;
+							stage1.setScene(betweens);
+							stage1.show();
+							
+							p1Board.hideShips();//hides on Board
+							hideShips(p1Board,tilesP1);//hides on GUI 
+							p2Board.showShips();//shows on Board
+							showShips(p2Board,tilesP2);	//shows on GUI
+						};
 						p2Board.display();
 						colorTilesShoot(p2Board, tilesP2, 1);
 						
-					
-						p = Player.P2;
+						if(checkWin(p2Ships,p2Board)==true) {
+							//player 1 wins 
+							lblEnd.setText("Player 1 wins!!!!!");
+							stage1.setScene(endScreen);
+							
+						}
 						
-						p1Board.hideShips();//hides on Board
-						hideShips(p1Board,tilesP1);//hides on GUI 
-						p2Board.showShips();//shows on Board
-						showShips(p2Board,tilesP2);	//shows on GUI
 					}
 					}
 				});
@@ -364,7 +410,33 @@ public class GUIDriver extends Application {
 		}
 	}
 	}
-
+	static boolean checkWin(ArrayList<Ship> ships, Board b) {
+		boolean won = true;
+		
+		for(Ship s : ships) {
+			
+			boolean a = s.getSunk(b);
+			
+			if(a) {
+				b.clearSunk(s);
+			}
+			
+			if(!a) {
+				won = false;
+			}
+		}
+		return won;
+	}
+	
+	public void clear(Button[][] b1,Button[][] b2) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				b1[i][j].setBackground((Background.fill(Color.BLUE)));
+				b2[i][j].setBackground((Background.fill(Color.BLUE)));
+			}
+		}
+			}
+	
 
 
 	public static void main(String[] args) {
