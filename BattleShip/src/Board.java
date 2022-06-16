@@ -129,6 +129,7 @@ public class Board {
 			}
 
 			// checks mid
+			int counter = 0;
 			row = row + 1;// resets start row
 			for (int i = 0; i < shipLength + 2; i++) {
 				try {
@@ -136,9 +137,12 @@ public class Board {
 						return false;
 					}
 				}catch(Exception e) {
-					
+					counter++;
 				}
 				
+			}
+			if(counter > 2) {
+				return false;
 			}
 
 			// checks below
