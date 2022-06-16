@@ -139,6 +139,17 @@ public class GUIDriver extends Application {
 				lblMid.setText("Player 1 Board");
 			}
 		});
+		
+		bttnReset.setOnAction(E->{
+			clear(tilesP1,tilesP2);
+			p1Board.clear();
+			p2Board.clear();
+			
+			placeTurnP1=true;
+			
+			stage1.setScene(game);
+			stage1.show();
+		});
 
 		// true means vertical
 		bttnVert.setOnAction(e -> {
