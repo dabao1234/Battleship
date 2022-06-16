@@ -129,14 +129,24 @@ public class Board {
 			}
 
 			// checks mid
+			int counter = 0;
 			row = row + 1;// resets start row
 			for (int i = 0; i < shipLength + 2; i++) {
-				
-				if ((board[row][startCol + i].getState()).equals(Cellstate.ship)) {
-					return false;
+				try {
+					if ((board[row][startCol + i].getState()).equals(Cellstate.ship)) {
+						return false;
+					}
+				}catch(Exception e) {
+					// Every time shipLength + 2 is out of bounds of the board, it'll add one to the counter
+					counter++;
 				}
 				
-				
+			}
+			// If the counter is over 2, we know the shipLength has gone out of bounds not just the
+			// shipLength + 2 (which can be out of bounds), so the ship can't be placed there and we return
+			// false!
+			if(counter > 2) {
+				return false;
 			}
 
 			// checks below
