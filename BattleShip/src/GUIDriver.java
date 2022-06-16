@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -245,6 +246,65 @@ public class GUIDriver extends Application {
 							stage1.show();
 							//hide P1 Ships 
 							hideShips(p1Board,tilesP1);
+							if(opp.equals(Player.AI)) {
+
+								Random r = new Random();
+								
+								for(int numP2Placed = 0; numP2Placed < 5; numP2Placed++) {
+								
+									orientation = r.nextBoolean();
+									if(orientation == true) {
+										column = r.nextInt(10);
+										row = r.nextInt(10 - lengthShips[numP2Placed]);
+									}
+									else {
+										column = r.nextInt(10 - lengthShips[numP2Placed]);
+										row = r.nextInt(10);
+									}
+									
+									if (orientation == true && numP2Placed < 5) {
+										Ship maybeShip;
+										maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
+										if (maybeShip != null) {
+											p2Ships.add(maybeShip);
+											colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
+											numP2Placed++;
+											try {
+											lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
+											}catch(Exception f) {
+												
+											}
+											p2Board.display();
+										}
+									} else if (orientation == false && numP2Placed < 5) {
+										Ship maybeShip;
+										maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
+										if (maybeShip != null) {
+											p2Ships.add(maybeShip);
+											colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
+											numP2Placed++;
+											try {
+											lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
+											}catch(Exception f) {
+												
+											}
+											p2Board.display();
+										}
+			
+									}
+									if (numP2Placed == 5) {
+										System.out.println("all placed");
+										placeTurnP2 = false;
+										p=Player.P1;
+										lblTurn.setText(p+" turn");
+										stage1.setScene(betweens);
+										stage1.show();
+										//hide p2 Ships and Show p1 ships
+										hideShips(p2Board,tilesP2);
+										showShips(p1Board,tilesP1);
+									}
+								}
+							}
 						}
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
 						if (p.equals(Player.P2)) {
@@ -291,9 +351,12 @@ public class GUIDriver extends Application {
 					lblTurn.setText(p+" turn");
 					
 					if (placeTurnP2 == true) {
+						int column;
+						int row;
+						
 						if(opp.equals(Player.P2)) {
-							int column = ((FancyButton) e.getSource()).getCol();
-							int row = ((FancyButton) e.getSource()).getRow();
+							column = ((FancyButton) e.getSource()).getCol();
+							row = ((FancyButton) e.getSource()).getRow();
 							if (orientation == true && numP2Placed < 5) {
 								Ship maybeShip;
 								maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
@@ -322,7 +385,7 @@ public class GUIDriver extends Application {
 									}
 									p2Board.display();
 								}
-
+	
 							}
 							if (numP2Placed == 5) {
 								System.out.println("all placed");
@@ -336,7 +399,6 @@ public class GUIDriver extends Application {
 								showShips(p1Board,tilesP1);
 							}
 						}
-						
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
 						
 						if (p.equals(Player.P1)) {
@@ -371,6 +433,7 @@ public class GUIDriver extends Application {
 						}
 						
 					}
+						
 					}
 				});
 
