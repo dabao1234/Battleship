@@ -65,31 +65,39 @@ public class Board {
 
 		int col = startCol;
 		int row = startRow;
+		
+		int counter = 0;
 
 		// checks vertical overlap
-		for (int i = 0; i < shipLength; i++) {// plus two as it needs to check above and below ship length
+		for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
 			try {
 				if ((board[row + i][col].getState()).equals(Cellstate.ship)) { 
 					return false;
 				}
 			} catch (Exception e) {
-				
+				counter++;
 			}
+		}
+		// If the counter is over 2, we know the shipLength has gone out of bounds not just the
+		// shipLength + 2 (which can be out of bounds), so the ship can't be placed there and we return
+		// false!
+		if(counter > 2) {
+			return false;
 		}
 
 		// checks to the left
 		row = startRow - 1;
 		col = startCol - 1;// this happens so it will start the column below start
-		
+				
 		for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
 			try {
 				if ((board[row + i][col].getState()).equals(Cellstate.ship)) {
 					return false;
 				}
 			} catch (Exception e) {
-				
 			}
 		}
+		
 		col = startCol + 1;// checks to the right of the place
 		for (int i = 0; i < shipLength + 2; i++) {// plus two as it needs to check above and below ship length
 			try {
