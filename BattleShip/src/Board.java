@@ -137,10 +137,14 @@ public class Board {
 						return false;
 					}
 				}catch(Exception e) {
+					// Every time shipLength + 2 is out of bounds of the board, it'll add one to the counter
 					counter++;
 				}
 				
 			}
+			// If the counter is over 2, we know the shipLength has gone out of bounds not just the
+			// shipLength + 2 (which can be out of bounds), so the ship can't be placed there and we return
+			// false!
 			if(counter > 2) {
 				return false;
 			}
