@@ -115,7 +115,15 @@ public class GUIDriver extends Application {
 		end.getChildren().addAll(lblEnd, bttnReset);
 		end.setAlignment(Pos.CENTER);
 		Scene endScreen = new Scene(end, 700, 700);
-
+		
+		//mid Screen 
+		VBox a= new VBox();
+		Label lblmid = new Label();
+		Button bttnbetwen= new Button("Play next player");
+		a.getChildren().addAll(lblmid, bttnbetwen);
+		a.setAlignment(Pos.CENTER);
+		Scene betweens = new Scene(a, 100, 100);
+		
 		stage1.setScene(selection);
 		stage1.show();
 
@@ -145,7 +153,10 @@ public class GUIDriver extends Application {
 			
 		});
 
-		// false means horizontal
+		bttnbetwen.setOnAction(e->{
+			stage1.setScene(game);
+			stage1.show();
+		});
 
 		// sets the turn label at the top
 		lblTurn.setAlignment(Pos.CENTER);
@@ -192,6 +203,8 @@ public class GUIDriver extends Application {
 							placeTurnP2 = true;
 							lblTurn.setText("P2 Turn");
 							p=Player.P2;
+							stage1.setScene(betweens);
+							stage1.show();
 							//hide P1 Ships 
 							hideShips(p1Board,tilesP1);
 						}
@@ -206,7 +219,16 @@ public class GUIDriver extends Application {
 							p2Board.showShips();//shows on Board
 							showShips(p2Board,tilesP2);	//shows on GUI
 							
-							p1Board.shoot(row, column);
+							if(p1Board.shoot(row, column)==true) {
+								p = Player.P2;
+								stage1.setScene(betweens);
+								stage1.show();
+								
+								p1Board.hideShips();//hides on Board
+								hideShips(p1Board,tilesP1);//hides on GUI 
+								p2Board.showShips();//shows on Board
+								showShips(p2Board,tilesP2);	//shows on GUI
+							};
 							p1Board.display();
 							colorTilesShoot(p1Board, tilesP1, 1);
 							
@@ -219,7 +241,11 @@ public class GUIDriver extends Application {
 							}
 							
 							// check for a win
+							stage1.setScene(betweens);
+							stage1.show();
 							p = Player.P1;
+							//enter the inbetween screen 
+							
 							
 							p2Board.hideShips();//hides on Board
 							hideShips(p2Board,tilesP2);//hides on GUI 
@@ -263,6 +289,8 @@ public class GUIDriver extends Application {
 							placeTurnP2 = false;
 							p=Player.P1;
 							lblTurn.setText(p+" turn");
+							stage1.setScene(betweens);
+							stage1.show();
 							//hide p2 Ships and Show p1 ships
 							hideShips(p2Board,tilesP2);
 							showShips(p1Board,tilesP1);
@@ -278,7 +306,16 @@ public class GUIDriver extends Application {
 					
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
-						p2Board.shoot(row, column);
+						if(p2Board.shoot(row, column)==true) {
+							p = Player.P2;
+							stage1.setScene(betweens);
+							stage1.show();
+							
+							p1Board.hideShips();//hides on Board
+							hideShips(p1Board,tilesP1);//hides on GUI 
+							p2Board.showShips();//shows on Board
+							showShips(p2Board,tilesP2);	//shows on GUI
+						};
 						p2Board.display();
 						colorTilesShoot(p2Board, tilesP2, 1);
 						
@@ -288,12 +325,7 @@ public class GUIDriver extends Application {
 							stage1.setScene(endScreen);
 							
 						}
-						p = Player.P2;
 						
-						p1Board.hideShips();//hides on Board
-						hideShips(p1Board,tilesP1);//hides on GUI 
-						p2Board.showShips();//shows on Board
-						showShips(p2Board,tilesP2);	//shows on GUI
 					}
 					}
 				});

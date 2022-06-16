@@ -73,7 +73,7 @@ public class Board {
 					return false;
 				}
 			} catch (Exception e) {
-
+				
 			}
 		}
 
@@ -86,7 +86,7 @@ public class Board {
 					return false;
 				}
 			} catch (Exception e) {
-
+				
 			}
 		}
 		col = startCol + 1;// checks to the right of the place
