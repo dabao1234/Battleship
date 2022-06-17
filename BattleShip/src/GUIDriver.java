@@ -177,7 +177,9 @@ public class GUIDriver extends Application {
 			clear(tilesP1, tilesP2);
 			p1Board.clear();
 			p2Board.clear();
-
+			
+			numP1Placed=0;
+			numP2Placed=0;
 			placeTurnP1 = true;
 
 			stage1.setScene(game);
