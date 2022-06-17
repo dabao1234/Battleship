@@ -224,17 +224,12 @@ public class Driver {
 	 * @param b2 - player 2's board
 	 * @return true when the turn is complete
 	 */
-	
-	static int lastRow = -1;
-	static int lastCol = -1;
-	
 	static boolean turn(Scanner in, Player p, Board b1, Board b2, ArrayList<Ship> p1Ships, ArrayList<Ship> p2Ships) {
 		if(gameOver) {
 			return false;
 		}
 		
 		Random r = new Random();
-		
 		
 		System.out.println(p + "'s turn!");
 		int row;
@@ -261,30 +256,8 @@ public class Driver {
 			row = robustInt(in) - 1;
 		}
 		else {
-			if(lastRow > 0) {
-				col = lastCol;
-				row = lastRow;
-				if(checkAI(row, col-1, b1)) {
-					col = col-1;
-				}
-				else if(checkAI(row, col+1, b1)) {
-					col = col+1;
-				}
-				else if(checkAI(row-1, col, b1)) {
-					row = row-1;
-				}
-				else if(checkAI(row+1, col, b1)) {
-					row = row+1;
-				}
-				else {
-					col = r.nextInt(10);
-					row = r.nextInt(10);
-				}
-			}
-			else {
-				col = r.nextInt(10);
-				row = r.nextInt(10);
-			}
+			col = r.nextInt(10);
+			row = r.nextInt(10);
 		}
 		
 		//Player 1 or Player 2's turn to shoot the ships
@@ -308,81 +281,16 @@ public class Driver {
 			b1.display();
 			b2.display();
 			if(shoot(row, col, b1, p1Ships)) {
-				// Goes to the next player's turn
 				b1.display();
 				p = Player.P1;
-				lastCol = -1;
-				lastRow = -1;
 				
 				return turn(in, p, b1, b2, p1Ships, p2Ships);
 			}
 			else {
-				lastCol = col;
-				lastRow = row;
 				return turn(in, p, b1, b2, p1Ships, p2Ships);
 			}
 		}
-	}
-	
-	private static boolean checkAI(int row, int col, Board b1) {
-		if(b1.getCells()[col][row].equals(Cellstate.empty) || b1.getCells()[col][row].equals(Cellstate.ship)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	/**
-	 * 
-	 * @param in
-	 * @param p
-	 * @param b1
-	 * @param b2
-	 * @param p1Ships
-	 * @param p2Ships
-	 * @return
-	 */
-	static boolean aiTurn(int r, int c, Player p, Board b1, Board b2, ArrayList<Ship> p1Ships, ArrayList<Ship> p2Ships) {
-		boolean placed = false;
-		boolean d = false;
-		
-		while(!d) {
-			placed = false;
-			try {
-				d = shoot(r+1, c, b1, p1Ships);
-				placed = true;
-			}catch(Exception e) {
-				
-			}
-			if(!placed) {
-				try {
-					d = shoot(r-1, c, b1, p1Ships);
-					placed = true;
-				}catch(Exception e) {
-					
-				}
-			}
-			
-			if(!placed) {
-				try {
-					d = shoot(r, c-1, b1, p1Ships);
-					placed = true;
-				}catch(Exception e) {
-					
-				}
-			}
-			if(!placed) {
-				try {
-					d = shoot(r, c+1, b1, p1Ships);
-					placed = true;
-				}catch(Exception e) {
-					
-				}
-			}
-		}
-				
-		return placed;
+		//ADD FOR SHIP IN SHIPS CHECKSUNK: CALL CLEARMISS
 	}
 	
 	
