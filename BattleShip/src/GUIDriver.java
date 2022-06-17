@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -141,6 +142,7 @@ public class GUIDriver extends Application {
 		a.setAlignment(Pos.CENTER);
 		Scene betweens = new Scene(a, 450, 370);
 
+
 		stage1.setScene(selection);
 		stage1.show();
 
@@ -258,12 +260,77 @@ public class GUIDriver extends Application {
 							p = Player.P2;
 							stage1.setScene(betweens);
 							stage1.show();
+
+							//hide P1 Ships 
+							hideShips(p1Board,tilesP1);
+							
+							if(opp.equals(Player.AI)) {
+
+								Random r = new Random();
+								numP2Placed = 0;
+								
+								while(numP2Placed < 5) {
+								
+									orientation = r.nextBoolean();
+									if(orientation == true) {
+										column = r.nextInt(10);
+										row = r.nextInt(10 - lengthShips[numP2Placed]);
+									}
+									else {
+										column = r.nextInt(10 - lengthShips[numP2Placed]);
+										row = r.nextInt(10);
+									}
+									
+									if (orientation == true && numP2Placed < 5) {
+										Ship maybeShip;
+										maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
+										if (maybeShip != null) {
+											p2Ships.add(maybeShip);
+											colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
+											numP2Placed++;
+											try {
+											lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
+											}catch(Exception f) {
+												
+											}
+											p2Board.display();
+										}
+									} else if (orientation == false && numP2Placed < 5) {
+										Ship maybeShip;
+										maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
+										if (maybeShip != null) {
+											p2Ships.add(maybeShip);
+											colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
+											numP2Placed++;
+											try {
+											lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
+											}catch(Exception f) {
+												
+											}
+											p2Board.display();
+										}
+			
+									}
+									if (numP2Placed == 5) {
+										System.out.println("all placed");
+										placeTurnP2 = false;
+										p=Player.P1;
+										lblTurn.setText(p+" turn");
+										stage1.setScene(betweens);
+										stage1.show();
+										//hide p2 Ships and Show p1 ships
+										hideShips(p2Board,tilesP2);
+										showShips(p1Board,tilesP1);
+									}
+								}
+							}
 							// hide P1 Ships
 							hideShips(p1Board, tilesP1);
 						}
+						// if all placement is over, shoot time
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
 						if (p.equals(Player.P2)) {
-
+							colorTilesShoot(p1Board, tilesP1, 1);
 							int column = ((FancyButton) e.getSource()).getCol();
 							int row = ((FancyButton) e.getSource()).getRow();
 
@@ -272,7 +339,7 @@ public class GUIDriver extends Application {
 							p2Board.showShips();// shows on Board
 							showShips(p2Board, tilesP2); // shows on GUI
 
-							if (p1Board.shoot(row, column) == true) {
+							if (p1Board.shoot(row, column)) {
 								p = Player.P1;
 								stage1.setScene(betweens);
 								stage1.show();
@@ -281,11 +348,13 @@ public class GUIDriver extends Application {
 								hideShips(p2Board, tilesP2);// hides on GUI
 								p1Board.showShips();// shows on Board
 								showShips(p1Board, tilesP1); // shows on GUI
-
+								
 								stage1.setScene(betweens);
+								colorTilesShoot(p1Board, tilesP1, 1);
 							}
 							;
 							p1Board.display();
+							checkWin(p1Ships, p1Board);
 							colorTilesShoot(p1Board, tilesP1, 1);
 
 							// checks if there is a winner
@@ -304,12 +373,19 @@ public class GUIDriver extends Application {
 				});
 				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
+
 					lblTurn.setText(p + "'s turn");
 
+
+					int column;
+					int row;
+
+
 					if (placeTurnP2 == true) {
+						
 						if (opp.equals(Player.P2)) {
-							int column = ((FancyButton) e.getSource()).getCol();
-							int row = ((FancyButton) e.getSource()).getRow();
+							column = ((FancyButton) e.getSource()).getCol();
+							row = ((FancyButton) e.getSource()).getRow();
 							if (orientation == true && numP2Placed < 5) {
 								Ship maybeShip;
 								maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
@@ -338,7 +414,7 @@ public class GUIDriver extends Application {
 									}
 									p2Board.display();
 								}
-
+	
 							}
 							if (numP2Placed == 5) {
 								System.out.println("all placed");
@@ -356,38 +432,71 @@ public class GUIDriver extends Application {
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
 
 						if (p.equals(Player.P1)) {
+							colorTilesShoot(p2Board, tilesP2, 1);
+							boolean done;
 
 							p2Board.hideShips();
 							hideShips(p2Board, tilesP2);
 							p1Board.showShips();
 							showShips(p1Board, tilesP1);
 
-							int column = ((FancyButton) e.getSource()).getCol();
-							int row = ((FancyButton) e.getSource()).getRow();
+							column = ((FancyButton) e.getSource()).getCol();
+							row = ((FancyButton) e.getSource()).getRow();
+							
+							done = p2Board.shoot(row, column);
 
-							if (p2Board.shoot(row, column) == true) {
-								p = Player.P2;
-								stage1.setScene(betweens);
-								stage1.show();
+							if (done) {
+								p = opp;
+								if(p.equals(Player.P2)) {
+									stage1.setScene(betweens);
+									stage1.show();
 
-								p1Board.hideShips();// hides on Board
-								hideShips(p1Board, tilesP1);// hides on GUI
-								p2Board.showShips();// shows on Board
-								showShips(p2Board, tilesP2); // shows on GUI
+									p1Board.hideShips();// hides on Board
+									hideShips(p1Board, tilesP1);// hides on GUI
+									p2Board.showShips();// shows on Board
+									showShips(p2Board, tilesP2); // shows on GUI
+									colorTilesShoot(p2Board, tilesP2, 1);
+								}
 							}
-							;
 							p2Board.display();
+							checkWin(p2Ships, p2Board);
 							colorTilesShoot(p2Board, tilesP2, 1);
 
 							if (checkWin(p2Ships, p2Board) == true) {
 								// player 1 wins
 								lblEnd.setText("Player 1 wins!!!!!");
 								stage1.setScene(endScreen);
+							}
+							
+							if(p.equals(Player.AI) && done) {
+								Random r = new Random();
+								boolean done1 = false;
+								
+								while(!done1) {
+									column = r.nextInt(10);
+									row = r.nextInt(10);
+									done1 = p1Board.shoot(row, column);
+								}
+					
+								p = Player.P1;
+								stage1.show();
 
+															
+								colorTilesShoot(p1Board, tilesP1, 1);
+
+								// checks if there is a winner
+								if (checkWin(p1Ships, p1Board) == true) {
+									// player 2 wins
+									lblEnd.setText("You lose!");
+									stage1.setScene(endScreen);
+
+								}
 							}
 
 						}
+						
 					}
+					
 				});
 
 			}
