@@ -209,7 +209,9 @@ public class GUIDriver extends Application {
 			for (int z = 0; z < num_Cols; z++) {
 				// P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
-					lblTurn.setText(p + "'s turn");
+					
+					// FIX THIS
+					lblTurn.setText(p + "'s turn. " + "Next ship length: 2");
 
 					if (placeTurnP1 == true) {
 
@@ -225,11 +227,8 @@ public class GUIDriver extends Application {
 								p1Ships.add(maybeShip);
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
-								try {
-									lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
-								} catch (Exception l) {
-
-								}
+								lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
+								
 								p1Board.display();
 							}
 							// If the player chooses to place a ship vertically and the number of ships that
@@ -242,11 +241,8 @@ public class GUIDriver extends Application {
 								p1Ships.add(maybeShip);
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
-								try {
-									lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
-								} catch (Exception h) {
-
-								}
+								lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
+								
 								p1Board.display();
 							}
 
@@ -257,12 +253,15 @@ public class GUIDriver extends Application {
 							placeTurnP1 = false;
 							placeTurnP2 = true;
 							lblTurn.setText("P2's Turn");
-							p = Player.P2;
-							stage1.setScene(betweens);
-							stage1.show();
+							
+							if(opp.equals(Player.P2)) {
+								p = Player.P2;
+								stage1.setScene(betweens);
+								stage1.show();
 
-							//hide P1 Ships 
-							hideShips(p1Board,tilesP1);
+								//hide P1 Ships 
+								hideShips(p1Board,tilesP1);
+							}
 							
 							if(opp.equals(Player.AI)) {
 
@@ -325,7 +324,7 @@ public class GUIDriver extends Application {
 								}
 							}
 							// hide P1 Ships
-							hideShips(p1Board, tilesP1);
+							//hideShips(p1Board, tilesP1);
 						}
 						// if all placement is over, shoot time
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
@@ -343,6 +342,8 @@ public class GUIDriver extends Application {
 								p = Player.P1;
 								stage1.setScene(betweens);
 								stage1.show();
+								
+								lblTurn.setText(p+" turn");
 
 								p2Board.hideShips();// hides on Board
 								hideShips(p2Board, tilesP2);// hides on GUI
@@ -373,8 +374,9 @@ public class GUIDriver extends Application {
 				});
 				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
-
-					lblTurn.setText(p + "'s turn");
+					
+					// FIX THIS
+					lblTurn.setText(p + "'s turn. Next ship length: 2");
 
 
 					int column;
