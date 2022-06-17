@@ -38,7 +38,8 @@ public class GUIDriver extends Application {
 	@Override
 	public void start(Stage stage1) throws Exception {
 		// board objects
-
+		lblTurn.setAlignment(Pos.CENTER);
+		lblTurn.setStyle("-fx-border-color: black; -fx-font-size: 30; -fx-background-color: linear-gradient(to bottom, #f2f2f2, #d4d4d4);");
 		Board p1Board = new Board(10, 10, Player.P1);
 		Board p2Board = new Board(10, 10, Player.P2);
 		// Creates the buttons for P1
@@ -89,18 +90,23 @@ public class GUIDriver extends Application {
 		// Creates play scene
 
 		VBox P2 = new VBox();
-		P2.setStyle("-fx-background-image: url('https://i.pinimg.com/originals/07/8e/53/078e53a1f98f3cf6c77d996e7a98c4b4.jpg')");
+		P2.setStyle(
+				"-fx-background-image: url('https://i.pinimg.com/originals/07/8e/53/078e53a1f98f3cf6c77d996e7a98c4b4.jpg')");
 		HBox orientations = new HBox();
 		Button bttnVert = new Button("Vertical");
+		bttnVert.setStyle("-fx-font-size: 20");
 		Button bttnHor = new Button("Horizontal");
+		bttnHor.setStyle("-fx-font-size: 20");
 		orientations.getChildren().addAll(bttnVert, bttnHor);
+		P2.setAlignment(Pos.CENTER);
 		P2.getChildren().addAll(lblTurn, top, boardP2, mid, boardP1, orientations);
 		Scene game = new Scene(P2, 500, 700);
 
 		// Selection Screen
 
 		VBox select = new VBox();
-		Label lblStart = new Label("Welcom to BATTLESHIP!");
+		Label lblStart = new Label("Welcome to Battleship");
+		lblStart.setStyle("-fx-font-size: 30; -fx-text-fill: white;");
 		HBox srtButtons = new HBox();
 		Button bttnHuman = new Button("Vs Human");
 		Button bttnAI = new Button("Vs AI");
@@ -113,30 +119,28 @@ public class GUIDriver extends Application {
 
 		// end Screen
 		VBox end = new VBox();
+		end.setStyle("-fx-background-image: url('https://pixeljoint.com/files/icons/full/win__r1340336691.gif')");
 		Label lblEnd = new Label();
+		lblEnd.setStyle("-fx-font-size: 30; -fx-text-fill: white; -fx-background-color: black");
 		Button bttnReset = new Button("Play Again");
+		bttnReset.setStyle("-fx-font-size:30");
 		end.getChildren().addAll(lblEnd, bttnReset);
 		end.setAlignment(Pos.CENTER);
-		Scene endScreen = new Scene(end, 700, 700);
+		Scene endScreen = new Scene(end, 750, 700);
 
 		// mid Screen
 		VBox a = new VBox();
 		Label lblmid = new Label();
-<<<<<<< HEAD
-		Button bttnbetwen= new Button("Next Player's Turn");
-		
-		a.setStyle("-fx-background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ea/BB61_USS_Iowa_BB61_broadside_USN.jpg')");
-		a.getChildren().addAll(lblmid, bttnbetwen);
-		
-		a.setAlignment(Pos.CENTER);
-		Scene betweens = new Scene(a, 200, 200);
-=======
-		Button bttnbetwen = new Button("Play next player");
-		a.getChildren().addAll(lblmid, bttnbetwen);
-		a.setAlignment(Pos.CENTER);
-		Scene betweens = new Scene(a, 100, 100);
 
->>>>>>> branch 'main' of https://github.com/dabao1234/Battleship.git
+		Button bttnbetwen = new Button("Next Player's Turn");
+
+		a.setStyle(
+				"-fx-background-image: url('https://c.tenor.com/dIYElE0kJHQAAAAC/wee-ship.gif')");
+		a.getChildren().addAll(lblmid, bttnbetwen);
+
+		a.setAlignment(Pos.CENTER);
+		Scene betweens = new Scene(a, 450, 370);
+
 		stage1.setScene(selection);
 		stage1.show();
 
@@ -144,7 +148,7 @@ public class GUIDriver extends Application {
 
 		// button events
 		bttnHuman.setOnAction(e -> {
-			lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP1Placed]);
+			lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
 			stage1.setScene(game);
 			stage1.show();
 			opp = p.P2;
@@ -203,7 +207,7 @@ public class GUIDriver extends Application {
 			for (int z = 0; z < num_Cols; z++) {
 				// P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
-					lblTurn.setText(p + " turn");
+					lblTurn.setText(p + "'s turn");
 
 					if (placeTurnP1 == true) {
 
@@ -220,7 +224,7 @@ public class GUIDriver extends Application {
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
 								try {
-									lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP1Placed]);
+									lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
 								} catch (Exception l) {
 
 								}
@@ -237,7 +241,7 @@ public class GUIDriver extends Application {
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
 								try {
-									lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP1Placed]);
+									lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
 								} catch (Exception h) {
 
 								}
@@ -250,7 +254,7 @@ public class GUIDriver extends Application {
 							System.out.println("all placed");
 							placeTurnP1 = false;
 							placeTurnP2 = true;
-							lblTurn.setText("P2 Turn");
+							lblTurn.setText("P2's Turn");
 							p = Player.P2;
 							stage1.setScene(betweens);
 							stage1.show();
@@ -300,7 +304,7 @@ public class GUIDriver extends Application {
 				});
 				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
-					lblTurn.setText(p + " turn");
+					lblTurn.setText(p + "'s turn");
 
 					if (placeTurnP2 == true) {
 						if (opp.equals(Player.P2)) {
@@ -314,7 +318,7 @@ public class GUIDriver extends Application {
 									colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 									numP2Placed++;
 									try {
-										lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP2Placed]);
+										lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP2Placed]);
 									} catch (Exception f) {
 
 									}
@@ -328,7 +332,7 @@ public class GUIDriver extends Application {
 									colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 									numP2Placed++;
 									try {
-										lblTurn.setText(p + " turn" + " next ship is:" + lengthShips[numP2Placed]);
+										lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP2Placed]);
 									} catch (Exception f) {
 
 									}
@@ -340,7 +344,7 @@ public class GUIDriver extends Application {
 								System.out.println("all placed");
 								placeTurnP2 = false;
 								p = Player.P1;
-								lblTurn.setText(p + " turn");
+								lblTurn.setText(p + "'s turn");
 								stage1.setScene(betweens);
 								stage1.show();
 								// hide p2 Ships and Show p1 ships
