@@ -179,6 +179,8 @@ public class GUIDriver extends Application {
 			p2Board.clear();
 
 			placeTurnP1 = true;
+			numP1Placed = 0;
+			numP2Placed = 0;
 
 			stage1.setScene(game);
 			stage1.show();
@@ -479,12 +481,15 @@ public class GUIDriver extends Application {
 							}
 							
 							if(p.equals(Player.AI) && done) {
-								Random r = new Random();
+								Cell k;
 								boolean done1 = false;
 								
 								while(!done1) {
-									column = r.nextInt(10);
-									row = r.nextInt(10);
+									k = p1Board.getRandom();
+									
+									row = k.getRow();
+									column = k.getCol();
+									
 									done1 = p1Board.shoot(row, column);
 								}
 					

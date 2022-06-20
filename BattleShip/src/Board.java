@@ -1,8 +1,12 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Board {
 	private Cell[][] board;
 	private int row;
 	private int col;
 	private Player player;
+	private ArrayList<Cell> possible = new ArrayList<>();
 
 	/**
 	 * Constructor to create a board
@@ -18,6 +22,7 @@ public class Board {
 		for (int i = 0; i < aRows; i++) {
 			for (int j = 0; j < aCols; j++) {
 				board[i][j] = new Cell(i, j); // no color
+				possible.add(board[i][j]);
 			}
 		}
 	}
@@ -386,6 +391,16 @@ public class Board {
 			return false;
 		}
 	}
+	
+	public Cell getRandom() {
+		Random r = new Random();
+		int c = r.nextInt(possible.size());
+		
+		Cell d = possible.get(c);
+		
+		return d;
+	}
+
 
 	/**
 	 * Shoots at the given coordinates
@@ -402,6 +417,7 @@ public class Board {
 			if (!hasAttempt(row, col)) {
 				// if not, make it a hit
 				board[row][col].setState(Cellstate.hit);
+				possible.remove(board[row][col]);
 				return false;
 			} else {
 				// if so, we want them to enter another thing

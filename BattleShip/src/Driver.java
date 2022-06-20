@@ -281,13 +281,17 @@ public class Driver {
 					row = row+1;
 				}
 				else {
-					col = r.nextInt(10);
-					row = r.nextInt(10);
+					Cell z = b1.getRandom();
+
+					col = z.getCol();
+					row = z.getRow();
 				}
 			}
 			else {
-				col = r.nextInt(10);
-				row = r.nextInt(10);
+				Cell z = b1.getRandom();
+
+				col = z.getCol();
+				row = z.getRow();
 			}
 		}
 		
