@@ -265,15 +265,19 @@ public class Driver {
 				col = lastCol;
 				row = lastRow;
 				if(checkAI(row, col-1, b1)) {
+					System.out.println("A");
 					col = col-1;
 				}
 				else if(checkAI(row, col+1, b1)) {
+					System.out.println("B");
 					col = col+1;
 				}
 				else if(checkAI(row-1, col, b1)) {
+					System.out.println("C");
 					row = row-1;
 				}
 				else if(checkAI(row+1, col, b1)) {
+					System.out.println("D");
 					row = row+1;
 				}
 				else {
@@ -325,7 +329,7 @@ public class Driver {
 	}
 	
 	private static boolean checkAI(int row, int col, Board b1) {
-		if(b1.getCells()[col][row].equals(Cellstate.empty) || b1.getCells()[col][row].equals(Cellstate.ship)) {
+		if(b1.getCells()[col][row].getState().equals(Cellstate.empty) || b1.getCells()[col][row].getState().equals(Cellstate.ship)) {
 			return true;
 		}
 		else {

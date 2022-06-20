@@ -227,7 +227,11 @@ public class GUIDriver extends Application {
 								p1Ships.add(maybeShip);
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
-								lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
+								try {
+									lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
+								}catch(Exception l) {
+									
+								}
 								
 								p1Board.display();
 							}
@@ -241,7 +245,11 @@ public class GUIDriver extends Application {
 								p1Ships.add(maybeShip);
 								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
 								numP1Placed++;
-								lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
+								try {
+									lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
+								}catch(Exception f) {
+									
+								}
 								
 								p1Board.display();
 							}
