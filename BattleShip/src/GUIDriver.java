@@ -132,12 +132,12 @@ public class GUIDriver extends Application {
 		// mid Screen
 		VBox a = new VBox();
 		Label lblmid = new Label();
-
-		Button bttnbetwen = new Button("Next Player's Turn");
+		Button bttnBetween = new Button("Next Player's Turn");
+		bttnBetween.setStyle("-fx-font-size: 20;");
 
 		a.setStyle(
 				"-fx-background-image: url('https://c.tenor.com/dIYElE0kJHQAAAAC/wee-ship.gif')");
-		a.getChildren().addAll(lblmid, bttnbetwen);
+		a.getChildren().addAll(lblmid, bttnBetween);
 
 		a.setAlignment(Pos.CENTER);
 		Scene betweens = new Scene(a, 450, 370);
@@ -177,7 +177,9 @@ public class GUIDriver extends Application {
 			clear(tilesP1, tilesP2);
 			p1Board.clear();
 			p2Board.clear();
-
+			
+			numP1Placed=0;
+			numP2Placed=0;
 			placeTurnP1 = true;
 
 			stage1.setScene(game);
@@ -195,7 +197,7 @@ public class GUIDriver extends Application {
 
 		});
 
-		bttnbetwen.setOnAction(e -> {
+		bttnBetween.setOnAction(e -> {
 			stage1.setScene(game);
 			stage1.show();
 		});
