@@ -558,7 +558,12 @@ public class GUIDriver extends Application {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param board - board
+	 * @param buts - buttons
+	 * Hide the ships on the board
+	 */
 	public void hideShips(Board board, Button[][] buts) {
 		Cell[][] bCells = board.getCells();
 		board.display();
@@ -572,7 +577,12 @@ public class GUIDriver extends Application {
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @param board - the board
+	 * @param buts - buttons
+	 * Show the ships on the board
+	 */
 	public void showShips(Board board, Button[][] buts) {
 		Cell[][] bCells = board.getCells();
 		board.display();
@@ -586,7 +596,13 @@ public class GUIDriver extends Application {
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @param ships - the ships
+	 * @param b - the board
+	 * @return true if all the ships are sunk
+	 * 
+	 */
 	static boolean checkWin(ArrayList<Ship> ships, Board b) {
 		boolean won = true;
 
@@ -604,7 +620,12 @@ public class GUIDriver extends Application {
 		}
 		return won;
 	}
-
+	/**
+	 * 
+	 * @param b1 - board 1
+	 * @param b2 - board 2
+	 * Clear the board/Set them all to blue
+	 */
 	public void clear(Button[][] b1, Button[][] b2) {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
