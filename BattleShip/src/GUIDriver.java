@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.scene.text.Font;
 
 public class GUIDriver extends Application {
 	// Constants for the board
@@ -85,7 +86,7 @@ public class GUIDriver extends Application {
 
 		top.setAlignment(Pos.CENTER);
 		mid.setAlignment(Pos.CENTER);
-
+		
 		// Creates P2 play scene
 
 		// Creates play scene
@@ -104,7 +105,7 @@ public class GUIDriver extends Application {
 		Scene game = new Scene(P2, 500, 700);
 
 		// Selection Screen
-
+		
 		VBox select = new VBox();
 		Label lblStart = new Label("Welcome to Battleship");
 		lblStart.setStyle("-fx-font-size: 30; -fx-text-fill: white;");
@@ -133,11 +134,13 @@ public class GUIDriver extends Application {
 		VBox a = new VBox();
 		Label lblmid = new Label();
 
-		Button bttnbetwen = new Button("Next Player's Turn");
+		Button bttnBetween = new Button("Next Player's Turn");
+		bttnBetween.setStyle("-fx-font-size: 30;");
+		
 
 		a.setStyle(
 				"-fx-background-image: url('https://c.tenor.com/dIYElE0kJHQAAAAC/wee-ship.gif')");
-		a.getChildren().addAll(lblmid, bttnbetwen);
+		a.getChildren().addAll(lblmid, bttnBetween);
 
 		a.setAlignment(Pos.CENTER);
 		Scene betweens = new Scene(a, 450, 370);
@@ -197,7 +200,7 @@ public class GUIDriver extends Application {
 
 		});
 
-		bttnbetwen.setOnAction(e -> {
+		bttnBetween.setOnAction(e -> {
 			stage1.setScene(game);
 			stage1.show();
 		});
