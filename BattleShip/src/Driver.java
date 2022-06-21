@@ -261,39 +261,18 @@ public class Driver {
 			row = robustInt(in) - 1;
 		}
 		else {
-			if(lastRow > 0) {
-				col = lastCol;
-				row = lastRow;
-				if(checkAI(row, col-1, b1)) {
-					System.out.println("A");
-					col = col-1;
-				}
-				else if(checkAI(row, col+1, b1)) {
-					System.out.println("B");
-					col = col+1;
-				}
-				else if(checkAI(row-1, col, b1)) {
-					System.out.println("C");
-					row = row-1;
-				}
-				else if(checkAI(row+1, col, b1)) {
-					System.out.println("D");
-					row = row+1;
-				}
-				else {
-					Cell z = b1.getRandom();
-
-					col = z.getCol();
-					row = z.getRow();
-				}
+			
+			Cell z = b1.getRandom();
+			
+			if(z.equals(null)) {
+				return false;
 			}
-			else {
-				Cell z = b1.getRandom();
 
-				col = z.getCol();
-				row = z.getRow();
-			}
+			col = z.getCol();
+			row = z.getRow();
+		
 		}
+		
 		
 		//Player 1 or Player 2's turn to shoot the ships
 		if(p.equals(Player.P1)) {

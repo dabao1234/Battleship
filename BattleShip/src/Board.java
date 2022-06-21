@@ -393,10 +393,16 @@ public class Board {
 	}
 	
 	public Cell getRandom() {
+		if(possible.size() == 0) {
+			return null;
+		}
+		
 		Random r = new Random();
 		int c = r.nextInt(possible.size());
 		
 		Cell d = possible.get(c);
+		possible.remove(c);
+		System.out.println(possible);
 		
 		return d;
 	}
@@ -416,8 +422,8 @@ public class Board {
 			// checks to see if the ship has been hit already
 			if (!hasAttempt(row, col)) {
 				// if not, make it a hit
+				//this.possible.remove(board[row][col]);
 				board[row][col].setState(Cellstate.hit);
-				possible.remove(board[row][col]);
 				return false;
 			} else {
 				// if so, we want them to enter another thing
@@ -428,6 +434,7 @@ public class Board {
 		// if no ship there, make it a miss
 		else if(!hasAttempt(row, col)){
 			board[row][col].setState(Cellstate.miss);
+			//this.possible.remove(board[row][col]);
 		}
 		// if no ship but you've already shot there, try again
 		else {

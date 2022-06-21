@@ -189,7 +189,6 @@ public class GUIDriver extends Application {
 		// true means vertical
 		bttnVert.setOnAction(e -> {
 			orientation = true;
-			System.out.print(orientation);
 		});
 
 		bttnHor.setOnAction(e -> {
@@ -213,7 +212,7 @@ public class GUIDriver extends Application {
 				tilesP1[i][z].setOnAction(e -> {
 					
 					// FIX THIS
-					lblTurn.setText(p + "'s turn. " + "Next ship length: 2");
+					
 
 					if (placeTurnP1 == true) {
 
@@ -259,7 +258,6 @@ public class GUIDriver extends Application {
 						}
 						// Checks if all the ships are placed, if it is, swap players turn
 						if (numP1Placed == 5) {
-							System.out.println("all placed");
 							placeTurnP1 = false;
 							placeTurnP2 = true;
 							lblTurn.setText("P2's Turn");
@@ -298,11 +296,13 @@ public class GUIDriver extends Application {
 											colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 											numP2Placed++;
 											try {
-											lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
+												lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
 											}catch(Exception f) {
 												
 											}
 											p2Board.display();
+										}else {
+											lblTurn.setText("Invalid Placement ");
 										}
 									} else if (orientation == false && numP2Placed < 5) {
 										Ship maybeShip;
@@ -312,16 +312,17 @@ public class GUIDriver extends Application {
 											colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
 											numP2Placed++;
 											try {
-											lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
+												lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
 											}catch(Exception f) {
 												
 											}
 											p2Board.display();
+										}else {
+											lblTurn.setText("Invalid placement ");
 										}
 			
 									}
 									if (numP2Placed == 5) {
-										System.out.println("all placed");
 										placeTurnP2 = false;
 										p=Player.P1;
 										lblTurn.setText(p+" turn");
@@ -386,7 +387,6 @@ public class GUIDriver extends Application {
 				tilesP2[i][z].setOnAction(e -> {
 					
 					// FIX THIS
-					lblTurn.setText(p + "'s turn. Next ship length: 2");
 
 
 					int column;
@@ -408,9 +408,11 @@ public class GUIDriver extends Application {
 									try {
 										lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP2Placed]);
 									} catch (Exception f) {
-
+										
 									}
 									p2Board.display();
+								}else {
+									lblTurn.setText("Invalid Placement ");
 								}
 							} else if (orientation == false && numP2Placed < 5) {
 								Ship maybeShip;
@@ -425,11 +427,12 @@ public class GUIDriver extends Application {
 
 									}
 									p2Board.display();
+								}else {
+									lblTurn.setText("Invalid Placement ");
 								}
 	
 							}
 							if (numP2Placed == 5) {
-								System.out.println("all placed");
 								placeTurnP2 = false;
 								p = Player.P1;
 								lblTurn.setText(p + "'s turn");
@@ -486,11 +489,15 @@ public class GUIDriver extends Application {
 								
 								while(!done1) {
 									k = p1Board.getRandom();
+									if(k.equals(null)) {
+										done = true;
+									}else {
+										row = k.getRow();
+										column = k.getCol();
+										
+										done1 = p1Board.shoot(row, column);
+									}
 									
-									row = k.getRow();
-									column = k.getCol();
-									
-									done1 = p1Board.shoot(row, column);
 								}
 					
 								p = Player.P1;
