@@ -432,9 +432,7 @@ public class Board {
 	}
 	
 	public Cell getRandom() {
-		if(cellCount==0) {
-			return null;
-		}
+		
 		
 		Random r = new Random();
 		int c = r.nextInt(possible.size());
