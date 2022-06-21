@@ -213,7 +213,8 @@ public class GUIDriver extends Application {
 			for (int z = 0; z < num_Cols; z++) {
 				// P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
-					
+					colorTilesShoot(p1Board, tilesP1, 1);
+					colorTilesShoot(p2Board, tilesP2, 1);
 					
 					if (placeTurnP1 == true) {
 
@@ -227,7 +228,7 @@ public class GUIDriver extends Application {
 							maybeShip = p1Board.placeShipVertical(row, column, lengthShips[numP1Placed]);
 							if (maybeShip != null) {
 								p1Ships.add(maybeShip);
-								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
+								colorTiles(p1Board, tilesP1);
 								numP1Placed++;
 								try {
 									lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
@@ -247,7 +248,7 @@ public class GUIDriver extends Application {
 							maybeShip = p1Board.placeShipHorizontal(row, column, lengthShips[numP1Placed]);
 							if (maybeShip != null) {
 								p1Ships.add(maybeShip);
-								colorTiles(p1Board, tilesP1, lengthShips[numP1Placed]);
+								colorTiles(p1Board, tilesP1);
 								numP1Placed++;
 								try {
 									lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
@@ -298,7 +299,7 @@ public class GUIDriver extends Application {
 										maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
 										if (maybeShip != null) {
 											p2Ships.add(maybeShip);
-											colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
+											colorTiles(p2Board, tilesP2);
 											numP2Placed++;
 											try {
 												lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
@@ -315,7 +316,7 @@ public class GUIDriver extends Application {
 										maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
 										if (maybeShip != null) {
 											p2Ships.add(maybeShip);
-											colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
+											colorTiles(p2Board, tilesP2);
 											numP2Placed++;
 											try {
 												lblTurn.setText(p+" turn"+" next ship is:"+ lengthShips[numP2Placed]);
@@ -347,6 +348,7 @@ public class GUIDriver extends Application {
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
 						if (p.equals(Player.P2)) {
 							colorTilesShoot(p1Board, tilesP1, 1);
+						
 							int column = ((FancyButton) e.getSource()).getCol();
 							int row = ((FancyButton) e.getSource()).getRow();
 
@@ -385,6 +387,7 @@ public class GUIDriver extends Application {
 				});
 				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
+					
 					int column;
 					int row;
 					//If it's player 2's turn, place ships
@@ -399,7 +402,7 @@ public class GUIDriver extends Application {
 								maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
 								if (maybeShip != null) {
 									p2Ships.add(maybeShip);
-									colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
+									colorTiles(p2Board, tilesP2);
 									numP2Placed++;
 									try {
 										lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP2Placed]);
@@ -416,7 +419,7 @@ public class GUIDriver extends Application {
 								maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
 								if (maybeShip != null) {
 									p2Ships.add(maybeShip);
-									colorTiles(p2Board, tilesP2, lengthShips[numP2Placed]);
+									colorTiles(p2Board, tilesP2);
 									numP2Placed++;
 									try {
 										lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP2Placed]);
@@ -446,7 +449,7 @@ public class GUIDriver extends Application {
 						
 						if (p.equals(Player.P1)) {
 							//player 1 shoot phase
-							//colorTilesShoot(p2Board, tilesP2, 1);
+							colorTilesShoot(p2Board, tilesP2, 1);
 							boolean done;
 
 							p2Board.hideShips();
@@ -561,7 +564,7 @@ public class GUIDriver extends Application {
 	 *                 status of each tile, grey for the ship, red if the ship is
 	 *                 hit, and white if the tile was a miss
 	 */
-	public void colorTiles(Board board, Button[][] buts, int numTiles) {
+	public void colorTiles(Board board, Button[][] buts) {
 		Cell[][] bCells = board.getCells();
 		//board.display();
 
