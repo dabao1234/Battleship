@@ -368,8 +368,7 @@ public class GUIDriver extends Application {
 								
 								stage1.setScene(betweens);
 								colorTilesShoot(p1Board, tilesP1, 1);
-							}
-							;
+							};
 							p1Board.display();
 							checkWin(p1Ships, p1Board);
 							colorTilesShoot(p1Board, tilesP1, 1);
@@ -379,13 +378,8 @@ public class GUIDriver extends Application {
 								// player 2 wins
 								lblEnd.setText("Player 2 wins!!!!!");
 								stage1.setScene(endScreen);
-
 							}
-
-							
-
 						}
-
 					}
 				});
 				// Ship placement for player 2
