@@ -19,11 +19,11 @@ public class Cell {
 	public Cellstate getState() {
 		return state;
 	}
-	
+	//gets row
 	public int getRow() {
 		return row;
 	}
-	
+	//gets column
 	public int getCol() {
 		return col;
 	}
@@ -35,7 +35,7 @@ public class Cell {
 		}
 		return false;
 	}
-	
+	//checks to see if the cell is a miss
 	public boolean isMiss() {
 		if(state.equals(Cellstate.miss)) {
 			return true;

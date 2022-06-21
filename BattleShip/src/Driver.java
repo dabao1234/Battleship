@@ -170,6 +170,7 @@ public class Driver {
 			row = robustInt(in) - 1;
 		}
 		else {
+			//Ship placement for the AI
 			shipAlign = 1 + r.nextInt(2);
 			if(shipAlign == 1) {
 				startCol = r.nextInt(10);
@@ -182,7 +183,7 @@ public class Driver {
 		}
 		
 		
-		//Placing the Ship, if it is 1 place it horizontally, if it is 2 place it vertically
+		//Placing the Ship, if it is 1 place it horizontally
 		if(shipAlign == 1) {
 			lengthShip = lengthShips[count];
 			Ship s;
@@ -199,6 +200,7 @@ public class Driver {
 			b.display();
 			return true;
 		}
+		//Vertical ship placement
 		else if(shipAlign == 2) {
 			lengthShip = lengthShips[count];
 			
@@ -281,6 +283,7 @@ public class Driver {
 			if(shoot(row, col, b2, p2Ships)) {
 				b2.display();
 				p = opponent;
+				//Check win condition
 				if(checkWin(p2Ships, b2)) {
 					gameOver = true;
 					System.out.println("Congratulations P1!");
@@ -322,29 +325,29 @@ public class Driver {
 	
 	/**
 	 * 
-	 * @param in
-	 * @param p
-	 * @param b1
-	 * @param b2
-	 * @param p1Ships
-	 * @param p2Ships
+	 * @param in - users input
+	 * @param p - player 
+	 * @param b1 - board 1
+	 * @param b2 - board 2
+	 * @param p1Ships - ships for player 1
+	 * @param p2Ships - ships for player 2
 	 * @return
 	 */
 	static boolean aiTurn(int r, int c, Player p, Board b1, Board b2, ArrayList<Ship> p1Ships, ArrayList<Ship> p2Ships) {
 		boolean placed = false;
-		boolean d = false;
+		boolean done = false;
 		
-		while(!d) {
+		while(!done) {
 			placed = false;
 			try {
-				d = shoot(r+1, c, b1, p1Ships);
+				done = shoot(r+1, c, b1, p1Ships);
 				placed = true;
 			}catch(Exception e) {
 				
 			}
 			if(!placed) {
 				try {
-					d = shoot(r-1, c, b1, p1Ships);
+					done = shoot(r-1, c, b1, p1Ships);
 					placed = true;
 				}catch(Exception e) {
 					
@@ -353,7 +356,7 @@ public class Driver {
 			
 			if(!placed) {
 				try {
-					d = shoot(r, c-1, b1, p1Ships);
+					done = shoot(r, c-1, b1, p1Ships);
 					placed = true;
 				}catch(Exception e) {
 					
@@ -361,7 +364,7 @@ public class Driver {
 			}
 			if(!placed) {
 				try {
-					d = shoot(r, c+1, b1, p1Ships);
+					done = shoot(r, c+1, b1, p1Ships);
 					placed = true;
 				}catch(Exception e) {
 					
