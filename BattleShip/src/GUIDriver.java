@@ -105,7 +105,6 @@ public class GUIDriver extends Application {
 		Scene game = new Scene(P2, 500, 700);
 
 		// Selection Screen
-		
 		VBox select = new VBox();
 		Label lblStart = new Label("Welcome to Battleship");
 		lblStart.setStyle("-fx-font-size: 30; -fx-text-fill: white;");
@@ -119,7 +118,7 @@ public class GUIDriver extends Application {
 		select.setAlignment(Pos.CENTER);
 		Scene selection = new Scene(select, 1000, 450);
 
-		// end Screen
+		//End Screen
 		VBox end = new VBox();
 		end.setStyle("-fx-background-image: url('https://pixeljoint.com/files/icons/full/win__r1340336691.gif')");
 		Label lblEnd = new Label();
@@ -130,7 +129,7 @@ public class GUIDriver extends Application {
 		end.setAlignment(Pos.CENTER);
 		Scene endScreen = new Scene(end, 750, 700);
 
-		// mid Screen
+		//Screen In-between
 		VBox a = new VBox();
 		Label lblmid = new Label();
 
@@ -151,7 +150,7 @@ public class GUIDriver extends Application {
 
 		p = p.P1;
 
-		// button events
+		//Button to select human mode
 		bttnHuman.setOnAction(e -> {
 			lblTurn.setText(p + "'s turn. " + " Next ship length: " + lengthShips[numP1Placed]);
 			stage1.setScene(game);
@@ -163,7 +162,7 @@ public class GUIDriver extends Application {
 				lblMid.setText("Player 1 Board");
 			}
 		});
-
+		//Button to set the game mode to AI
 		bttnAI.setOnAction(e -> {
 
 			stage1.setScene(game);
@@ -175,7 +174,7 @@ public class GUIDriver extends Application {
 				lblMid.setText("Player 1 Board");
 			}
 		});
-
+		//Reset for the next playthrough
 		bttnReset.setOnAction(E -> {
 			clear(tilesP1, tilesP2);
 			p1Board.clear();
@@ -189,16 +188,16 @@ public class GUIDriver extends Application {
 			stage1.show();
 		});
 
-		// true means vertical
+		//Button for changing orientation
 		bttnVert.setOnAction(e -> {
 			orientation = true;
 		});
-
+		//Button for changing orientation
 		bttnHor.setOnAction(e -> {
 			orientation = false;
 
 		});
-
+		//Button in between to hide boards and show boards
 		bttnBetween.setOnAction(e -> {
 			stage1.setScene(game);
 			stage1.show();
@@ -273,7 +272,7 @@ public class GUIDriver extends Application {
 								//hide P1 Ships 
 								hideShips(p1Board,tilesP1);
 							}
-							
+							//Placement for the AI
 							if(opp.equals(Player.AI)) {
 
 								Random r = new Random();
@@ -290,7 +289,7 @@ public class GUIDriver extends Application {
 										column = r.nextInt(10 - lengthShips[numP2Placed]);
 										row = r.nextInt(10);
 									}
-									
+									//Vertical ship placement for player 2
 									if (orientation == true && numP2Placed < 5) {
 										Ship maybeShip;
 										maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
@@ -307,6 +306,7 @@ public class GUIDriver extends Application {
 										}else {
 											lblTurn.setText("Invalid Placement ");
 										}
+										//Horizontal ship placement for player 2
 									} else if (orientation == false && numP2Placed < 5) {
 										Ship maybeShip;
 										maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
@@ -325,10 +325,11 @@ public class GUIDriver extends Application {
 										}
 			
 									}
+									//If the ships are all placed
 									if (numP2Placed == 5) {
 										placeTurnP2 = false;
 										p=Player.P1;
-										lblTurn.setText(p+" turn");
+										lblTurn.setText(p+"'s turn");
 										stage1.setScene(betweens);
 										stage1.show();
 										//hide p2 Ships and Show p1 ships
@@ -337,8 +338,7 @@ public class GUIDriver extends Application {
 									}
 								}
 							}
-							// hide P1 Ships
-							//hideShips(p1Board, tilesP1);
+							
 						}
 						// if all placement is over, shoot time
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
@@ -351,13 +351,13 @@ public class GUIDriver extends Application {
 							hideShips(p1Board, tilesP1);// hides on GUI
 							p2Board.showShips();// shows on Board
 							showShips(p2Board, tilesP2); // shows on GUI
-
+						
 							if (p1Board.shoot(row, column)) {
 								p = Player.P1;
 								stage1.setScene(betweens);
 								stage1.show();
 								
-								lblTurn.setText(p+" turn");
+								lblTurn.setText(p+"'s turn");
 
 								p2Board.hideShips();// hides on Board
 								hideShips(p2Board, tilesP2);// hides on GUI
@@ -380,7 +380,7 @@ public class GUIDriver extends Application {
 
 							}
 
-							// check for a win
+							
 
 						}
 
@@ -388,19 +388,15 @@ public class GUIDriver extends Application {
 				});
 				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
-					
-					// FIX THIS
-
-
 					int column;
 					int row;
-
-
+					//If it's player 2's turn, place ships
 					if (placeTurnP2 == true) {
 						
 						if (opp.equals(Player.P2)) {
 							column = ((FancyButton) e.getSource()).getCol();
 							row = ((FancyButton) e.getSource()).getRow();
+							//Vertical Placement
 							if (orientation == true && numP2Placed < 5) {
 								Ship maybeShip;
 								maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
@@ -417,6 +413,7 @@ public class GUIDriver extends Application {
 								}else {
 									lblTurn.setText("Invalid Placement ");
 								}
+								//Horizontal Placement
 							} else if (orientation == false && numP2Placed < 5) {
 								Ship maybeShip;
 								maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
@@ -435,6 +432,7 @@ public class GUIDriver extends Application {
 								}
 	
 							}
+							//If player 2 has finished placing 5 ships, move on
 							if (numP2Placed == 5) {
 								placeTurnP2 = false;
 								p = Player.P1;
@@ -446,7 +444,7 @@ public class GUIDriver extends Application {
 								showShips(p1Board, tilesP1);
 							}
 						}
-
+						//Section for tile shooting
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
 
 						if (p.equals(Player.P1)) {
@@ -462,7 +460,7 @@ public class GUIDriver extends Application {
 							row = ((FancyButton) e.getSource()).getRow();
 							
 							done = p2Board.shoot(row, column);
-
+							//If the player is done shooting
 							if (done) {
 								p = opp;
 								if(p.equals(Player.P2)) {
@@ -479,13 +477,13 @@ public class GUIDriver extends Application {
 							p2Board.display();
 							checkWin(p2Ships, p2Board);
 							colorTilesShoot(p2Board, tilesP2, 1);
-
+							//Checking win condition
 							if (checkWin(p2Ships, p2Board) == true) {
 								// player 1 wins
 								lblEnd.setText("Player 1 wins!!!!!");
 								stage1.setScene(endScreen);
 							}
-							
+							//AI Mode
 							if(p.equals(Player.AI) && done) {
 								Cell k;
 								boolean done1 = false;
@@ -555,7 +553,13 @@ public class GUIDriver extends Application {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param board - board
+	 * @param buts - buttons
+	 * @param numTiles - number of tiles
+	 * Change the color of the tiles, if it is hit, make it red, if it is a miss, make the tile white
+	 */
 	public void colorTilesShoot(Board board, Button[][] buts, int numTiles) {
 		Cell[][] bCells = board.getCells();
 		board.display();
