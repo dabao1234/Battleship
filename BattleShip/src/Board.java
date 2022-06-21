@@ -443,7 +443,7 @@ public class Board {
 		}
 		return true;
 	}
-	
+	//Clear the entire board, change all the states to empty
 	public void clear() {
 		for(int i=0;i<10;i++) {
 			for(int j=0;j<10;j++) {

@@ -322,29 +322,29 @@ public class Driver {
 	
 	/**
 	 * 
-	 * @param in
-	 * @param p
-	 * @param b1
-	 * @param b2
-	 * @param p1Ships
-	 * @param p2Ships
+	 * @param in - users input
+	 * @param p - player 
+	 * @param b1 - board 1
+	 * @param b2 - board 2
+	 * @param p1Ships - ships for player 1
+	 * @param p2Ships - ships for player 2
 	 * @return
 	 */
 	static boolean aiTurn(int r, int c, Player p, Board b1, Board b2, ArrayList<Ship> p1Ships, ArrayList<Ship> p2Ships) {
 		boolean placed = false;
-		boolean d = false;
+		boolean done = false;
 		
-		while(!d) {
+		while(!done) {
 			placed = false;
 			try {
-				d = shoot(r+1, c, b1, p1Ships);
+				done = shoot(r+1, c, b1, p1Ships);
 				placed = true;
 			}catch(Exception e) {
 				
 			}
 			if(!placed) {
 				try {
-					d = shoot(r-1, c, b1, p1Ships);
+					done = shoot(r-1, c, b1, p1Ships);
 					placed = true;
 				}catch(Exception e) {
 					
@@ -353,7 +353,7 @@ public class Driver {
 			
 			if(!placed) {
 				try {
-					d = shoot(r, c-1, b1, p1Ships);
+					done = shoot(r, c-1, b1, p1Ships);
 					placed = true;
 				}catch(Exception e) {
 					
@@ -361,7 +361,7 @@ public class Driver {
 			}
 			if(!placed) {
 				try {
-					d = shoot(r, c+1, b1, p1Ships);
+					done = shoot(r, c+1, b1, p1Ships);
 					placed = true;
 				}catch(Exception e) {
 					
