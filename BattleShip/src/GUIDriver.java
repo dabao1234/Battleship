@@ -461,6 +461,12 @@ public class GUIDriver extends Application {
 							if (done) {
 								p = opp;
 								if(p.equals(Player.P2)) {
+									if (checkWin(p2Ships, p2Board) == true) {
+										// player 1 wins
+										lblEnd.setText("Player 1 wins!!!!!");
+										stage1.setScene(endScreen);
+									}
+									
 									stage1.setScene(betweens);
 									stage1.show();
 
@@ -484,19 +490,32 @@ public class GUIDriver extends Application {
 							if(p.equals(Player.AI) && done) {
 								Cell k;
 								boolean done1 = false;
-								boolean f = false;
 								
 								while(!done1) {
 									k = p1Board.getRandom();
 									
 									if(k == null) {
+											
 										done1 = true;
+										if (checkWin(p1Ships, p1Board) == true) {
+											// player 2 wins
+											lblEnd.setText("You lose!");
+											stage1.setScene(endScreen);
+
+										}
 									}
+									
 									else {
 										row = k.getRow();
 										column = k.getCol();
 										
 										done1 = p1Board.shoot(row, column);
+										if (checkWin(p1Ships, p1Board) == true) {
+											// player 2 wins
+											lblEnd.setText("You lose!");
+											stage1.setScene(endScreen);
+
+										}
 									}
 									
 								}
