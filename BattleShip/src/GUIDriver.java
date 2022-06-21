@@ -238,6 +238,8 @@ public class GUIDriver extends Application {
 								}
 								
 								p1Board.display();
+							}else {
+								lblTurn.setText("Invalid Placement ");
 							}
 							// If the player chooses to place a ship vertically and the number of ships that
 							// are
@@ -256,6 +258,8 @@ public class GUIDriver extends Application {
 								}
 								
 								p1Board.display();
+							}else {
+								lblTurn.setText("Invalid Placement ");
 							}
 
 						}
