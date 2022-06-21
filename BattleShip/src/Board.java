@@ -253,83 +253,120 @@ public class Board {
 	 */
 	public void clearSunk(Ship ship) {
 		//The starting values of the ship
-		int shipLength = ship.getLength();
-		int startRow = ship.getStartRow();
-		int startCol = ship.getStartCol();
-		//Checks whether the ship is placed vertically or horizontally
-		if (ship.getOrientation().equals("V")) {
-			// checks to the left
-			int row = startRow - 1;
-			int col = startCol - 1; //this happens so it will start the column above start
-			
-			//Surrounds the area of the ship with misses if the ship is sunk
-			for(int x = 0; x < shipLength+2; x++) {
-				try {
-					board[row + x][col].setState(Cellstate.miss);
-				}catch(Exception e) {
+				int shipLength = ship.getLength();
+				int startRow = ship.getStartRow();
+				int startCol = ship.getStartCol();
+				int tilesClr=0;
+				//Checks whether the ship is placed vertically or horizontally
+				if (ship.getOrientation().equals("V")) {
+					// checks to the left
+					int row = startRow - 1;
+					int col = startCol - 1; //this happens so it will start the column above start
 					
-				}
-			}
-			
-			col = startCol + 1;
-			
-			for(int x = 0; x < shipLength+2; x++) {
-				try {
-					board[row + x][col].setState(Cellstate.miss);
-				}catch(Exception e) {
+					//Surrounds the area of the ship with misses if the ship is sunk
+					for(int x = 0; x < shipLength+2; x++) {
+						try {
+							if(board[row + x][col].getState().equals(Cellstate.empty)) {
+								
+								tilesClr++;
+							}
+							board[row + x][col].setState(Cellstate.miss);
+						}catch(Exception e) {
+							
+						}
+					}
 					
-				}
-			}
-			
-			try {
-				board[row][startCol].setState(Cellstate.miss);
-			}catch(Exception e) {
-				
-			}
-			try {
-				board[startRow + shipLength][startCol].setState(Cellstate.miss);
-			}catch(Exception e) {
-				
-			}
-			
-		} else {
-			//Surrounds the ship if it is placed horizontally 
-			int row = startRow;
-			int col = startCol;
-			
-			row = startRow - 1;
-			col = startCol - 1;
-			
-			for(int x = 0; x < shipLength+2; x++) {
-				try {
-					board[row][col + x].setState(Cellstate.miss);
-				}catch(Exception e) {
+					col = startCol + 1;
 					
-				}
-			}
-				
-			row = startRow + 1;
-			
-			for(int x = 0; x < shipLength+2; x++) {
-				try {
-					board[row][col + x].setState(Cellstate.miss);
-				}catch(Exception e) {
+					for(int x = 0; x < shipLength+2; x++) {
+						try {
+							if(board[row + x][col].getState().equals(Cellstate.empty)) {
+								
+								tilesClr++;
+							}
+							board[row + x][col].setState(Cellstate.miss);
+						}catch(Exception e) {
+							
+						}
+					}
 					
-				}
-			}
-			//Catches any errors in the case it goes out of bounds
-			try {
-				board[startRow][col].setState(Cellstate.miss);
-			}catch(Exception e) {
-				
-			}
-			try {
-				board[startRow][startCol + shipLength].setState(Cellstate.miss);
-			}catch(Exception e) {
-				
-			}
+					try {
+						if(board[row][startCol].getState().equals(Cellstate.empty)) {
+							
+							tilesClr++;
+						}
+						board[row][startCol].setState(Cellstate.miss);
+					}catch(Exception e) {
+						
+					}
+					try {
+						if(board[startRow + shipLength][startCol].getState().equals(Cellstate.empty)) {
+						
+							tilesClr++; 
+						}
+						board[startRow + shipLength][startCol].setState(Cellstate.miss);
+					}catch(Exception e) {
+						
+					}
+					
+				} else {
+					//Surrounds the ship if it is placed horizontally 
+					int row = startRow;
+					int col = startCol;
+					
+					row = startRow - 1;
+					col = startCol - 1;
+					
+					for(int x = 0; x < shipLength+2; x++) {
+						try {
+							if(board[row][col + x].getState().equals(Cellstate.empty)){
+								
+								tilesClr++;
+							}
+							board[row][col + x].setState(Cellstate.miss);
+						}catch(Exception e) {
+							
+						}
+					}
+						
+					row = startRow + 1;
+					
+					for(int x = 0; x < shipLength+2; x++) {
+						try {
+							if(board[row][col + x].getState().equals(Cellstate.empty)) {
+								tilesClr++;
+							}
+							board[row][col + x].setState(Cellstate.miss);
+						}catch(Exception e) {
+							
+						}
+					}
+					//Catches any errors in the case it goes out of bounds
+					try {
+						if(board[startRow][col].getState().equals(Cellstate.empty)) {
+							
+							tilesClr++;
+						}
+						board[startRow][col].setState(Cellstate.miss);
+					}catch(Exception e) {
+						
+					}
+					try {
+						if(board[startRow][startCol + shipLength].getState().equals(Cellstate.empty)) {
+							tilesClr++;
+							
+						}
+						board[startRow][startCol + shipLength].setState(Cellstate.miss);
+					}catch(Exception e) {
+						
+					}
 
+				}
+		if(tilesClr!=0) {
+		System.out.println("tiles set to miss"+tilesClr);
 		}
+		//cellCount=cellCount-tilesClr;
+		cellCount=cellCount-tilesClr;
 
 	}
 	/**
@@ -395,7 +432,7 @@ public class Board {
 	}
 	
 	public Cell getRandom() {
-		if(cellCount<0) {
+		if(cellCount==0) {
 			return null;
 		}
 		
@@ -404,7 +441,8 @@ public class Board {
 		
 		Cell d = possible.get(c);
 		cellCount--;
-		System.out.println(cellCount);
+		System.out.println("tiles left"+ cellCount);
+		System.out.println("tiles cleared "+ (100-cellCount));
 		possible.remove(c); 
 		
 		return d;

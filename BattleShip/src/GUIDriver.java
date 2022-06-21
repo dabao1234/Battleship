@@ -235,7 +235,7 @@ public class GUIDriver extends Application {
 									
 								}
 								
-								p1Board.display();
+								//p1Board.display();
 							}else {
 								lblTurn.setText("Invalid Placement ");
 							}
@@ -255,7 +255,7 @@ public class GUIDriver extends Application {
 									
 								}
 								
-								p1Board.display();
+								//p1Board.display();
 							}else {
 								lblTurn.setText("Invalid Placement ");
 							}
@@ -305,7 +305,7 @@ public class GUIDriver extends Application {
 											}catch(Exception f) {
 												
 											}
-											p2Board.display();
+											//p2Board.display();
 										}else {
 											lblTurn.setText("Invalid Placement ");
 										}
@@ -322,7 +322,7 @@ public class GUIDriver extends Application {
 											}catch(Exception f) {
 												
 											}
-											p2Board.display();
+											//p2Board.display();
 										}else {
 											lblTurn.setText("Invalid placement ");
 										}
@@ -370,7 +370,7 @@ public class GUIDriver extends Application {
 								stage1.setScene(betweens);
 								colorTilesShoot(p1Board, tilesP1, 1);
 							};
-							p1Board.display();
+							//p1Board.display();
 							checkWin(p1Ships, p1Board);
 							colorTilesShoot(p1Board, tilesP1, 1);
 
@@ -406,7 +406,7 @@ public class GUIDriver extends Application {
 									} catch (Exception f) {
 										
 									}
-									p2Board.display();
+									//p2Board.display();
 								}else {
 									lblTurn.setText("Invalid Placement ");
 								}
@@ -423,7 +423,7 @@ public class GUIDriver extends Application {
 									} catch (Exception f) {
 
 									}
-									p2Board.display();
+									//p2Board.display();
 								}else {
 									lblTurn.setText("Invalid Placement ");
 								}
@@ -443,9 +443,10 @@ public class GUIDriver extends Application {
 						}
 						//Section for tile shooting
 					} else if (placeTurnP1 == false && placeTurnP2 == false) {
-
+						
 						if (p.equals(Player.P1)) {
-							colorTilesShoot(p2Board, tilesP2, 1);
+							//player 1 shoot phase
+							//colorTilesShoot(p2Board, tilesP2, 1);
 							boolean done;
 
 							p2Board.hideShips();
@@ -461,11 +462,6 @@ public class GUIDriver extends Application {
 							if (done) {
 								p = opp;
 								if(p.equals(Player.P2)) {
-									if (checkWin(p2Ships, p2Board) == true) {
-										// player 1 wins
-										lblEnd.setText("Player 1 wins!!!!!");
-										stage1.setScene(endScreen);
-									}
 									
 									stage1.setScene(betweens);
 									stage1.show();
@@ -477,8 +473,7 @@ public class GUIDriver extends Application {
 									colorTilesShoot(p2Board, tilesP2, 1);
 								}
 							}
-							p2Board.display();
-							checkWin(p2Ships, p2Board);
+							//p2Board.display();
 							colorTilesShoot(p2Board, tilesP2, 1);
 							//Checking win condition
 							if (checkWin(p2Ships, p2Board) == true) {
@@ -493,9 +488,10 @@ public class GUIDriver extends Application {
 								
 								while(!done1) {
 									k = p1Board.getRandom();
-									
+									System.out.println("k" +k);
+									System.out.println("done"+ done1);
 									if(k == null) {
-											
+										System.out.println("no more shots");
 										done1 = true;
 										if (checkWin(p1Ships, p1Board) == true) {
 											// player 2 wins
@@ -503,22 +499,34 @@ public class GUIDriver extends Application {
 											stage1.setScene(endScreen);
 
 										}
-									}
-									
-									else {
+										else if (checkWin(p2Ships, p2Board) == true) {
+											// player 1 wins
+											lblEnd.setText("You win!");
+											stage1.setScene(endScreen);
+
+										}
+									} else {
 										row = k.getRow();
 										column = k.getCol();
 										
 										done1 = p1Board.shoot(row, column);
+										System.out.println("ai has shot at"+row+ ","+column);
 										if (checkWin(p1Ships, p1Board) == true) {
 											// player 2 wins
 											lblEnd.setText("You lose!");
 											stage1.setScene(endScreen);
 
 										}
+										else if (checkWin(p2Ships, p2Board) == true) {
+											// player 1 wins
+											lblEnd.setText("You win!");
+											stage1.setScene(endScreen);
+
+										}
 									}
 									
 								}
+								System.out.println("end turn AI");
 					
 								p = Player.P1;
 								
@@ -555,7 +563,7 @@ public class GUIDriver extends Application {
 	 */
 	public void colorTiles(Board board, Button[][] buts, int numTiles) {
 		Cell[][] bCells = board.getCells();
-		board.display();
+		//board.display();
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -580,7 +588,7 @@ public class GUIDriver extends Application {
 	 */
 	public void colorTilesShoot(Board board, Button[][] buts, int numTiles) {
 		Cell[][] bCells = board.getCells();
-		board.display();
+		//board.display();
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -603,7 +611,7 @@ public class GUIDriver extends Application {
 	 */
 	public void hideShips(Board board, Button[][] buts) {
 		Cell[][] bCells = board.getCells();
-		board.display();
+		//board.display();
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -622,7 +630,7 @@ public class GUIDriver extends Application {
 	 */
 	public void showShips(Board board, Button[][] buts) {
 		Cell[][] bCells = board.getCells();
-		board.display();
+		//board.display();
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -645,13 +653,12 @@ public class GUIDriver extends Application {
 
 		for (Ship s : ships) {
 
-			boolean a = s.getSunk(b);
-
-			if (a) {
+			boolean isSunk = s.getSunk(b);
+			if (isSunk) {
 				b.clearSunk(s);
 			}
 
-			if (!a) {
+			if (!isSunk) {
 				won = false;
 			}
 		}
@@ -672,9 +679,10 @@ public class GUIDriver extends Application {
 		}
 	}
 
+	
 	public static void main(String[] args) {
 		launch(args);
 
 	}
-
 }
+
