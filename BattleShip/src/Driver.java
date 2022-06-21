@@ -265,20 +265,7 @@ public class Driver {
 			Cell z = b1.getRandom();
 			
 			if(z == null) {
-				boolean f = false;
-				for (int i = 0; i < 10; i++) {
-					for (int j = 0; j < 10; j++) {
-						z = b1.getCells()[i][j];
-						if(!z.isHit() && !z.isMiss()) {
-							col = z.getCol();
-							row = z.getRow();
-							f = true;
-						}
-					}
-				}
-				if(!f) {
-					gameOver = true;
-				}
+				return false;
 			}
 
 			col = z.getCol();

@@ -500,21 +500,9 @@ public class GUIDriver extends Application {
 									k = p1Board.getRandom();
 									
 									if(k == null) {
-										for (int c = 0; c < 10; c++) {
-											for (int j = 0; j < 10; j++) {
-												k = p1Board.getCells()[c][j];
-												if(!k.isHit() && !k.isMiss()) {
-													column = k.getCol();
-													row = k.getRow();
-													done1 = p1Board.shoot(row, column);
-													f = true;
-												}
-											}
-										}
-										if(!f) {
-											done = true;
-										}
-									}else {
+										done1 = true;
+									}
+									else {
 										row = k.getRow();
 										column = k.getCol();
 										

@@ -5,6 +5,7 @@ public class Board {
 	private Cell[][] board;
 	private int row;
 	private int col;
+	int cellCount=100;
 	private Player player;
 	private ArrayList<Cell> possible = new ArrayList<>();
 
@@ -394,7 +395,7 @@ public class Board {
 	}
 	
 	public Cell getRandom() {
-		if(possible.size() == 0) {
+		if(cellCount==0) {
 			return null;
 		}
 		
@@ -402,7 +403,9 @@ public class Board {
 		int c = r.nextInt(possible.size());
 		
 		Cell d = possible.get(c);
-		possible.remove(c);
+		cellCount--;
+		System.out.println(cellCount);
+		possible.remove(c); 
 		
 		return d;
 	}
@@ -451,6 +454,7 @@ public class Board {
 				possible.add(board[i][j]);
 			}
 		}
+		cellCount=100;
 	}
 	
 	/**
