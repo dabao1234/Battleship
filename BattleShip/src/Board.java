@@ -395,7 +395,7 @@ public class Board {
 	}
 	
 	public Cell getRandom() {
-		if(cellCount==0) {
+		if(cellCount<0) {
 			return null;
 		}
 		
