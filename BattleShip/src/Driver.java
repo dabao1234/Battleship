@@ -170,6 +170,7 @@ public class Driver {
 			row = robustInt(in) - 1;
 		}
 		else {
+			//Ship placement for the AI
 			shipAlign = 1 + r.nextInt(2);
 			if(shipAlign == 1) {
 				startCol = r.nextInt(10);
@@ -182,7 +183,7 @@ public class Driver {
 		}
 		
 		
-		//Placing the Ship, if it is 1 place it horizontally, if it is 2 place it vertically
+		//Placing the Ship, if it is 1 place it horizontally
 		if(shipAlign == 1) {
 			lengthShip = lengthShips[count];
 			Ship s;
@@ -199,6 +200,7 @@ public class Driver {
 			b.display();
 			return true;
 		}
+		//Vertical ship placement
 		else if(shipAlign == 2) {
 			lengthShip = lengthShips[count];
 			
@@ -281,6 +283,7 @@ public class Driver {
 			if(shoot(row, col, b2, p2Ships)) {
 				b2.display();
 				p = opponent;
+				//Check win condition
 				if(checkWin(p2Ships, b2)) {
 					gameOver = true;
 					System.out.println("Congratulations P1!");
