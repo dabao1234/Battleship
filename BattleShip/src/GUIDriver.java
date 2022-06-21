@@ -213,9 +213,7 @@ public class GUIDriver extends Application {
 				// P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
 					
-					// FIX THIS
 					
-
 					if (placeTurnP1 == true) {
 
 						int column = ((FancyButton) e.getSource()).getCol();
