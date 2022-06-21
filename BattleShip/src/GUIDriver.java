@@ -292,7 +292,7 @@ public class GUIDriver extends Application {
 										column = r.nextInt(10 - lengthShips[numP2Placed]);
 										row = r.nextInt(10);
 									}
-									//Vertical ship placement for player 2
+									//Vertical ship placement for ai
 									if (orientation == true && numP2Placed < 5) {
 										Ship maybeShip;
 										maybeShip = p2Board.placeShipVertical(row, column, lengthShips[numP2Placed]);
@@ -309,7 +309,7 @@ public class GUIDriver extends Application {
 										}else {
 											lblTurn.setText("Invalid Placement ");
 										}
-										//Horizontal ship placement for player 2
+										//Horizontal ship placement for ai
 									} else if (orientation == false && numP2Placed < 5) {
 										Ship maybeShip;
 										maybeShip = p2Board.placeShipHorizontal(row, column, lengthShips[numP2Placed]);
@@ -521,8 +521,7 @@ public class GUIDriver extends Application {
 								}
 					
 								p = Player.P1;
-								stage1.show();
-
+								
 															
 								colorTilesShoot(p1Board, tilesP1, 1);
 
