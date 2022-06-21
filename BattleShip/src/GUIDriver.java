@@ -182,10 +182,11 @@ public class GUIDriver extends Application {
 			p2Board.clear();
 
 			placeTurnP1 = true;
+			orientation = true;
 			numP1Placed = 0;
 			numP2Placed = 0;
 
-			stage1.setScene(game);
+			stage1.setScene(selection);
 			stage1.show();
 		});
 
@@ -493,11 +494,26 @@ public class GUIDriver extends Application {
 							if(p.equals(Player.AI) && done) {
 								Cell k;
 								boolean done1 = false;
+								boolean f = false;
 								
 								while(!done1) {
 									k = p1Board.getRandom();
-									if(k.equals(null)) {
-										done = true;
+									
+									if(k == null) {
+										for (int c = 0; c < 10; c++) {
+											for (int j = 0; j < 10; j++) {
+												k = p1Board.getCells()[c][j];
+												if(!k.isHit() && !k.isMiss()) {
+													column = k.getCol();
+													row = k.getRow();
+													done1 = p1Board.shoot(row, column);
+													f = true;
+												}
+											}
+										}
+										if(!f) {
+											done = true;
+										}
 									}else {
 										row = k.getRow();
 										column = k.getCol();

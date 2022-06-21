@@ -47,6 +47,7 @@ public class Board {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				board[i][j] = new Cell(i, j); // no color
+				possible.add(board[i][j]);
 			}
 		}
 		// fills board with empty cells
@@ -402,7 +403,6 @@ public class Board {
 		
 		Cell d = possible.get(c);
 		possible.remove(c);
-		System.out.println(possible);
 		
 		return d;
 	}
@@ -448,9 +448,11 @@ public class Board {
 		for(int i=0;i<10;i++) {
 			for(int j=0;j<10;j++) {
 				board[i][j].setState(Cellstate.empty);
+				possible.add(board[i][j]);
 			}
 		}
 	}
+	
 	/**
 	 * Displays the board
 	 */
