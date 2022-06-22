@@ -545,6 +545,7 @@ public class GUIDriver extends Application {
 							}
 							// AI Mode
 							if(p.equals(Player.AI) && done) {
+								int shots = 0;
 								// If it's the AI's turn and P1 is done shooting, doing the AI shoot turn
 								
 								// Initializing the cell to be shot at
@@ -555,6 +556,7 @@ public class GUIDriver extends Application {
 								boolean done1 = false;
 							
 								while(!done1) {
+									shots++;
 									
 									Ship m = null;
 									
@@ -630,6 +632,7 @@ public class GUIDriver extends Application {
 									stage1.setScene(endScreen);
 
 								}
+								lblTurn.setText("AI shot " + shots + " time(s)");
 							}
 
 						}
