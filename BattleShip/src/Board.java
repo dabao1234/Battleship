@@ -229,9 +229,10 @@ public class Board {
 		if (isEmpty == true) {
 			for (int i = 0; i < shipLength; i++) {
 				// Sets the cells to be ships
-				board[startRow + i][startCol].setState(Cellstate.ship);
+				
 				try {
 					// Modifies the ship cell list to include each cell
+					board[startRow + i][startCol].setState(Cellstate.ship);
 					cell[i] = board[startRow + i][startCol];
 				} catch (Exception k) {
 				}
