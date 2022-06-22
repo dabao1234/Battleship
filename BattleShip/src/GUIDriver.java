@@ -561,7 +561,7 @@ public class GUIDriver extends Application {
 									Ship m = null;
 									
 									// Whether or not the AI will aim correctly given the chance
-									// about a 1/3 chance
+									// About a 1/3 chance
 									// If chance = 0, they will guess the next tile placement correctly
 									// If it's 1 or 2, they will hit somewhere random
 									int chance = r.nextInt(3);
