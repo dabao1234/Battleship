@@ -113,7 +113,7 @@ public class Board {
 		// If the counter is over 2, we know the shipLength has gone out of bounds not just the
 		// shipLength + 2 (which can be out of bounds), so the ship can't be placed there and we return
 		// false!
-		if(counter > 2) {
+		if(counter >= 2) {
 			return false;
 		}
 
