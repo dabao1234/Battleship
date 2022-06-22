@@ -162,7 +162,6 @@ public class Board {
 			row = startRow;// resets start row
 			for (int i = 0; i < shipLength + 2; i++) {
 				try {
-					System.out.println(board[row][col + i].getState());
 					if ((board[row][col + i].getState()).equals(Cellstate.ship)) {
 						return false;
 					}
