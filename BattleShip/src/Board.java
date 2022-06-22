@@ -152,12 +152,13 @@ public class Board {
 	 */
 	public boolean checkOverlapHorizontal(int startRow, int startCol, int shipLength) {
 		try {
-			// checks above
+			
 			int row = startRow;
 			int col = startCol;
 			row = startRow - 1;
 			col = startCol - 1;// always starts one column behind
 
+			// checks above
 			for (int i = 0; i < shipLength + 2; i++) {
 
 				try {
@@ -186,7 +187,7 @@ public class Board {
 			// If the counter is over 2, we know the shipLength has gone out of bounds not just the
 			// shipLength + 2 (which can be out of bounds), so the ship can't be placed there and we return
 			// false!
-			if(counter > 2) {
+			if(counter >= 2) {
 				return false;
 			}
 
@@ -264,9 +265,10 @@ public class Board {
 		if (isEmpty == true) {
 			for (int i = 0; i < shipLength; i++) {
 				// Sets the cells to be ships
-				board[startRow][startCol + i].setState(Cellstate.ship);
+				
 				try {
 					// Modifies the ship cell list to include each cell
+					board[startRow][startCol + i].setState(Cellstate.ship);
 					cell[i] = board[startRow][startCol + i];
 				} catch (Exception k) {
 				}

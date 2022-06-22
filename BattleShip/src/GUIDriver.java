@@ -247,8 +247,9 @@ public class GUIDriver extends Application {
 							// when moving from placement to shoot mode, so the button should have a different
 							// message as there's only one real player taking their turn.
 							bttnBetween.setText("Shooting Time!");
+						} else {
+							bttnBetween.setText("Next player");
 						}
-						
 						// Taking the row and column locations from the user
 						int column = ((FancyButton) e.getSource()).getCol();
 						int row = ((FancyButton) e.getSource()).getRow();
