@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Board {
 	private Cell[][] board;
@@ -24,6 +26,17 @@ public class Board {
 			for (int j = 0; j < aCols; j++) {
 				board[i][j] = new Cell(i, j); // no color
 				possible.add(board[i][j]);
+			}
+		}
+	}
+	
+	private void updatePossible() {
+		possible.clear();
+		
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if(board[i][j].getState().equals(Cellstate.empty) || board[i][j].getState().equals(Cellstate.ship))
+					possible.add(board[i][j]);
 			}
 		}
 	}
@@ -71,7 +84,7 @@ public class Board {
 	public boolean checkAroundVertical(int startRow, int startCol, int shipLength) {
 
 		int col = startCol;
-		int row = startRow;
+		int row = startRow-1;
 		
 		int counter = 0;
 
@@ -145,11 +158,12 @@ public class Board {
 
 			// checks mid
 			int counter = 0;
-			row = row + 1;// resets start row
+			col=startCol-1;
+			row = startRow;// resets start row
 			for (int i = 0; i < shipLength + 2; i++) {
 				try {
-					System.out.println(board[row][startCol + i].getState());
-					if ((board[row][startCol + i].getState()).equals(Cellstate.ship)) {
+					System.out.println(board[row][col + i].getState());
+					if ((board[row][col + i].getState()).equals(Cellstate.ship)) {
 						return false;
 					}
 				}catch(Exception e) {
@@ -254,120 +268,83 @@ public class Board {
 	 */
 	public void clearSunk(Ship ship) {
 		//The starting values of the ship
-				int shipLength = ship.getLength();
-				int startRow = ship.getStartRow();
-				int startCol = ship.getStartCol();
-				int tilesClr=0;
-				//Checks whether the ship is placed vertically or horizontally
-				if (ship.getOrientation().equals("V")) {
-					// checks to the left
-					int row = startRow - 1;
-					int col = startCol - 1; //this happens so it will start the column above start
+		int shipLength = ship.getLength();
+		int startRow = ship.getStartRow();
+		int startCol = ship.getStartCol();
+		//Checks whether the ship is placed vertically or horizontally
+		if (ship.getOrientation().equals("V")) {
+			// checks to the left
+			int row = startRow - 1;
+			int col = startCol - 1; //this happens so it will start the column above start
+			
+			//Surrounds the area of the ship with misses if the ship is sunk
+			for(int x = 0; x < shipLength+2; x++) {
+				try {
+					board[row + x][col].setState(Cellstate.miss);
+				}catch(Exception e) {
 					
-					//Surrounds the area of the ship with misses if the ship is sunk
-					for(int x = 0; x < shipLength+2; x++) {
-						try {
-							if(board[row + x][col].getState().equals(Cellstate.empty)) {
-								
-								tilesClr++;
-							}
-							board[row + x][col].setState(Cellstate.miss);
-						}catch(Exception e) {
-							
-						}
-					}
-					
-					col = startCol + 1;
-					
-					for(int x = 0; x < shipLength+2; x++) {
-						try {
-							if(board[row + x][col].getState().equals(Cellstate.empty)) {
-								
-								tilesClr++;
-							}
-							board[row + x][col].setState(Cellstate.miss);
-						}catch(Exception e) {
-							
-						}
-					}
-					
-					try {
-						if(board[row][startCol].getState().equals(Cellstate.empty)) {
-							
-							tilesClr++;
-						}
-						board[row][startCol].setState(Cellstate.miss);
-					}catch(Exception e) {
-						
-					}
-					try {
-						if(board[startRow + shipLength][startCol].getState().equals(Cellstate.empty)) {
-						
-							tilesClr++; 
-						}
-						board[startRow + shipLength][startCol].setState(Cellstate.miss);
-					}catch(Exception e) {
-						
-					}
-					
-				} else {
-					//Surrounds the ship if it is placed horizontally 
-					int row = startRow;
-					int col = startCol;
-					
-					row = startRow - 1;
-					col = startCol - 1;
-					
-					for(int x = 0; x < shipLength+2; x++) {
-						try {
-							if(board[row][col + x].getState().equals(Cellstate.empty)){
-								
-								tilesClr++;
-							}
-							board[row][col + x].setState(Cellstate.miss);
-						}catch(Exception e) {
-							
-						}
-					}
-						
-					row = startRow + 1;
-					
-					for(int x = 0; x < shipLength+2; x++) {
-						try {
-							if(board[row][col + x].getState().equals(Cellstate.empty)) {
-								tilesClr++;
-							}
-							board[row][col + x].setState(Cellstate.miss);
-						}catch(Exception e) {
-							
-						}
-					}
-					//Catches any errors in the case it goes out of bounds
-					try {
-						if(board[startRow][col].getState().equals(Cellstate.empty)) {
-							
-							tilesClr++;
-						}
-						board[startRow][col].setState(Cellstate.miss);
-					}catch(Exception e) {
-						
-					}
-					try {
-						if(board[startRow][startCol + shipLength].getState().equals(Cellstate.empty)) {
-							tilesClr++;
-							
-						}
-						board[startRow][startCol + shipLength].setState(Cellstate.miss);
-					}catch(Exception e) {
-						
-					}
-
 				}
-		if(tilesClr!=0) {
-		System.out.println("tiles set to miss"+tilesClr);
+			}
+			
+			col = startCol + 1;
+			
+			for(int x = 0; x < shipLength+2; x++) {
+				try {
+					board[row + x][col].setState(Cellstate.miss);
+				}catch(Exception e) {
+					
+				}
+			}
+			
+			try {
+				board[row][startCol].setState(Cellstate.miss);
+			}catch(Exception e) {
+				
+			}
+			try {
+				board[startRow + shipLength][startCol].setState(Cellstate.miss);
+			}catch(Exception e) {
+				
+			}
+			
+		} else {
+			//Surrounds the ship if it is placed horizontally 
+			int row = startRow;
+			int col = startCol;
+			
+			row = startRow - 1;
+			col = startCol - 1;
+			
+			for(int x = 0; x < shipLength+2; x++) {
+				try {
+					board[row][col + x].setState(Cellstate.miss);
+				}catch(Exception e) {
+					
+				}
+			}
+				
+			row = startRow + 1;
+			
+			for(int x = 0; x < shipLength+2; x++) {
+				try {
+					board[row][col + x].setState(Cellstate.miss);
+				}catch(Exception e) {
+					
+				}
+			}
+			//Catches any errors in the case it goes out of bounds
+			try {
+				board[startRow][col].setState(Cellstate.miss);
+			}catch(Exception e) {
+				
+			}
+			try {
+				board[startRow][startCol + shipLength].setState(Cellstate.miss);
+			}catch(Exception e) {
+				
+			}
+
 		}
-		//cellCount=cellCount-tilesClr;
-		cellCount=cellCount-tilesClr;
 
 	}
 	/**
@@ -433,16 +410,18 @@ public class Board {
 	}
 	
 	public Cell getRandom() {
+		updatePossible();
 		
+		if(possible.size() <= 0) {
+			return null;
+		}
 		
 		Random r = new Random();
 		int c = r.nextInt(possible.size());
 		
 		Cell d = possible.get(c);
-		cellCount--;
-		System.out.println("tiles left"+ cellCount);
-		System.out.println("tiles cleared "+ (100-cellCount));
-		possible.remove(c); 
+		
+		updatePossible();
 		
 		return d;
 	}
@@ -491,23 +470,22 @@ public class Board {
 				possible.add(board[i][j]);
 			}
 		}
-		cellCount=100;
 	}
 	
 	/**
 	 * Displays the board
 	 */
 	public void display() {
-		System.out.println(player + "'s board:");
-		System.out.println("  1 2 3 4 5 6 7 8 9 10");
+		//System.out.println(player + "'s board:");
+		//System.out.println("  1 2 3 4 5 6 7 8 9 10");
 		for (int i = 0; i < row; i++) {
-			System.out.print(i + 1 + " ");
+			//System.out.print(i + 1 + " ");
 			for (int j = 0; j < col; j++) {
-				System.out.print(board[i][j] + " ");
+				//System.out.print(board[i][j] + " ");
 
 			}
 			// go to the next line for the next row of ships
-			System.out.println();
+			//System.out.println();
 		}
 	}
 }
