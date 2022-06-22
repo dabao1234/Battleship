@@ -1,14 +1,24 @@
-import java.util.ArrayList;
-import java.util.Random;
+package holloway.caitlin;
+
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The player's Battleship board with all their cells
+ */
+
 public class Board {
+	// The array of cells the board is made up of
 	private Cell[][] board;
+	
+	// The number of rows and columns in the board
 	private int row;
 	private int col;
-	int cellCount=100;
+	
+	// The owner of the board
 	private Player player;
+	
+	// The ArrayList of cells that have not been shot at yet by the AI
 	private ArrayList<Cell> possible = new ArrayList<>();
 
 	/**
@@ -24,12 +34,16 @@ public class Board {
 		board = new Cell[aRows][aCols];
 		for (int i = 0; i < aRows; i++) {
 			for (int j = 0; j < aCols; j++) {
+				// Creates all the cells and adds them to the possible list
 				board[i][j] = new Cell(i, j); // no color
 				possible.add(board[i][j]);
 			}
 		}
 	}
 	
+	/**
+	 * Updates the list of possible cells to shoot at
+	 */
 	private void updatePossible() {
 		possible.clear();
 		
@@ -68,8 +82,8 @@ public class Board {
 	}
 
 	/**
-	 * 
-	 * @return the board
+	 * Returns the actual cells that make up the board
+	 * @return the array of cells the board holds
 	 */
 	public Cell[][] getCells() {
 		return board;
@@ -84,7 +98,7 @@ public class Board {
 	public boolean checkAroundVertical(int startRow, int startCol, int shipLength) {
 
 		int col = startCol;
-		int row = startRow-1;
+		int row = startRow - 1;
 		
 		int counter = 0;
 
@@ -158,8 +172,8 @@ public class Board {
 
 			// checks mid
 			int counter = 0;
-			col=startCol-1;
-			row = startRow;// resets start row
+			col = startCol - 1;
+			row = startRow; // resets start row
 			for (int i = 0; i < shipLength + 2; i++) {
 				try {
 					if ((board[row][col + i].getState()).equals(Cellstate.ship)) {
@@ -206,23 +220,28 @@ public class Board {
 		// place the start of the ship and then set the state of every cell upwards to
 		// ship
 		
+		// Initializing the ship cells
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
+		// Checks to make sure it's possible to place here
 		isEmpty = checkAroundVertical(startRow, startCol, shipLength);// checks around the ship
+		
 		// if it is empty place ship
 		if (isEmpty == true) {
 			for (int i = 0; i < shipLength; i++) {
+				// Sets the cells to be ships
 				board[startRow + i][startCol].setState(Cellstate.ship);
 				try {
+					// Modifies the ship cell list to include each cell
 					cell[i] = board[startRow + i][startCol];
 				} catch (Exception k) {
 				}
 			}
+		// Returns a null ship object if the placement doesn't go through
 		} else {
-			System.out.println("Invalid placement, try again.");
 			return null;
 		}
-
+		// Creates the ship object if possible and returns it
 		Ship newShip = new Ship(shipLength, cell, "V");
 		return newShip;
 
@@ -235,28 +254,30 @@ public class Board {
 	 * @return the new ship that is placed horizontally, returns null if it cannot be placed
 	 */
 	public Ship placeShipHorizontal(int startRow, int startCol, int shipLength) {
-		// place the start of the ship and then set the state of evercell upwards to
-		// ship
-		// to avoid overlap check if all cells are empty
+		// place the start of the ship and then set the state of every cell to the right as ship
+		// to avoid overlap, check if all cells are empty to begin with
 		
+		// Initializing the ship cells
 		Cell[] cell = new Cell[shipLength];
 		boolean isEmpty = false;
+		// Checks to make sure it's possible to place here
 		isEmpty = checkOverlapHorizontal(startRow, startCol, shipLength);
 
 		if (isEmpty == true) {
 			for (int i = 0; i < shipLength; i++) {
+				// Sets the cells to be ships
 				board[startRow][startCol + i].setState(Cellstate.ship);
-				// ADD THESE CELLS TO THE SHIP OBJECT
 				try {
+					// Modifies the ship cell list to include each cell
 					cell[i] = board[startRow][startCol + i];
 				} catch (Exception k) {
 				}
 			}
+		// Returns a null ship object if the placement doesn't go through
 		} else {
-			System.out.println("Invalid placement, try again.");
 			return null;
 		}
-
+		// Creates the ship object if possible and returns it
 		Ship newShip = new Ship(shipLength, cell, "H");
 		return newShip;
 	}
@@ -270,38 +291,53 @@ public class Board {
 		int shipLength = ship.getLength();
 		int startRow = ship.getStartRow();
 		int startCol = ship.getStartCol();
+		
 		//Checks whether the ship is placed vertically or horizontally
 		if (ship.getOrientation().equals("V")) {
 			// checks to the left
 			int row = startRow - 1;
 			int col = startCol - 1; //this happens so it will start the column above start
-			
-			//Surrounds the area of the ship with misses if the ship is sunk
+						
+			// Setting the cells to the left of the ship and the left diagonals to be misses
 			for(int x = 0; x < shipLength+2; x++) {
 				try {
-					board[row + x][col].setState(Cellstate.miss);
+					// Makes sure it doesn't accidentally override a ship tile!
+					// (that shouldn't happen, but it did one single time, so just to be safe)
+					if(!board[row + x][col].getState().equals(Cellstate.ship)) {
+						board[row + x][col].setState(Cellstate.miss);
+					}
 				}catch(Exception e) {
 					
 				}
 			}
 			
+			// Sets the cells to the right of the ship and the right diagonals to be misses
 			col = startCol + 1;
-			
 			for(int x = 0; x < shipLength+2; x++) {
+				// Catches out-of-bounds errors
 				try {
-					board[row + x][col].setState(Cellstate.miss);
+					if(!board[row + x][col].getState().equals(Cellstate.ship)) {
+						board[row + x][col].setState(Cellstate.miss);
+					}
 				}catch(Exception e) {
 					
 				}
 			}
 			
+			// Catches out-of-bounds errors
 			try {
-				board[row][startCol].setState(Cellstate.miss);
+				// Sets directly above the ship to be a miss
+				if(!board[row][startCol].getState().equals(Cellstate.ship)) {
+					board[row][startCol].setState(Cellstate.miss);
+				}
 			}catch(Exception e) {
 				
 			}
 			try {
-				board[startRow + shipLength][startCol].setState(Cellstate.miss);
+				// Sets directly below the ship to be a miss
+				if(!board[startRow + shipLength][startCol].getState().equals(Cellstate.ship)) {
+					board[startRow + shipLength][startCol].setState(Cellstate.miss);
+				}
 			}catch(Exception e) {
 				
 			}
@@ -314,31 +350,42 @@ public class Board {
 			row = startRow - 1;
 			col = startCol - 1;
 			
+			// Setting above the ship and the above diagonals to be misses
 			for(int x = 0; x < shipLength+2; x++) {
 				try {
-					board[row][col + x].setState(Cellstate.miss);
+					if(!board[row][col + x].getState().equals(Cellstate.ship)) {
+						board[row][col + x].setState(Cellstate.miss);
+					}
 				}catch(Exception e) {
 					
 				}
 			}
 				
 			row = startRow + 1;
-			
+			// Setting below the ship and the below diagonals to be misses
 			for(int x = 0; x < shipLength+2; x++) {
 				try {
-					board[row][col + x].setState(Cellstate.miss);
+					if(!board[row][col + x].getState().equals(Cellstate.ship)) {
+						board[row][col + x].setState(Cellstate.miss);
+					}
 				}catch(Exception e) {
 					
 				}
 			}
 			//Catches any errors in the case it goes out of bounds
 			try {
-				board[startRow][col].setState(Cellstate.miss);
+				// Sets the cell to the left of the ship to be a miss
+				if(!board[startRow][col].getState().equals(Cellstate.ship)) {
+					board[startRow][col].setState(Cellstate.miss);
+				}
 			}catch(Exception e) {
 				
 			}
 			try {
-				board[startRow][startCol + shipLength].setState(Cellstate.miss);
+				// Sets the cell to the right of the ship to be a miss
+				if(!board[startRow][startCol + shipLength].getState().equals(Cellstate.ship)) {
+					board[startRow][startCol + shipLength].setState(Cellstate.miss);
+				}
 			}catch(Exception e) {
 				
 			}
@@ -408,19 +455,25 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Returns a random cell in the board that has not been shot at yet
+	 * @return a random cell that can be shot at
+	 */
 	public Cell getRandom() {
+		// Updating the list of possible cells to pick from
 		updatePossible();
 		
+		// If there are none to choose from, returning null
 		if(possible.size() <= 0) {
+			// This should not happen, because a win condition would have executed by this point
 			return null;
 		}
 		
 		Random r = new Random();
+		
+		// Picking a random cell from the amount of cells still left to choose from
 		int c = r.nextInt(possible.size());
-		
 		Cell d = possible.get(c);
-		
-		updatePossible();
 		
 		return d;
 	}
@@ -445,7 +498,6 @@ public class Board {
 				return false;
 			} else {
 				// if so, we want them to enter another thing
-				System.out.println("Try again!");
 				return false;
 			}
 		}
@@ -456,7 +508,6 @@ public class Board {
 		}
 		// if no ship but you've already shot there, try again
 		else {
-			System.out.println("Try again!");
 			return false;
 		}
 		return true;
@@ -473,6 +524,7 @@ public class Board {
 	
 	/**
 	 * Displays the board
+	 * Made this do nothing because the driver game is not meant to be played, our Battleship is the GUI
 	 */
 	public void display() {
 		//System.out.println(player + "'s board:");
