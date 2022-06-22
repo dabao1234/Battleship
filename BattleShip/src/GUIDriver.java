@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
 public class GUIDriver extends Application {
-	// Constants for the board
+	/// Constants for the board
 	final int num_Rows = 10;
 	final int num_Cols = 10;
 	final int WIDTH = 700;
