@@ -213,9 +213,7 @@ public class GUIDriver extends Application {
 			for (int z = 0; z < num_Cols; z++) {
 				// P2's board is clickable if it is player 1's turn
 				tilesP1[i][z].setOnAction(e -> {
-					colorTilesShoot(p1Board, tilesP1, 1);
-					colorTilesShoot(p2Board, tilesP2, 1);
-					
+	
 					if (placeTurnP1 == true) {
 
 						int column = ((FancyButton) e.getSource()).getCol();
@@ -358,6 +356,8 @@ public class GUIDriver extends Application {
 							showShips(p2Board, tilesP2); // shows on GUI
 						
 							if (p1Board.shoot(row, column)) {
+								colorTilesShoot(p1Board,tilesP1,1);
+								colorTilesShoot(p2Board,tilesP2,1);
 								p = Player.P1;
 								stage1.setScene(betweens);
 								stage1.show();
@@ -384,6 +384,8 @@ public class GUIDriver extends Application {
 							}
 						}
 					}
+					colorTilesShoot(p1Board,tilesP1,1);
+					colorTilesShoot(p2Board,tilesP2,1);
 				});
 				// Ship placement for player 2
 				tilesP2[i][z].setOnAction(e -> {
@@ -461,6 +463,8 @@ public class GUIDriver extends Application {
 							row = ((FancyButton) e.getSource()).getRow();
 							
 							done = p2Board.shoot(row, column);
+							colorTilesShoot(p1Board,tilesP1,1);
+							colorTilesShoot(p2Board,tilesP2,1);
 							//If the player is done shooting
 							if (done) {
 								p = opp;
@@ -477,7 +481,7 @@ public class GUIDriver extends Application {
 								}
 							}
 							//p2Board.display();
-							colorTilesShoot(p2Board, tilesP2, 1);
+						
 							//Checking win condition
 							if (checkWin(p2Ships, p2Board) == true) {
 								// player 1 wins
@@ -513,6 +517,8 @@ public class GUIDriver extends Application {
 										column = k.getCol();
 										
 										done1 = p1Board.shoot(row, column);
+										colorTilesShoot(p1Board,tilesP1,1);
+										colorTilesShoot(p2Board,tilesP2,1);
 										System.out.println("ai has shot at"+row+ ","+column);
 										if (checkWin(p1Ships, p1Board) == true) {
 											// player 2 wins
@@ -548,7 +554,8 @@ public class GUIDriver extends Application {
 						}
 						
 					}
-					
+					colorTilesShoot(p1Board,tilesP1,1);
+					colorTilesShoot(p2Board,tilesP2,1);
 				});
 
 			}
