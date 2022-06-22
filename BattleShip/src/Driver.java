@@ -2,12 +2,24 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Battleship - A game where the goal is to sink all of your opponent's ships before they sink yours!
+ * @author Caitlin Holloway, Christopher Holland, David Bao
+ */
 
 public class Driver {
+	// Note that the driver class has been lobotomized by yours truly, so the text-based game should no longer
+	// function. Please redirect to the GUIDriver to actually play and look at the game code! The driver
+	// code is not relevant to the graphical game, its methods were only used as inspiration.
 	
 	static boolean gameOver = false;
+	// Setting the opponent - this is AI for testing purposes
 	static Player opponent = Player.AI;
 	
+	/**
+	 * This is useless test code, as our game is graphics-based.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		final int NUM_SHIPS = 5; 
@@ -62,9 +74,9 @@ public class Driver {
 	
 	/**
 	 * Asks for either one or two, and depending on the answer, the user will be 
-	 * placing a ship vertically
-	 * or horizontally
-	 * @param in
+	 * placing a ship vertically or horizontally
+	 * This is NOT used in the graphical game
+	 * @param in - the scanner to be used
 	 * @return the alignment value, 1 or 2
 	 */
 	public static int getAlign(Scanner in) {
@@ -94,6 +106,7 @@ public class Driver {
 
 	/**
 	 * Takes user input for an integer between 1 and 9
+	 * This is NOT used in the graphical game
 	 * @param in - the scanner to take user input
 	 * @return  the number the user has input
 	 */
@@ -119,14 +132,16 @@ public class Driver {
 
 	/**
 	 * Shoots at the cell the user selects
+	 * This is NOT used in the graphical game
 	 * @param r - the row
 	 * @param c - the column
 	 * @param b - the board
 	 * @return whether or not to go to the next turn
 	 */
-	
 	static boolean shoot(int r, int c, Board b, ArrayList<Ship> ships) {
+		// Calling the board shoot method to see if the player's turn should end yet
 		boolean done = b.shoot(r, c);
+		// Checking to see if anyone has won
 		if(checkWin(ships, b)) {
 			gameOver = true;
 			System.out.println("Congratulations " + b.getPlayer() + "!");
@@ -138,6 +153,7 @@ public class Driver {
 	
 	/**
 	 * Places all of the user's ships for them
+	 * This is NOT used in the GUI driver
 	 * @param in - the scanner object
 	 * @param b - the board
 	 * @param p - the player
@@ -146,7 +162,8 @@ public class Driver {
 	 * @return true if the ship is successfully placed or false if the ship is not placed
 	 */
 	static boolean place(Scanner in, Board b, Player p, int count, ArrayList<Ship> ships) {
-
+		
+		// Initializing our variables
 		int shipAlign = 0;
 		int startCol = 0;
 		int row = 0;
@@ -220,6 +237,7 @@ public class Driver {
 	}
 	/**
 	 * Runs a user's entire turn, including shooting and checking for wins
+	 * This is NOT used in the graphical game
 	 * @param in - the users input
 	 * @param p - the current player
 	 * @param b1 - player 1's board
@@ -314,71 +332,10 @@ public class Driver {
 		}
 	}
 	
-	private static boolean checkAI(int row, int col, Board b1) {
-		if(b1.getCells()[col][row].getState().equals(Cellstate.empty) || b1.getCells()[col][row].getState().equals(Cellstate.ship)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	/**
-	 * 
-	 * @param in - users input
-	 * @param p - player 
-	 * @param b1 - board 1
-	 * @param b2 - board 2
-	 * @param p1Ships - ships for player 1
-	 * @param p2Ships - ships for player 2
-	 * @return
-	 */
-	static boolean aiTurn(int r, int c, Player p, Board b1, Board b2, ArrayList<Ship> p1Ships, ArrayList<Ship> p2Ships) {
-		boolean placed = false;
-		boolean done = false;
-		
-		while(!done) {
-			placed = false;
-			try {
-				done = shoot(r+1, c, b1, p1Ships);
-				placed = true;
-			}catch(Exception e) {
-				
-			}
-			if(!placed) {
-				try {
-					done = shoot(r-1, c, b1, p1Ships);
-					placed = true;
-				}catch(Exception e) {
-					
-				}
-			}
-			
-			if(!placed) {
-				try {
-					done = shoot(r, c-1, b1, p1Ships);
-					placed = true;
-				}catch(Exception e) {
-					
-				}
-			}
-			if(!placed) {
-				try {
-					done = shoot(r, c+1, b1, p1Ships);
-					placed = true;
-				}catch(Exception e) {
-					
-				}
-			}
-		}
-				
-		return placed;
-	}
-	
-	
 	/**
 	 * Loops through all of a user's ships and check if they are sunk to
 	 * determine whether or not the game has been won
+	 * This is NOT called in the graphical game, but the code is reused
 	 * @param ships - all the ships
 	 * @param b - the board
 	 * @return returns true if the player has won
